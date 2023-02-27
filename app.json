@@ -4,10 +4,10 @@
     "slug": "unipool",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ufo.svg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/ufo.svg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
