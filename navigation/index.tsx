@@ -5,7 +5,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
 import {RootStackParamList} from "../types";
-import WelconeScreen from "../screens/WelcomeScreen";
+import WelcomeScreen from "../screens/WelcomeScreen";
+import HomeScreen from "../screens/HomeScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -33,7 +34,8 @@ function RootNavigator() {
           title: "",
         }}
       >
-        <Stack.Screen name={'Welcome'} component={WelconeScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'Home'} component={HomeScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
   );
 }
