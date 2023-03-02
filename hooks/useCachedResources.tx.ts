@@ -2,6 +2,8 @@ import { FontAwesome } from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
+import {loadColors} from "../configs/react-native-ui-lib/FoundationConfig";
+import {loadStyles} from "../configs/react-native-ui-lib/ComponentsConfig";
 
 export default function useCachedResources() {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
@@ -11,7 +13,8 @@ export default function useCachedResources() {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHideAsync();
-
+        loadColors();
+        loadStyles();
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,

@@ -7,6 +7,8 @@ import { ColorSchemeName, Pressable } from 'react-native';
 import {RootStackParamList} from "../types";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import HomeScreen from "../screens/HomeScreen";
+import LoginScreen from "../screens/LoginScreen";
+import RegisterScreen from '../screens/RegisterScreen';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -36,6 +38,8 @@ function RootNavigator() {
       >
         <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Home'} component={HomeScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
       </Stack.Navigator>
   );
 }
