@@ -10,11 +10,12 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
             <Text text30 grey90 marginB-400 center={true}>
                 Unipool
             </Text>
-            <Button block
-                    label={'Get Started'}
+            <Button label={'Get Started'}
                     backgroundColor={Colors.primary}
                     square
                     marginB-100
+                    marginL-32
+                    marginR-32
                     onPress={() => navigation.navigate('Login')}
             />
         </View>

@@ -8,7 +8,7 @@ export function loadStyles() {
     // be used to create different variations of buttons in your app
     if (props.square) {
       return {
-        borderRadius: 8,
+        borderRadius: 5,
         backgroundColor: Colors.primary
       };
     }
@@ -19,9 +19,9 @@ export function loadStyles() {
     if (props.loginInput) {
       return {
         fieldStyle: {
-          borderRadius: 8,
+          borderRadius: 5,
           backgroundColor: '#000',
-          padding: 16,
+          padding: 12,
         }
       };
     }

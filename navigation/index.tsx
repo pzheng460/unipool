@@ -4,11 +4,13 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
-import {RootStackParamList} from "../types";
+import {RootStackParamList, RootTabParamList, RootTabScreenProps} from "../types";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from '../screens/RegisterScreen';
+import {useAuthState} from "react-firebase-hooks/auth";;
+import {auth} from "../configs/firebase/FirebaseConfig";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -27,8 +29,10 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const [user, loading, error] = useAuthState(auth);
 
   return (
+    user === null ?
       <Stack.Navigator
         screenOptions={{
           headerShadowVisible: false,
@@ -37,10 +41,42 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
-        <Stack.Screen name={'Home'} component={HomeScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
+      </Stack.Navigator> :
+      <Stack.Navigator
+        screenOptions={{
+          headerShadowVisible: false,
+          headerTransparent: true,
+          title: "",
+        }}
+      >
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       </Stack.Navigator>
+  );
+}
+
+/**
+ * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
+ * https://reactnavigation.org/docs/bottom-tab-navigator
+ */
+const BottomTab = createBottomTabNavigator<RootTabParamList>();
+
+function BottomTabNavigator() {
+
+  return (
+    <BottomTab.Navigator
+      initialRouteName="Home"
+     >
+      <BottomTab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
+          title: 'Home',
+          tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+        })}
+      />
+    </BottomTab.Navigator>
   );
 }
 

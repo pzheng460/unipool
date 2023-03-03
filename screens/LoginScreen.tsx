@@ -23,7 +23,6 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
 
     function handleLogin() {
         signInWithEmailAndPassword(email, password);
-        if (user) {navigation.navigate('Home')}
         if (error) {console.log(error.message)}
     }
 
@@ -38,7 +37,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
             <View style={{flex: 4}}>
                 <View style={{flexDirection: "row", justifyContent: "flex-start"}}>
                     <Text
-                        style={{color: "#10274C", fontSize: 30, fontWeight: "500", fontFamily: "Oceanwide-Semibold"}}>Login</Text>
+                        style={{color: "#10274C", fontSize: 30, fontFamily: "Oceanwide-Semibold"}}>Login</Text>
                 </View>
 
                 <View style={{marginTop: 20}}>
@@ -49,11 +48,12 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                         validate={['email']}
                         validationMessage={['Email is invalid']}
                         fieldStyle={{backgroundColor: Colors.background,
-                            padding: 16,
-                            borderRadius: 8,
+                            padding: 12,
+                            borderRadius: 5,
                             borderColor: 'grey',
-                            borderWidth: 1
+                            borderWidth: 1,
                         }}
+                        style={{fontSize: 16}}
                         validationMessagePosition={'bottom'}
                         enableErrors
                     />
@@ -64,9 +64,13 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                         placeholder={'Password'}
                         onChangeText={(v) => setPassword(v)}
                         secureTextEntry={true}
-                        style={{backgroundColor: "#FFFFFF", padding: 16,
-                            borderRadius: 8,borderColor: 'grey',
-                            borderWidth: 1,}}
+                        style={{backgroundColor: "#FFFFFF",
+                            padding: 12,
+                            borderRadius: 5,
+                            borderColor: 'grey',
+                            borderWidth: 1,
+                            fontSize: 16,
+                        }}
                     />
                 </View>
 
@@ -119,13 +123,13 @@ const styles = StyleSheet.create({
         fontFamily: "Oceanwide-Semibold",
         paddingTop: 3,
         paddingBottom: 3,
-        fontSize: 16
+        fontSize: 18,
     },
     loginButtonText: {
         color: "#FFFFFF",
         fontFamily: "Oceanwide-Semibold",
         paddingTop: 3,
         paddingBottom: 3,
-        fontSize: 16
+        fontSize: 18,
     }
 });

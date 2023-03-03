@@ -20,7 +20,6 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
 
     function handleRegister() {
         createUserWithEmailAndPassword(email, password);
-        if (user) {navigation.navigate('Home')}
         if (error) {
             console.log(error.message);
             navigation.navigate('Register');
@@ -45,10 +44,11 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
                         validate={['email']}
                         validationMessage={['Email is invalid']}
                         fieldStyle={{backgroundColor: Colors.background,
-                            padding: 16,
-                            borderRadius: 8,
+                            padding: 12,
+                            borderRadius: 5,
                             borderColor: 'grey',
-                            borderWidth: 1
+                            borderWidth: 1,
+                            fontSize: 16,
                         }}
                         validationMessagePosition={'bottom'}
                         enableErrors
@@ -60,9 +60,13 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
                         placeholder={'Password'}
                         onChangeText={(v) => setPassword(v)}
                         secureTextEntry={true}
-                        style={{backgroundColor: "#FFFFFF", padding: 16,
-                            borderRadius: 8,borderColor: 'grey',
-                            borderWidth: 1,}}
+                        style={{backgroundColor: "#FFFFFF",
+                            padding: 12,
+                            borderRadius: 5,
+                            borderColor: 'grey',
+                            borderWidth: 1,
+                            fontSize: 16,
+                        }}
                     />
                 </View>
 
@@ -71,9 +75,13 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
                         placeholder={'Retype Password'}
                         // onChangeText={(v) => setPassword(v)}
                         secureTextEntry={true}
-                        style={{backgroundColor: "#FFFFFF", padding: 16,
-                            borderRadius: 8,borderColor: 'grey',
-                            borderWidth: 1,}}
+                        style={{backgroundColor: "#FFFFFF",
+                            padding: 12,
+                            borderRadius: 5,
+                            borderColor: 'grey',
+                            borderWidth: 1,
+                            fontSize: 16,
+                        }}
                     />
                 </View>
             </View>
@@ -94,17 +102,11 @@ const styles = StyleSheet.create({
         paddingTop: 200,
         padding: 40,
     },
-    loginWithGoogleText: {
-        color: "#6C757D",
-        fontFamily: "Oceanwide-Semibold",
-        paddingTop: 3,
-        paddingBottom: 3,
-        fontSize: 13
-    },
     loginButtonText: {
         color: "#FFFFFF",
         fontFamily: "Oceanwide-Semibold",
         paddingTop: 3,
-        paddingBottom: 3
+        paddingBottom: 3,
+        fontSize: 18
     }
 });
