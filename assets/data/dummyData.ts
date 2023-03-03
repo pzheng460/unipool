@@ -59,7 +59,7 @@ const trip1: Trip = {
 const trip2: Trip = {
     from: "Georgia Tech",
     to: "H Mart",
-    roundTrip: false,
+    roundTrip: true,
     date: 70000,
     returnDate: 71000,
 
