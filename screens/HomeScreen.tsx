@@ -14,37 +14,21 @@ import {
     TabControllerImperativeMethods,
     TextField
 } from "react-native-ui-lib";
-import {StyleSheet, TextStyle, ScrollView, Alert, TouchableOpacity} from "react-native";
+import {RefreshControl, StyleSheet, TextStyle, ActivityIndicator} from "react-native";
+import {ScrollView, Alert, TouchableOpacity} from "react-native";
 import {RootTabScreenProps} from "../types";
-import {useState} from "react";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
-import {trips} from "../assets/data/dummyData";
-
-function renderItem(item: Trip) {
-    return (
-        <TripCard trip={item}></TripCard>
-    );
-}
-export function renderCardList() {
-  return (
-    <GridList data={trips}
-              renderItem={({item}) => renderItem(item)}
-              numColumns={1}
-              itemSpacing={Spacings.s2}
-              listPadding={Spacings.s2}
-              style={{paddingTop: Spacings.s2,
-                  backgroundColor: Colors.background2,
-                  // minHeight: '100%'
-                }}
-
-    />
-  )
-}
+import {trips, trip1} from "../assets/data/dummyData";
+import React, {useEffect, useState} from "react";
+import firebase from "firebase/compat";
+import functions = firebase.functions;
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
-    const data = ['All', 'Today', 'Grocery', 'Market', 'Shopping'];
+    const [refreshing, setRefreshing] = useState(false);
+    const [tripData, setTripData] = useState(trips);
+
     const options = [{
         id: 0,
         name: "All",
@@ -72,6 +56,48 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
         }
     ];
     const [active, setActive] = useState(options);
+
+    // useEffect(() => {
+    //     loadUserData();
+    // }, []);
+
+    const refreshTrips = () => {
+        setRefreshing(true);
+        fetch('https://randomuser.me/api/?results=8')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                setRefreshing(false);
+                let newData = tripData.concat([trip1]);
+                setTripData(newData);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    function renderItem(item: Trip) {
+        return (
+            <TripCard trip={item}></TripCard>
+        );
+    }
+    function renderCardList() {
+        return (
+            <GridList data={tripData}
+                      renderItem={({item}) => renderItem(item)}
+                      numColumns={1}
+                      itemSpacing={Spacings.s2}
+                      listPadding={Spacings.s2}
+                      style={{paddingTop: Spacings.s2,
+                          backgroundColor: Colors.background2,
+                          // minHeight: '100%'
+                      }}
+                      refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
+
+            />
+        )
+    }
+
+
 
     const handleClick = function (idx: number) {
         // @ts-ignore
@@ -142,6 +168,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                         {renderChipFilter()}
                     </ScrollView>
                 </View>
+                {/*{refreshing ? <ActivityIndicator size="small" /> : null}*/}
                 {renderCardList()}
             </View>
         )
@@ -177,51 +204,4 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
             </TabController>
         </View>
     );
-  return (
-     <View useSafeArea
-           flexG
-           style={{
-             backgroundColor: Colors.$backgroundDefault,
-             height: "100%",
-             width: "100%"
-          }}
-     >
-       <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]}>
-         <TabController.TabBar
-           enableShadows
-           indicatorInsets={50}
-           indicatorStyle={{
-             backgroundColor: Colors.primary,
-             height: 4,
-             borderRadius: 8,
-             bottom: 0,
-            }}
-           labelStyle={tabTextStyle}
-           selectedLabelStyle={{
-             ...tabTextStyle,
-             fontSize: 18
-           }}
-           selectedLabelColor="#000"
-         />
-         <View flex backgroundColor={Colors.background2}>
-           <TabController.TabPage index={0}>
-               {renderExplorePage()}
-           </TabController.TabPage>
-           <TabController.TabPage index={1} lazy>
-             <Text>1</Text>
-           </TabController.TabPage>
-         </View>
-       </TabController>
-     </View>
-  );
 }
-const styles = StyleSheet.create({
-    list: {
-        paddingTop: Spacings.s5,
-    },
-    itemImage: {
-        width: '100%',
-        height: 85,
-        borderRadius: BorderRadiuses.br10
-    }
-});

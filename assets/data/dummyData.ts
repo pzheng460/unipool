@@ -20,7 +20,7 @@ const user2 : User = {
     gender: 'male',
 };
 
-const trip1: Trip = {
+export const trip1: Trip = {
     from: "Georgia Tech",
     to: "Hartsfield-Jackson Atlanta International Airport",
     roundTrip: false,
