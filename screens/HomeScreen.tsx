@@ -30,10 +30,10 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     const [tripData, setTripData] = useState(trips);
 
     const options = [{
-        id: 0,
-        name: "All",
-        active: false
-    },
+            id: 0,
+            name: "All",
+            active: false
+        },
         {
             id: 1,
             name: "Today",
@@ -92,12 +92,9 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                           // minHeight: '100%'
                       }}
                       refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
-
             />
         )
     }
-
-
 
     const handleClick = function (idx: number) {
         // @ts-ignore

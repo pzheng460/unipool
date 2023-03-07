@@ -1,4 +1,4 @@
-import {StyleSheet, TextInput} from "react-native";
+import {Keyboard, StyleSheet, TextInput, Touchable, TouchableWithoutFeedback} from "react-native";
 import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
 import {AntDesign} from '@expo/vector-icons';
 import {useState} from "react";
@@ -21,12 +21,19 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
         error,
     ] = useSignInWithEmailAndPassword(auth);
 
+    const onKeyboard = () => {
+        Keyboard.dismiss();
+    }
+
     function handleLogin() {
         signInWithEmailAndPassword(email, password);
         if (error) {console.log(error.message)}
     }
 
     return (
+        <TouchableWithoutFeedback
+            onPress={() =>{onKeyboard()}}
+        >
         <View style={styles.container}>
             <View style={{flex: 2}}>
                 <View style={{flexDirection: "row", justifyContent: "center"}}>
@@ -107,6 +114,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                 </View>
             </View>
         </View>
+        </TouchableWithoutFeedback>
     );
 }
 
