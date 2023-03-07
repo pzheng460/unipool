@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import {AntDesign, FontAwesome} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,6 +11,10 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from '../screens/RegisterScreen';
 import {useAuthState} from "react-firebase-hooks/auth";;
 import {auth} from "../configs/firebase/FirebaseConfig";
+import GroupScreen from "../screens/GroupScreen";
+import MessageScreen from "../screens/MessageScreen";
+import MeScreen from "../screens/MeScreen";
+import {Colors} from "react-native-ui-lib";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -64,6 +68,8 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
@@ -71,10 +77,49 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
+        //@ts-ignore
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+          tabBarActiveTintColor: Colors.primary,
+          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
+        })}
+      />
+      <BottomTab.Screen
+        name="Groups"
+        component={GroupScreen}
+        //@ts-ignore
+        options={({ navigation }: RootTabScreenProps<'Groups'>) => ({
+          title: 'Groups',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="addusergroup" color={color} />,
+          tabBarActiveTintColor: Colors.primary,
+          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
+        })}
+      />
+      <BottomTab.Screen
+        name="Messages"
+        component={MessageScreen}
+        //@ts-ignore
+        options={({ navigation }: RootTabScreenProps<'Messages'>) => ({
+          title: 'Messages',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="message1" color={color} />,
+          tabBarActiveTintColor: Colors.primary,
+          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
+        })}
+      />
+      <BottomTab.Screen
+        name="Me"
+        component={MeScreen}
+        //@ts-ignore
+        options={({ navigation }: RootTabScreenProps<'Me'>) => ({
+          title: 'Me',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          tabBarActiveTintColor: Colors.primary,
+          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
         })}
       />
     </BottomTab.Navigator>
@@ -85,8 +130,8 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof AntDesign>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <AntDesign size={24} style={{ marginBottom: -3 }} {...props} />;
 }
