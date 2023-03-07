@@ -11,36 +11,25 @@ import {
 } from "react-native-ui-lib";
 import {StyleSheet, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../types";
+import TripCard from "../components/TripCard";
+import {Trip} from "../Interface/TripInterface";
+import {trips} from "../assets/data/dummyData";
 
-const data = [1, 2, 3, 4];
-// @ts-ignore
-function renderItem({ item }) {
+function renderItem(item: Trip) {
     return (
-        <Card
-            height={120}
-            flex1
-            marginL-10
-            marginR-10
-        >
-            <Card.Section
-                content={[{text: 'Card content here', text70: true, red30: true}]}
-                contentStyle={{alignItems: 'center'}}
-            />
-            <Card.Section
-                content={[{text: item.toString(), text90BL: true, red30: true}]}
-                contentStyle={{alignItems: 'center'}}
-            />
-        </Card>
+        <TripCard trip={item}></TripCard>
     );
 }
 export function renderExplorePage() {
-    return (
-        <GridList data={data}
-                  renderItem={renderItem}
-                  numColumns={1}
-                  contentContainerStyle={styles.list}
-        />
-    )
+  return (
+    <GridList data={trips}
+              renderItem={({item}) => renderItem(item)}
+              numColumns={1}
+              itemSpacing={Spacings.s2}
+              listPadding={Spacings.s2}
+              style={{paddingTop: Spacings.s2}}
+    />
+  )
 }
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
@@ -54,7 +43,14 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   };
 
   return (
-     <View useSafeArea flexG style={{backgroundColor: Colors.$backgroundDefault}}>
+     <View useSafeArea
+           flexG
+           style={{
+             backgroundColor: Colors.$backgroundDefault,
+             height: "100%",
+             width: "100%"
+          }}
+     >
        <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]}>
          <TabController.TabBar
            enableShadows
@@ -66,15 +62,15 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
              bottom: 0,
             }}
            labelStyle={tabTextStyle}
-           selectedLabelStyle={tabTextStyle}
+           selectedLabelStyle={{
+             ...tabTextStyle,
+             fontSize: 18
+           }}
            selectedLabelColor="#000"
          />
-         <View flex>
+         <View flex backgroundColor={Colors.background2}>
            <TabController.TabPage index={0}>
                {renderExplorePage()}
-             {/*<View flex style={{height: "100%"}}>*/}
-             {/*    <Text>0</Text>*/}
-             {/*</View>*/}
            </TabController.TabPage>
            <TabController.TabPage index={1} lazy>
              <Text>1</Text>
