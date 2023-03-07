@@ -11,6 +11,7 @@ export function loadColors() {
     success: '#00B578',
     warn: '#FF8F1F',
     background: '#FFFFFF',
+    background2: '#F2F4F5'
   });
 }
 
