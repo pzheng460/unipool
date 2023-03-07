@@ -73,53 +73,49 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
+      screenOptions={{
+        tabBarStyle: {
+          height: 90,
+        },
+        tabBarActiveTintColor: Colors.primary,
+        //@ts-ignore
+        tabBarLabelStyle: {fontSize: 12, fontWeight: 600},
+    }}
      >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
-        //@ts-ignore
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-          tabBarActiveTintColor: Colors.primary,
-          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
         })}
       />
       <BottomTab.Screen
         name="Groups"
         component={GroupScreen}
-        //@ts-ignore
         options={({ navigation }: RootTabScreenProps<'Groups'>) => ({
           title: 'Groups',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="addusergroup" color={color} />,
-          tabBarActiveTintColor: Colors.primary,
-          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
         })}
       />
       <BottomTab.Screen
         name="Messages"
         component={MessageScreen}
-        //@ts-ignore
         options={({ navigation }: RootTabScreenProps<'Messages'>) => ({
           title: 'Messages',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="message1" color={color} />,
-          tabBarActiveTintColor: Colors.primary,
-          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
         })}
       />
       <BottomTab.Screen
         name="Me"
         component={MeScreen}
-        //@ts-ignore
         options={({ navigation }: RootTabScreenProps<'Me'>) => ({
           title: 'Me',
           headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-          tabBarActiveTintColor: Colors.primary,
-          tabBarLabelStyle: {fontSize: 11, fontWeight: 600},
         })}
       />
     </BottomTab.Navigator>
@@ -133,5 +129,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof AntDesign>['name'];
   color: string;
 }) {
-  return <AntDesign size={24} style={{ marginBottom: -3 }} {...props} />;
+  return <AntDesign size={26} style={{ marginBottom: -3 }} {...props} />;
 }
