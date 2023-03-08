@@ -16,6 +16,7 @@ import MessageScreen from "../screens/MessageScreen";
 import MeScreen from "../screens/MeScreen";
 import {Colors} from "react-native-ui-lib";
 import TripDetailsScreen from "../screens/TripDetailsScreen";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -68,7 +69,7 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-
+  const insets = useSafeAreaInsets();
   // @ts-ignore
   // @ts-ignore
   return (
@@ -76,11 +77,11 @@ function BottomTabNavigator() {
       initialRouteName="Home"
       screenOptions={{
         tabBarStyle: {
-          height: 90,
+          height: 56 + insets.bottom,
         },
         tabBarActiveTintColor: Colors.primary,
         //@ts-ignore
-        tabBarLabelStyle: {fontSize: 12, fontWeight: 600},
+        tabBarLabelStyle: {fontSize: 12, fontWeight: 600, marginBottom: 8},
     }}
      >
       <BottomTab.Screen
@@ -130,5 +131,5 @@ function TabBarIcon(props: {
   name: React.ComponentProps<typeof AntDesign>['name'];
   color: string;
 }) {
-  return <AntDesign size={26} style={{ marginBottom: -3 }} {...props} />;
+  return <AntDesign size={26} style={{ marginBottom: -4 }} {...props} />;
 }
