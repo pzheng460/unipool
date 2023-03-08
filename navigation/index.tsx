@@ -15,6 +15,7 @@ import GroupScreen from "../screens/GroupScreen";
 import MessageScreen from "../screens/MessageScreen";
 import MeScreen from "../screens/MeScreen";
 import {Colors} from "react-native-ui-lib";
+import TripDetailsScreen from "../screens/TripDetailsScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -52,10 +53,10 @@ function RootNavigator() {
         screenOptions={{
           headerShadowVisible: false,
           headerTransparent: true,
-          title: "",
         }}
       >
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="Order" component={TripDetailsScreen} options={{ headerTitle: 'Trip Details' }}/>
       </Stack.Navigator>
   );
 }

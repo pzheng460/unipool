@@ -55,7 +55,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
   function renderItem(item: Trip) {
     return (
-      <TripCard trip={item}></TripCard>
+      <TripCard trip={item} onPress={() => navigation.navigate('Order')}></TripCard>
     );
   }
   function renderCardList() {
