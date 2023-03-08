@@ -1,5 +1,5 @@
 import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, Dimensions } from "react-native";
 import {RootStackParamList, RootStackScreenProps, RootTabScreenProps} from "../types";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {trips} from "../assets/data/dummyData";
@@ -9,11 +9,21 @@ import {Trip} from "../Interface/TripInterface";
 import {User} from "../Interface/TripInterface"
 import TripCard from "../components/TripCard";
 import React from "react";
+import TripDetailsCard from "../components/TripDetailCard";
 
 export default function TripDetailsScreen({route, navigation}: RootStackScreenProps<'TripDetails'>) {
     const tripId = route.params?.id;
+    const trip = trips[tripId as number];
+    const windowWidth = Dimensions.get('window').width;
+
     return (
         <View useSafeArea>
+            <Image
+                style={{width: windowWidth, height: 200}}
+                source={require('../assets/images/random-map.png')}
+            />
+            <TripDetailsCard trip={trip}></TripDetailsCard>
+
             <PeopleList people={trips[tripId as number].riders as User[]}></PeopleList>
             <View centerH paddingT-20>
                 <Button
@@ -30,10 +40,3 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    image: {
-        width: 200,
-        height: 200,
-    },
-})

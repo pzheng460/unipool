@@ -19,7 +19,7 @@ export default function PeopleList(props: {people: User[]}) {
     <GridList
         ListHeaderComponent={
             <Text h1 marginB-s5>
-                Co-passengers
+                Passengers
             </Text>
         }
         data={props.people}
@@ -28,6 +28,7 @@ export default function PeopleList(props: {people: User[]}) {
         itemSpacing={Spacings.s2}
         listPadding={Spacings.s2}
         contentContainerStyle={styles.list}
+        scrollEnabled={false}
     >
     </GridList>
   );
