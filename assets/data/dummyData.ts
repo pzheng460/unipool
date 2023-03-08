@@ -1,6 +1,7 @@
 import {Trip, User} from "../../Interface/TripInterface";
 
 const user1 : User = {
+    id: 0,
     firstName: 'Lucas',
     lastName: 'Lee',
     phone: '7702868930',
@@ -11,6 +12,7 @@ const user1 : User = {
 };
 
 const user2 : User = {
+    id: 1,
     firstName: 'Ruiqi',
     lastName: 'Liu',
     phone: '4706767789',
@@ -21,6 +23,7 @@ const user2 : User = {
 };
 
 export const trip1: Trip = {
+    id: 0,
     from: "Georgia Tech",
     to: "Hartsfield-Jackson Atlanta International Airport",
     roundTrip: false,
@@ -35,6 +38,7 @@ export const trip1: Trip = {
 };
 
 const trip2: Trip = {
+    id: 1,
     from: "Georgia Tech",
     to: "H Mart",
     roundTrip: true,
@@ -49,6 +53,7 @@ const trip2: Trip = {
 };
 
 const trip3: Trip = {
+    id: 2,
     from: "Georgia Tech",
     to: "Regal Atlantic Station",
     roundTrip: false,

@@ -56,7 +56,7 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="Order" component={TripDetailsScreen} options={{ headerTitle: 'Trip Details' }}/>
+        <Stack.Screen name="TripDetails" component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
       </Stack.Navigator>
   );
 }

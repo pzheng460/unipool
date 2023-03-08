@@ -2,12 +2,14 @@ import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
 import { StyleSheet } from "react-native";
 import {RootStackParamList, RootStackScreenProps, RootTabScreenProps} from "../types";
 import {SafeAreaView} from "react-native-safe-area-context";
-import {BottomTabScreenProps} from "@react-navigation/bottom-tabs";
+import {trips} from "../assets/data/dummyData";
 
 export default function TripDetailsScreen({route, navigation}: RootStackScreenProps<'TripDetails'>) {
+    const tripId = route.params?.id;
     return (
-        <SafeAreaView>
+        <View useSafeArea>
             <Text> Home Screen </Text>
-        </SafeAreaView>
+            <Text> {JSON.stringify(trips[tripId as number])} </Text>
+        </View>
     );
 }
