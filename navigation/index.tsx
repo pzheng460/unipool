@@ -1,4 +1,4 @@
-import { FontAwesome } from '@expo/vector-icons';
+import {AntDesign, FontAwesome} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,6 +11,12 @@ import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from '../screens/RegisterScreen';
 import {useAuthState} from "react-firebase-hooks/auth";;
 import {auth} from "../configs/firebase/FirebaseConfig";
+import GroupScreen from "../screens/GroupScreen";
+import MessageScreen from "../screens/MessageScreen";
+import MeScreen from "../screens/MeScreen";
+import {Colors} from "react-native-ui-lib";
+import TripDetailsScreen from "../screens/TripDetailsScreen";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -48,10 +54,10 @@ function RootNavigator() {
         screenOptions={{
           headerShadowVisible: false,
           headerTransparent: true,
-          title: "",
         }}
       >
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="TripDetails" component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
       </Stack.Navigator>
   );
 }
@@ -63,17 +69,55 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-
+  const insets = useSafeAreaInsets();
+  // @ts-ignore
+  // @ts-ignore
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
+      screenOptions={{
+        tabBarStyle: {
+          height: 56 + insets.bottom,
+        },
+        tabBarActiveTintColor: Colors.primary,
+        //@ts-ignore
+        tabBarLabelStyle: {fontSize: 12, fontWeight: 600, marginBottom: 8},
+    }}
      >
       <BottomTab.Screen
         name="Home"
         component={HomeScreen}
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
+          headerShown: false,
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+        })}
+      />
+      <BottomTab.Screen
+        name="Groups"
+        component={GroupScreen}
+        options={({ navigation }: RootTabScreenProps<'Groups'>) => ({
+          title: 'Groups',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="addusergroup" color={color} />,
+        })}
+      />
+      <BottomTab.Screen
+        name="Messages"
+        component={MessageScreen}
+        options={({ navigation }: RootTabScreenProps<'Messages'>) => ({
+          title: 'Messages',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="message1" color={color} />,
+        })}
+      />
+      <BottomTab.Screen
+        name="Me"
+        component={MeScreen}
+        options={({ navigation }: RootTabScreenProps<'Me'>) => ({
+          title: 'Me',
+          headerShown: false,
+          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         })}
       />
     </BottomTab.Navigator>
@@ -84,8 +128,8 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof AntDesign>['name'];
   color: string;
 }) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+  return <AntDesign size={26} style={{ marginBottom: -4 }} {...props} />;
 }

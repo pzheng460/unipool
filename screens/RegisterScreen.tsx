@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {StyleSheet, TextInput} from "react-native";
+import {Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback} from "react-native";
 import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
 import {auth} from "../configs/firebase/FirebaseConfig";
 import {RootStackScreenProps} from "../types";
@@ -18,6 +18,10 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
 
+    const onKeyboard = () => {
+        Keyboard.dismiss();
+    }
+
     function handleRegister() {
         createUserWithEmailAndPassword(email, password);
         if (error) {
@@ -27,6 +31,9 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
     }
 
     return (
+        <TouchableWithoutFeedback
+            onPress={() =>{onKeyboard()}}
+        >
         <View style={styles.container}>
             <View style={{flex: 4}}>
                 <View style={{flexDirection: "row", justifyContent: "flex-start"}}>
@@ -91,6 +98,7 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
                 </Button>
             </View>
         </View>
+        </TouchableWithoutFeedback>
     );
 }
 

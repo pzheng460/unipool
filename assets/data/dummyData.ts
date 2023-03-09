@@ -1,28 +1,7 @@
-interface Trip {
-    from?: string;
-    to?: string;
-    roundTrip?: boolean;
-    date?: number;
-    returnDate?: number;
-
-    seatsTaken?: number;
-    seatsMax?: number;
-    riders?: User[];
-
-    sameGender?: boolean;
-};
-
-interface User {
-    firstName?: string;
-    lastName?: string;
-    phone?: string;
-    email?: string;
-    eduEmail?: string;
-    eduVerified?: boolean;
-    gender?: string;
-};
+import {Trip, User} from "../../Interface/TripInterface";
 
 const user1 : User = {
+    id: 0,
     firstName: 'Lucas',
     lastName: 'Lee',
     phone: '7702868930',
@@ -33,6 +12,7 @@ const user1 : User = {
 };
 
 const user2 : User = {
+    id: 1,
     firstName: 'Ruiqi',
     lastName: 'Liu',
     phone: '4706767789',
@@ -42,7 +22,8 @@ const user2 : User = {
     gender: 'male',
 };
 
-const trip1: Trip = {
+export const trip1: Trip = {
+    id: 0,
     from: "Georgia Tech",
     to: "Hartsfield-Jackson Atlanta International Airport",
     roundTrip: false,
@@ -57,6 +38,7 @@ const trip1: Trip = {
 };
 
 const trip2: Trip = {
+    id: 1,
     from: "Georgia Tech",
     to: "H Mart",
     roundTrip: true,
@@ -71,6 +53,7 @@ const trip2: Trip = {
 };
 
 const trip3: Trip = {
+    id: 2,
     from: "Georgia Tech",
     to: "Regal Atlantic Station",
     roundTrip: false,
@@ -84,6 +67,6 @@ const trip3: Trip = {
     sameGender: false,
 };
 
-const users : User[] = [user1, user2];
+export const users : User[] = [user1, user2];
 
-const trips : Trip[] = [trip1, trip2, trip3];
+export const trips : Trip[] = [trip1, trip2, trip3];
