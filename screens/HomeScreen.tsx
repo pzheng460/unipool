@@ -15,7 +15,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const options = [{
     id: 0,
     name: "All",
-    active: false
+    active: true
   },
     {
       id: 1,
@@ -29,7 +29,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     },
     {
       id: 3,
-      name: "Market",
+      name: "Airport",
       active: false
     },
     {
