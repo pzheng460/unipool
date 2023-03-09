@@ -11,8 +11,11 @@ dayjs.extend(localizedFormat);
 export default function TripCard(props: {trip: Trip, onPress: any}) {
   const trip = props.trip;
   return (
-    <Card height={150} borderRadius={5}
-      style={{overflow: "hidden", padding: 8}}
+    <Card height={150} borderRadius={0}
+      style={{
+        overflow: "hidden",
+        padding: 8
+    }}
           onPress={props.onPress}
     >
       {/*<Text> {JSON.stringify(props.trip)} </Text>*/}

@@ -18,14 +18,14 @@ export default function PeopleList(props: {people: User[]}) {
   return (
     <GridList
         ListHeaderComponent={
-            <Text h1 marginB-s5>
+            <Text text50 marginB-s5>
                 Passengers
             </Text>
         }
         data={props.people}
         renderItem={({item}) => renderItem(item)}
         numColumns={1}
-        itemSpacing={Spacings.s2}
+        itemSpacing={Spacings.s1}
         listPadding={Spacings.s2}
         contentContainerStyle={styles.list}
         scrollEnabled={false}
@@ -37,30 +37,34 @@ export default function PeopleList(props: {people: User[]}) {
 function renderItem(item: User) {
   return (
       <Card style={{flex:1,
-      flexDirection: 'row',
-      height:60}}>
-          <View flex-1 paddingL-15 paddingT-15>
-              {
-                  <Avatar size={30}
-                          name={item.firstName}
-                          backgroundColor={Colors.$backgroundWarningLight}
-                          labelColor={Colors.$textMajor}
-                          containerStyle={{marginLeft: 0}}
-                  ></Avatar>
-              }
+                    flexDirection: 'row',
+                    height:64,
+                    padding: 8,
+                    borderRadius: 5,
+                    // overflow: 'hidden',
+                  }}
+      >
+          <View flex-1 center>
+              <Avatar size={32}
+                      name={item.firstName}
+                      backgroundColor={Colors.$backgroundWarningLight}
+                      labelColor={Colors.$textMajor}
+              ></Avatar>
           </View>
-          <View flex-2 paddingT-10>
-              <View flex-1>
+          <View flex-2>
+              <View flex centerV>
                   <Text $textDefault>{item.firstName+" "+item.lastName}</Text>
               </View>
-              <View flex-1>
-                  <Text $textDefault>{"Rate: 4.5"}</Text>
+              <View flex centerV>
+                  <Text $textDefault>{"Rating: 4.5"}</Text>
               </View>
           </View>
-          <View flex-3 paddingT-10>
-              <Text $textDefault>{"Group Creator"}</Text>
+          <View flex-2 center>
+            {
+              item.firstName === "Lucas" && <Text $textDefault>{"Group Creator"}</Text>
+            }
           </View>
-          <View flex-1></View>
+          {/*<View flex-1></View>*/}
       </Card>
   );
 }

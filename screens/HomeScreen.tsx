@@ -5,6 +5,7 @@ import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
 import {trip1, trips} from "../assets/data/dummyData";
 import React, {useState} from "react";
+import TripDetailsCard from "../components/TripDetailCard";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -64,7 +65,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                 renderItem={({item}) => renderItem(item)}
                 numColumns={1}
                 itemSpacing={Spacings.s2}
-                listPadding={Spacings.s2}
+                // listPadding={Spacings.s2}
                 style={{paddingTop: Spacings.s2,
                   backgroundColor: Colors.background2,
                   // minHeight: '100%'
@@ -148,6 +149,24 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     )
   }
 
+  function renderMyTripPage() {
+    return (
+      <View flex>
+        <View centerV height={32} margin-8>
+          <Text text50>
+            Upcoming Trips
+          </Text>
+        </View>
+        <TripDetailsCard trip={trips[1]}/>
+        <View centerV height={32} margin-8>
+          <Text text50>
+            Past Trips
+          </Text>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <View useSafeArea flexG style={{backgroundColor: Colors.$backgroundDefault}}>
       <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]}>
@@ -172,7 +191,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
             {renderExplorePage()}
           </TabController.TabPage>
           <TabController.TabPage index={1} lazy>
-            <Text>1</Text>
+            {renderMyTripPage()}
           </TabController.TabPage>
         </View>
       </TabController>

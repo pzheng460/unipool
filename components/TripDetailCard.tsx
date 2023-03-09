@@ -12,7 +12,7 @@ export default function TripDetailsCard(props: {trip: Trip}) {
   const trip = props.trip;
   return (
     <Card height={150} borderRadius={5}
-      style={{overflow: "hidden", padding: 8, marginHorizontal: 8, marginTop: 1}}
+      style={{padding: 8, marginHorizontal: 8, marginTop: 1}}
     >
       {/*<Text> {JSON.stringify(props.trip)} </Text>*/}
       <View

@@ -17,26 +17,28 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     const windowWidth = Dimensions.get('window').width;
 
     return (
-        <View useSafeArea>
+        <View useSafeArea flexG backgroundColor={Colors.white}>
             <Image
                 style={{width: windowWidth, height: 200}}
                 source={require('../assets/images/random-map.png')}
             />
+          <View flex>
             <TripDetailsCard trip={trip}></TripDetailsCard>
 
             <PeopleList people={trips[tripId as number].riders as User[]}></PeopleList>
             <View centerH paddingT-20>
-                <Button
-                    label={'Join'}
-                    size={Button.sizes.medium}
-                    backgroundColor={Colors.red30}
-                    labelStyle={{fontWeight: '500', letterSpacing: -0.5}}
-                    style={{
-                        width: 100,
-                        height: 50,
-                    }}
-                />
+              <Button
+                label={'Join'}
+                size={Button.sizes.medium}
+                backgroundColor={Colors.primary}
+                labelStyle={{fontWeight: '500', letterSpacing: -0.5}}
+                style={{
+                  width: 100,
+                  height: 50,
+                }}
+              />
             </View>
+          </View>
         </View>
     );
 }
