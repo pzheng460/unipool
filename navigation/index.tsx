@@ -17,6 +17,7 @@ import MeScreen from "../screens/MeScreen";
 import {Colors} from "react-native-ui-lib";
 import TripDetailsScreen from "../screens/TripDetailsScreen";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import TripCreate1 from "../screens/TripCreate1";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -47,6 +48,7 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
+          <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerShown: false}}/>
         <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
       </Stack.Navigator> :
