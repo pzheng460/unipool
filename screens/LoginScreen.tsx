@@ -37,14 +37,14 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
         <View style={styles.container}>
             <View style={{flex: 2}}>
                 <View style={{flexDirection: "row", justifyContent: "center"}}>
-                    <Text style={{fontSize: 48, fontFamily: "Oceanwide-Semibold"}}>UniPool</Text>
+                    <Text style={{color: Colors.primary, fontSize: 48, fontWeight: 'bold'}}>UniPool</Text>
                 </View>
             </View>
 
             <View style={{flex: 4}}>
                 <View style={{flexDirection: "row", justifyContent: "flex-start"}}>
                     <Text
-                        style={{color: "#10274C", fontSize: 30, fontFamily: "Oceanwide-Semibold"}}>Login</Text>
+                        style={{color: Colors.primary, fontSize: 30, fontWeight: 'bold'}}>Login</Text>
                 </View>
 
                 <View style={{marginTop: 20}}>
@@ -57,8 +57,8 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                         fieldStyle={{backgroundColor: Colors.background,
                             padding: 12,
                             borderRadius: 5,
-                            borderColor: 'grey',
-                            borderWidth: 1,
+                            borderColor: 'gray',
+                            borderWidth: 2,
                         }}
                         style={{fontSize: 16}}
                         validationMessagePosition={'bottom'}
@@ -71,18 +71,18 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                         placeholder={'Password'}
                         onChangeText={(v) => setPassword(v)}
                         secureTextEntry={true}
-                        style={{backgroundColor: "#FFFFFF",
+                        style={{backgroundColor: Colors.background,
                             padding: 12,
                             borderRadius: 5,
-                            borderColor: 'grey',
-                            borderWidth: 1,
+                            borderColor: 'gray',
+                            borderWidth: 2,
                             fontSize: 16,
                         }}
                     />
                 </View>
 
                 <View style={{flexDirection: "row", justifyContent: "flex-end", marginTop: 5}}>
-                    <Text style={{fontFamily: "Oceanwide-Semibold", fontWeight: "200", fontSize: 14, color: "#6C757D"}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 14, color: "#6C757D"}}>
                         Forgot Password?
                     </Text>
                 </View>
@@ -128,14 +128,16 @@ const styles = StyleSheet.create({
     },
     loginWithGoogleText: {
         color: "#FFF",
-        fontFamily: "Oceanwide-Semibold",
+        // fontFamily: "Oceanwide-Semibold",
+        fontWeight: 'bold',
         paddingTop: 3,
         paddingBottom: 3,
         fontSize: 18,
     },
     loginButtonText: {
         color: "#FFFFFF",
-        fontFamily: "Oceanwide-Semibold",
+        // fontFamily: "Oceanwide-Semibold",
+        fontWeight: 'bold',
         paddingTop: 3,
         paddingBottom: 3,
         fontSize: 18,

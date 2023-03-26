@@ -6,6 +6,7 @@ import {Trip} from "../Interface/TripInterface";
 import {trip1, trips} from "../assets/data/dummyData";
 import React, {useState} from "react";
 import TripDetailsCard from "../components/TripDetailCard";
+import {AntDesign} from "@expo/vector-icons";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -88,7 +89,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
         return option;
       }
     });
-    console.log(new_opt);
+    // console.log(new_opt);
     setActive(new_opt);
   };
 
@@ -104,6 +105,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   function renderChipFilter() {
     return active.map((item, i) => (
       <Chip
+        key={i}
         marginR-8
         label={item.name}
         labelStyle={{color: item.active ? Colors.white : Colors.primary, padding: 8}}
@@ -126,7 +128,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
             marginT-8
             marginL-24
             marginR-24
-            placeholder={'A place / group'}
+            placeholder={'Search for a place / group'}
+            leadingAccessory={<AntDesign name="search1" size={20} color={'black'} style={{marginRight: 8}}/>}
             fieldStyle={{
               backgroundColor: Colors.background2,
               padding: 12,
