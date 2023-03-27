@@ -126,14 +126,14 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
         <View>
           <TextField
             marginT-8
-            marginL-24
-            marginR-24
+            marginL-12
+            marginR-12
             placeholder={'Search for a place / group'}
-            leadingAccessory={<AntDesign name="search1" size={20} color={'black'} style={{marginRight: 8}}/>}
+            leadingAccessory={<AntDesign name="search1" size={18} color={'#8c8c8c'} style={{marginRight: 8}}/>}
             fieldStyle={{
               backgroundColor: Colors.background2,
-              padding: 12,
-              borderRadius: 50,
+              padding: 10,
+              borderRadius: 8,
               borderWidth: 0,
             }}
             style={{fontSize: 16}}
@@ -141,7 +141,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
           <ScrollView
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            contentContainerStyle={{paddingBottom: 8, paddingTop: 8, marginLeft: 24}}
+            contentContainerStyle={{paddingBottom: 8, paddingTop: 8, marginLeft: 12, paddingRight: 12}}
           >
             {renderChipFilter()}
           </ScrollView>
