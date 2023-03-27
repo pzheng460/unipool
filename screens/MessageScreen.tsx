@@ -1,5 +1,14 @@
 import {RootTabScreenProps} from "../types";
-import {Colors, View, Text, TextField, GridList, Avatar, Card, Spacings, GridListItem, Dash} from "react-native-ui-lib";
+import {
+  Colors,
+  View,
+  Text,
+  TextField,
+  GridList,
+  Avatar,
+  Spacings,
+  Badge
+} from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
 import React from "react";
 import {Keyboard, TouchableWithoutFeedback} from "react-native";
@@ -87,18 +96,15 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
         <View
           flex
           row
-          centerV
           style={{
             height: 72,
-            padding: 12,
+            // padding: 12,
             borderRadius: 0,
             overflow: 'hidden',
-            borderBottomWidth: 1,
-            borderBottomColor: '#f0f0f0'
           }}
         >
-          <View flex-S left centerV row
-
+          <View flex-S left centerV
+                padding-12
           >
             {/*{*/}
             {/*  item.users.map((rider: User) => (*/}
@@ -117,15 +123,61 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
               // containerStyle={{marginLeft: -18, opacity: 0.7}}
             ></Avatar>
           </View>
-          <View flex-G left centerV marginL-8>
-            <View flex centerV left row>
-              <Text style={{fontWeight: 600, fontSize: 16}}> {item.name} </Text>
-            </View>
-            <View flex centerV left>
-              <Text style={{fontWeight: 400, fontSize: 14}}>
-                {/* @ts-ignore*/ }
-                {item.lastMessages?.at(-1)?.author.firstName + ": " + item.lastMessages?.at(-1)?.text}
-              </Text>
+          <View flex
+                row
+                marginR-12
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: '#f0f0f0'
+                }}
+          >
+            <View flex
+                  left
+            >
+              <View flex row bottom>
+                <View flex left>
+                  <Text style={{
+                    fontWeight: 600,
+                    fontSize: 16,
+                    lineHeight: 24,
+                    textAlign: 'left',
+                  }}> {item.name} </Text>
+                </View>
+                <View
+                  right
+                  style={{
+                    // minWidth: '20%',
+                    maxWidth: '25%',
+                  }}
+                >
+                  <View>
+                    <Text
+                      style={{
+                        lineHeight: 24,
+                        color: '#8c8c8c'
+                      }}
+                    > {"12:30"} </Text>
+                  </View>
+                </View>
+              </View>
+
+              <View flex top row>
+                <View flex left>
+                  <Text style={{
+                    fontWeight: 400,
+                    fontSize: 14,
+                    color: '#8c8c8c',
+                    lineHeight: 24,
+                    paddingLeft: 3
+                  }}>
+                    {/* @ts-ignore*/ }
+                    {item.lastMessages?.at(-1)?.author.firstName + ": " + item.lastMessages?.at(-1)?.text}
+                  </Text>
+                </View>
+                <View right paddingR-4>
+                  <Badge label={3}/>
+                </View>
+              </View>
             </View>
           </View>
         </View>
