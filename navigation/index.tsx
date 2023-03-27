@@ -8,6 +8,7 @@ import {RootStackParamList, RootTabParamList, RootTabScreenProps} from "../types
 import WelcomeScreen from "../screens/WelcomeScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
+import ChatScreen from "../screens/ChatScreen";
 import RegisterScreen from '../screens/RegisterScreen';
 import {useAuthState} from "react-firebase-hooks/auth";;
 import {auth} from "../configs/firebase/FirebaseConfig";
@@ -59,7 +60,9 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="TripDetails" component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
+        <Stack.Screen name="TripDetails"
+                      component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
+      <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
       </Stack.Navigator>
   );
 }

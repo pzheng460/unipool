@@ -11,8 +11,9 @@ import {
 } from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
 import React from "react";
-import {Keyboard, TouchableWithoutFeedback} from "react-native";
+import {Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
 import {Room, User, MessageType} from "@flyerhq/react-native-firebase-chat-core";
+import {floor} from "react-native-reanimated";
 
 
 export default function MessageScreen({navigation}: RootTabScreenProps<'Messages'>) {
@@ -43,20 +44,24 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
       author: userList[0],
       id: "0",
       text: "Hello there!",
-      type: "text"
+      type: "text",
+      createdAt: 0,
+    },
+
+    {
+      author: userList[2],
+      id: "2",
+      text: "Where should we meet?",
+      type: "text",
+      createdAt: 2,
     },
     {
       author: userList[1],
       id: "1",
       text: "Nice to meet you!",
-      type: "text"
+      type: "text",
+      createdAt: 1,
     },
-    {
-      author: userList[2],
-      id: "2",
-      text: "Wow wow",
-      type: "text"
-    }
   ]
 
   const rooms: Room[] = [
@@ -93,94 +98,88 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
   function renderMessageList(item: Room) {
     // @ts-ignore
     return (
-        <View
-          flex
-          row
-          style={{
-            height: 72,
-            // padding: 12,
-            borderRadius: 0,
-            overflow: 'hidden',
-          }}
-        >
-          <View flex-S left centerV
-                padding-12
+        <TouchableOpacity onPress={() => navigation.navigate('ChatScreen',
+            {roomMessages: item.lastMessages})}>
+          <View
+              flex
+              row
+              style={{
+                height: 72,
+                borderRadius: 0,
+                overflow: 'hidden',
+              }}
+
           >
-            {/*{*/}
-            {/*  item.users.map((rider: User) => (*/}
-            {/*    <Avatar size={48}*/}
-            {/*            name={rider.firstName}*/}
-            {/*            backgroundColor={Colors.$backgroundWarningLight}*/}
-            {/*            labelColor={Colors.$textMajor}*/}
-            {/*            containerStyle={{marginLeft: -18, opacity: 0.7}}*/}
-            {/*    ></Avatar>*/}
-            {/*  ))*/}
-            {/*}*/}
-            <Avatar size={48}
-                    name={item.users[0].firstName}
-                    backgroundColor={Colors.$backgroundWarningLight}
-                    labelColor={Colors.$textMajor}
-              // containerStyle={{marginLeft: -18, opacity: 0.7}}
-            ></Avatar>
-          </View>
-          <View flex
-                row
-                marginR-12
-                style={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: '#f0f0f0'
-                }}
-          >
-            <View flex
-                  left
+            <View flex-S left centerV
+                  padding-12
             >
-              <View flex row bottom>
-                <View flex left>
-                  <Text style={{
-                    fontWeight: 600,
-                    fontSize: 16,
-                    lineHeight: 24,
-                    textAlign: 'left',
-                  }}> {item.name} </Text>
-                </View>
-                <View
-                  right
+              <Avatar size={48}
+                      name={item.users[0].firstName}
+                      backgroundColor={Colors.$backgroundWarningLight}
+                      labelColor={Colors.$textMajor}
+                  // containerStyle={{marginLeft: -18, opacity: 0.7}}
+              ></Avatar>
+            </View>
+            <View flex
+                  row
+                  marginR-12
                   style={{
-                    // minWidth: '20%',
-                    maxWidth: '25%',
+                    borderBottomWidth: 1,
+                    borderBottomColor: '#f0f0f0'
                   }}
-                >
-                  <View>
-                    <Text
+            >
+              <View flex
+                    left
+              >
+                <View flex row bottom>
+                  <View flex left>
+                    <Text style={{
+                      fontWeight: 600,
+                      fontSize: 16,
+                      lineHeight: 24,
+                      textAlign: 'left',
+                    }}> {item.name} </Text>
+                  </View>
+                  <View
+                      right
                       style={{
-                        lineHeight: 24,
-                        color: '#8c8c8c'
+                        // minWidth: '20%',
+                        maxWidth: '25%',
                       }}
-                    > {"12:30"} </Text>
+                  >
+                    <View>
+                      <Text
+                          style={{
+                            lineHeight: 24,
+                            color: '#8c8c8c'
+                          }}
+                      > {"12:30"} </Text>
+                    </View>
                   </View>
                 </View>
-              </View>
 
-              <View flex top row>
-                <View flex left>
-                  <Text style={{
-                    fontWeight: 400,
-                    fontSize: 14,
-                    color: '#8c8c8c',
-                    lineHeight: 24,
-                    paddingLeft: 3
-                  }}>
-                    {/* @ts-ignore*/ }
-                    {item.lastMessages?.at(-1)?.author.firstName + ": " + item.lastMessages?.at(-1)?.text}
-                  </Text>
-                </View>
-                <View right paddingR-4>
-                  <Badge label={3}/>
+                <View flex top row>
+                  <View flex left>
+                    <Text style={{
+                      fontWeight: 400,
+                      fontSize: 14,
+                      color: '#8c8c8c',
+                      lineHeight: 24,
+                      paddingLeft: 3
+                    }}>
+                      {/* @ts-ignore*/}
+                      {item.lastMessages?.at(-1)?.author.firstName + ": " + item.lastMessages?.at(-1)?.text}
+                    </Text>
+                  </View>
+                  <View right paddingR-4>
+                    <Badge label={1+Math.floor(Math.random()*5)}/>
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
+
     )
   }
   return(

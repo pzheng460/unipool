@@ -56,6 +56,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   };
 
   function renderItem(item: Trip) {
+    // @ts-ignore
     return (
       <TripCard trip={item} onPress={() => navigation.navigate('TripDetails', {id: item.id})}></TripCard>
     );
