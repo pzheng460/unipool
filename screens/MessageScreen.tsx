@@ -11,7 +11,7 @@ import {
 } from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
 import React from "react";
-import {Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
+import {Keyboard, TouchableWithoutFeedback, TouchableHighlight} from "react-native";
 import {Room, User, MessageType} from "@flyerhq/react-native-firebase-chat-core";
 import {floor} from "react-native-reanimated";
 
@@ -98,7 +98,9 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
   function renderMessageList(item: Room) {
     // @ts-ignore
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('ChatScreen',
+        <TouchableHighlight
+          activeOpacity={0.9}
+          onPress={() => navigation.navigate('ChatScreen',
             {roomMessages: item.lastMessages})}>
           <View
               flex
@@ -107,6 +109,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                 height: 72,
                 borderRadius: 0,
                 overflow: 'hidden',
+                backgroundColor: Colors.white
               }}
 
           >
@@ -123,10 +126,10 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
             <View flex
                   row
                   marginR-12
-                  style={{
-                    borderBottomWidth: 1,
-                    borderBottomColor: '#f0f0f0'
-                  }}
+                  // style={{
+                  //   borderBottomWidth: 1,
+                  //   borderBottomColor: '#f0f0f0'
+                  // }}
             >
               <View flex
                     left
@@ -134,7 +137,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                 <View flex row bottom>
                   <View flex left>
                     <Text style={{
-                      fontWeight: 600,
+                      fontWeight: 500,
                       fontSize: 16,
                       lineHeight: 24,
                       textAlign: 'left',
@@ -150,6 +153,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                     <View>
                       <Text
                           style={{
+                            fontSize: 13,
                             lineHeight: 24,
                             color: '#8c8c8c'
                           }}
@@ -165,7 +169,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                       fontSize: 14,
                       color: '#8c8c8c',
                       lineHeight: 24,
-                      paddingLeft: 3
+                      paddingLeft: 4
                     }}>
                       {/* @ts-ignore*/}
                       {item.lastMessages?.at(-1)?.author.firstName + ": " + item.lastMessages?.at(-1)?.text}
@@ -178,7 +182,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
               </View>
             </View>
           </View>
-        </TouchableOpacity>
+        </TouchableHighlight>
 
     )
   }
@@ -204,16 +208,18 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
           }}
           style={{fontSize: 16}}
         />
-        <GridList data={rooms}
-                  renderItem={({item}) => renderMessageList(item)}
-                  numColumns={1}
-                  itemSpacing={0}
-                  style={{
-                    paddingTop: Spacings.s2,
-                    // backgroundColor: Colors.background2,
-                    // minHeight: '100%'
-                  }}
-        />
+        <View flex>
+          <GridList data={rooms}
+                    renderItem={({item}) => renderMessageList(item)}
+                    numColumns={1}
+                    itemSpacing={0}
+                    style={{
+                      paddingTop: Spacings.s2,
+                      // backgroundColor: Colors.background2,
+                      // height: '100%'
+                    }}
+          />
+        </View>
       </View>
     </TouchableWithoutFeedback>
   )
