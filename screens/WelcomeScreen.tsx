@@ -17,14 +17,16 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
                     marginR-32
                     onPress={() => navigation.navigate('Login')}
             />
-            <Button label={'Test'}
+
+            <Button label={'Test Rating'}
                     backgroundColor={Colors.primary}
                     square
                     marginB-20
                     marginL-32
                     marginR-32
-                    onPress={() => navigation.navigate('TripCreate1')}
+                    onPress={() => navigation.navigate('Rating')}
             />
+
         </View>
     );
 }

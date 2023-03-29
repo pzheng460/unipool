@@ -50,10 +50,9 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
-        <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerShown: false}}/>
         <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
-        <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerTitle: 'Rate Your Co-Rider'}}/>
       </Stack.Navigator> :
       <Stack.Navigator
         screenOptions={{
@@ -65,6 +64,8 @@ function RootNavigator() {
         <Stack.Screen name="TripDetails"
                       component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
+        <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerTitle: 'Create Your Trip'}}/>
+
       </Stack.Navigator>
   );
 }
@@ -140,3 +141,4 @@ function TabBarIcon(props: {
 }) {
   return <AntDesign size={26} style={{ marginBottom: -4 }} {...props} />;
 }
+

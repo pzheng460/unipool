@@ -36,9 +36,7 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
         >
 
             <View flex style={styles.container}>
-                <View marginB-20 style={{alignItems: 'center'}}>
-                    <Text text30  > Create your Trip</Text>
-                </View>
+
                 <View style={{flex: 5, flexDirection: 'column'}}>
                     {/*start & destination*/}
 

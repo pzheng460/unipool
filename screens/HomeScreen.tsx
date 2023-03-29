@@ -1,5 +1,16 @@
-import {Chip, Colors, GridList, Spacings, TabController, Text, TextField, View} from "react-native-ui-lib";
-import {RefreshControl, ScrollView, TextStyle} from "react-native";
+import {
+    Button,
+    Chip,
+    Colors,
+    FloatingButton,
+    GridList,
+    Spacings,
+    TabController,
+    Text,
+    TextField,
+    View
+} from "react-native-ui-lib";
+import {Dimensions, RefreshControl, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../types";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
@@ -8,6 +19,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {AntDesign} from "@expo/vector-icons";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
+import {Divider} from "@rneui/themed";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -17,6 +29,9 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const [refreshing, setRefreshing] = useState(false);
   const initTripData: Trip[] = [];
   const [tripData, setTripData] = useState(initTripData);
+  function plusIcon() {
+      return <AntDesign name="plus" size={45} color="white" />;
+  }
 
   useEffect(() => {
     setTripData(data.trips.filter(trip => {
@@ -51,6 +66,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     }
   ];
   const [active, setActive] = useState(options);
+  const {height, width} = Dimensions.get('window');
 
   const refreshTrips = () => {
     setRefreshing(true);
@@ -113,9 +129,11 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}
+                  scrollEnabled={false}
                   style={{
                     backgroundColor: Colors.background2,
-                    overflow: 'visible'
+                    overflow: 'visible',
+                    marginTop: Spacings.s2,
                   }}
                   keyExtractor={(item, index) => item.id.toString()}
           // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
@@ -137,8 +155,11 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}
+                  scrollEnabled={false}
                   style={{
                     backgroundColor: Colors.background2,
+                    overflow: 'visible',
+                    marginTop: Spacings.s2,
                   }}
                   keyExtractor={(item, index) => item.id.toString()}
             // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
@@ -230,6 +251,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
           </Text>
         </View>
         {renderUpcomingTrips()}
+        <Divider width={1} inset={false} insetType="middle" color={Colors.primary}/>
         <View centerV height={32} margin-8>
           <Text text50>
             Past Trips
@@ -262,10 +284,31 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
         <View flex >
           <TabController.TabPage index={0}>
             {renderExplorePage()}
+
+            <View style={{
+                // alignItems: 'flex-end',
+                // justifyContent: 'flex-end'
+                marginLeft: width-80
+            }}>
+                <FloatingButton
+                    visible={true}
+                    hideBackgroundOverlay={true}
+                    bottomMargin={20}
+                    button={{
+                        iconSource: plusIcon,
+                        onPress: () => {navigation.navigate('TripCreate1')},
+                        backgroundColor: Colors.black,
+                    }}
+                />
+            </View>
+
           </TabController.TabPage>
           <TabController.TabPage index={1} lazy>
-            {renderMyTripPage()}
+            <ScrollView>
+                {renderMyTripPage()}
+            </ScrollView>
           </TabController.TabPage>
+
         </View>
       </TabController>
     </View>

@@ -23,6 +23,7 @@ export type RootStackParamList = {
   TripDetails: {id: number} | undefined;
   TripCreate1: undefined;
   ChatScreen: {roomMessages: MessageType.Text[]};
+  Rating: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
