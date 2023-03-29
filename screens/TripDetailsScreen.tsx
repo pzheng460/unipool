@@ -1,30 +1,29 @@
-import {Button, Colors, View} from "react-native-ui-lib";
-import {Dimensions, Image} from "react-native";
-import {RootStackScreenProps} from "../types";
+import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
+import { StyleSheet, Image, Dimensions } from "react-native";
+import {RootStackParamList, RootStackScreenProps, RootTabScreenProps} from "../types";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {trips} from "../assets/data/dummyData";
 import PeopleList from "../components/PeopleList";
-import {User} from "../Interface/TripInterface";
-import React, {useContext} from "react";
+import renderItem from "../components/PeopleList";
+import {Trip} from "../Interface/TripInterface";
+import {User} from "../Interface/TripInterface"
+import TripCard from "../components/TripCard";
+import React from "react";
 import TripDetailsCard from "../components/TripDetailCard";
-import {DummyDataContext} from "../AppContextWrapper";
-import {GlobalData} from "../reducer/ActionType";
-import EmptyScreen from "./EmptyScreen";
+import RouteMap from "../components/RouteMap";
 
 export default function TripDetailsScreen({route, navigation}: RootStackScreenProps<'TripDetails'>) {
-
     const tripId = route.params?.id;
-    // console.log(tripId)
-    const data = useContext(DummyDataContext) as GlobalData;
-    const trip = data.trips.find((item) => item.id === tripId)
+    const trip = trips[tripId as number];
     const windowWidth = Dimensions.get('window').width;
+    const locations = [[33.7722, -84.3902], [48.8223785, 2.3361663]];
 
     return (
-        trip !== undefined ?
         <View useSafeArea flexG backgroundColor={Colors.white}>
-            <Image
-                style={{width: windowWidth, height: 200}}
-                source={require('../assets/images/random-map.png')}
-            />
-          <View flex>
+            <View style={{flex: 1}}>
+                <RouteMap coordinates = {locations}></RouteMap>
+            </View>
+          <View style={{flex: 2}} flex>
             <TripDetailsCard trip={trip}></TripDetailsCard>
 
             <PeopleList people={trip.riders as User[]}></PeopleList>
@@ -42,7 +41,5 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
             </View>
           </View>
         </View>
-          :
-        <EmptyScreen/>
     );
 }
