@@ -3,7 +3,7 @@ import {RefreshControl, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../types";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
-import {trip1, trip3, trip6, trips, user1} from "../assets/data/dummyData";
+import {trip1, trip3, trip6, trips, user1, user2} from "../assets/data/dummyData";
 import React, {useContext, useEffect, useState} from "react";
 import {AntDesign} from "@expo/vector-icons";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
@@ -63,6 +63,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
           trip: {
             ...trip3,
             type: 'upcoming',
+            riders: [user1, user2],
             id: Date.now(),
           }
         });
@@ -75,9 +76,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   function renderItem(item: Trip) {
     return (
       // @ts-ignore
-      <TripCard trip={item} onPress={() => navigation.navigate('TripDetails', {id: data.trips.findIndex(trip => {
-          return trip === item;
-      })})}></TripCard>
+      <TripCard trip={item} onPress={() => navigation.navigate('TripDetails', {id: item.id
+      })}></TripCard>
     );
   }
   function renderCardList() {
