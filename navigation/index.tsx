@@ -49,7 +49,7 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
-          <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerShown: false}}/>
+        <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerShown: false}}/>
         <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
       </Stack.Navigator> :
@@ -62,7 +62,7 @@ function RootNavigator() {
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="TripDetails"
                       component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
-      <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
+        <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
       </Stack.Navigator>
   );
 }

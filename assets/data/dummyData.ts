@@ -133,7 +133,7 @@ export const pastTrip2: Trip = {
     from: "H Mart",
     to: "Georgia Tech",
     roundTrip: false,
-    date: 40000,
+    date: 100000,
     returnDate: undefined,
 
     seatsTaken: 3,
@@ -148,7 +148,7 @@ export const pastTrip3: Trip = {
     from: "Regal Atlantic Station",
     to: "Georgia Tech",
     roundTrip: false,
-    date: 50000,
+    date: 150000,
     returnDate: undefined,
 
     seatsTaken: 3,
@@ -163,5 +163,15 @@ user3.pastTrips = [...user3.pastTrips, pastTrip1, pastTrip2, pastTrip3];
 user4.pastTrips = [...user4.pastTrips, pastTrip1, pastTrip2, pastTrip3];
 
 export const users : User[] = [user1, user2, user3, user4];
-export const trips : Trip[] = [trip1, trip2, trip3];
-export const pastTrips: Trip[] = [pastTrip1, pastTrip2, pastTrip3];
+export const upcomingTrips: Trip[] = [trip1, trip2, trip3];
+export const trips : Trip[] = [...upcomingTrips, pastTrip1, pastTrip2, pastTrip3];
+// export const trips = {
+//     [trip1.id]: trip1,
+//     [trip2.id]: trip2,
+//     [trip3.id]: trip3,
+//
+//     [pastTrip1.id]: pastTrip1,
+//     [pastTrip2.id]: pastTrip2,
+//     [pastTrip3.id]: pastTrip3,
+//
+// }

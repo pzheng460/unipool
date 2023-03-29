@@ -56,7 +56,7 @@ function renderItem(item: User) {
                   <Text $textDefault>{item.firstName+" "+item.lastName}</Text>
               </View>
               <View flex centerV>
-                  <Text $textDefault>{"Rating: 4.5"}</Text>
+                  <Text $textDefault>{"Rating: " + item.rating.toFixed(2)}</Text>
               </View>
           </View>
           <View flex-2 center>

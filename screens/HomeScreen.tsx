@@ -3,7 +3,7 @@ import {RefreshControl, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../types";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
-import {trip1, trips} from "../assets/data/dummyData";
+import {trip1, trips, upcomingTrips, user1} from "../assets/data/dummyData";
 import React, {useState} from "react";
 import TripDetailsCard from "../components/TripDetailCard";
 import {AntDesign} from "@expo/vector-icons";
@@ -11,7 +11,7 @@ import {AntDesign} from "@expo/vector-icons";
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
   const [refreshing, setRefreshing] = useState(false);
-  const [tripData, setTripData] = useState(trips);
+  const [tripData, setTripData] = useState(upcomingTrips);
 
   const options = [{
     id: 0,
@@ -47,7 +47,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
       .then((response) => response.json())
       .then((responseJson) => {
         setRefreshing(false);
-        let newData = tripData.concat([trip1]);
+        // let newData = tripData.concat([trip1]);
+        let newData = [...tripData, trip1];
         setTripData(newData);
       })
       .catch((error) => {
@@ -58,7 +59,9 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   function renderItem(item: Trip) {
     // @ts-ignore
     return (
-      <TripCard trip={item} onPress={() => navigation.navigate('TripDetails', {id: item.id})}></TripCard>
+      <TripCard trip={item} onPress={() => navigation.navigate('TripDetails', {id: trips.findIndex(trip => {
+          return trip === item;
+      })})}></TripCard>
     );
   }
   function renderCardList() {
@@ -75,6 +78,49 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                 refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
 
       />
+    )
+  }
+
+  function renderUpcomingTrips() {
+    if (user1.upcomingTrips.length === 0) {
+      return (
+          <Text text65 margin-20>
+            No upcoming trips
+          </Text>
+      )
+    }
+
+    return (
+        <GridList data={user1.upcomingTrips}
+                  renderItem={({item}) => renderItem(item)}
+                  numColumns={1}
+                  itemSpacing={Spacings.s2}
+                  style={{
+                    backgroundColor: Colors.background2,
+                  }}
+                  // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
+        />
+    )
+  }
+  function renderPastTrips() {
+    if (user1.pastTrips.length === 0) {
+      return (
+          <Text text65 margin-20>
+            No past trips
+          </Text>
+      )
+    }
+
+    return (
+        <GridList data={user1.pastTrips}
+                  renderItem={({item}) => renderItem(item)}
+                  numColumns={1}
+                  itemSpacing={Spacings.s2}
+                  style={{
+                    backgroundColor: Colors.background2,
+                  }}
+            // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
+        />
     )
   }
 
@@ -161,12 +207,13 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
             Upcoming Trips
           </Text>
         </View>
-        <TripDetailsCard trip={trips[1]}/>
+        {renderUpcomingTrips()}
         <View centerV height={32} margin-8>
           <Text text50>
             Past Trips
           </Text>
         </View>
+        {renderPastTrips()}
       </View>
     )
   }

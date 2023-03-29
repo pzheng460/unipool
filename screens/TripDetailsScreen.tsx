@@ -25,7 +25,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
           <View flex>
             <TripDetailsCard trip={trip}></TripDetailsCard>
 
-            <PeopleList people={trips[tripId as number].riders as User[]}></PeopleList>
+            <PeopleList people={trip.riders as User[]}></PeopleList>
             <View centerH paddingT-20>
               <Button
                 label={'Join'}
