@@ -3,6 +3,7 @@ import {Trip, User} from "../Interface/TripInterface";
 import dayjs from "dayjs";
 import {StyleSheet} from "react-native";
 import {FontAwesome} from "@expo/vector-icons";
+import React from "react";
 
 let localizedFormat = require('dayjs/plugin/localizedFormat');
 dayjs.extend(localizedFormat);
@@ -16,7 +17,7 @@ export default function TripCard(props: {trip: Trip, onPress: any}) {
         overflow: "hidden",
         padding: 8
     }}
-          onPress={props.onPress}
+      onPress={props.onPress}
     >
       {/*<Text> {JSON.stringify(props.trip)} </Text>*/}
       <View

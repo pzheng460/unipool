@@ -3,17 +3,26 @@ import {RefreshControl, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../types";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
-import {trip1, trips, upcomingTrips, user1} from "../assets/data/dummyData";
-import React, {useState} from "react";
-import TripDetailsCard from "../components/TripDetailCard";
+import {trip1, trip3, trip6, trips, user1} from "../assets/data/dummyData";
+import React, {useContext, useEffect, useState} from "react";
 import {AntDesign} from "@expo/vector-icons";
+import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
+import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
+  const data = useContext(DummyDataContext) as GlobalData;
+  const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
+
   const [refreshing, setRefreshing] = useState(false);
-  const [tripData, setTripData] = useState(trips.filter(trip => {
+  const initTripData: Trip[] = [];
+  const [tripData, setTripData] = useState(initTripData);
+
+  useEffect(() => {
+    setTripData(data.trips.filter(trip => {
       return trip.type === "upcoming";
-  }));
+    }));
+  }, [data.trips]);
 
   const options = [{
     id: 0,
@@ -49,9 +58,14 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
       .then((response) => response.json())
       .then((responseJson) => {
         setRefreshing(false);
-        let newData = [...tripData, trip1];
-        // trips = [...trips, trip1];
-        setTripData(newData);
+        dispatch({
+          type: ActionTypes.ADD_UPCOMING_TRIP,
+          trip: {
+            ...trip3,
+            type: 'upcoming',
+            id: Date.now(),
+          }
+        });
       })
       .catch((error) => {
         console.error(error);
@@ -59,9 +73,9 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   };
 
   function renderItem(item: Trip) {
-    // @ts-ignore
     return (
-      <TripCard trip={item} onPress={() => navigation.navigate('TripDetails', {id: trips.findIndex(trip => {
+      // @ts-ignore
+      <TripCard trip={item} onPress={() => navigation.navigate('TripDetails', {id: data.trips.findIndex(trip => {
           return trip === item;
       })})}></TripCard>
     );
@@ -77,6 +91,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                   backgroundColor: Colors.background2,
                   // minHeight: '100%'
                 }}
+                keyExtractor={(item, index) => item.id.toString()}
                 refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
 
       />
@@ -84,7 +99,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   }
 
   function renderUpcomingTrips() {
-    if (user1.upcomingTrips.length === 0) {
+    if (data.user.upcomingTrips.length === 0) {
       return (
           <Text text65 margin-20>
             No upcoming trips
@@ -93,15 +108,19 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     }
 
     return (
-        <GridList data={user1.upcomingTrips}
+      <View flex-G>
+        <GridList data={data.user.upcomingTrips}
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}
                   style={{
                     backgroundColor: Colors.background2,
+                    overflow: 'visible'
                   }}
-                  // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
+                  keyExtractor={(item, index) => item.id.toString()}
+          // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
         />
+      </View>
     )
   }
   function renderPastTrips() {
@@ -114,13 +133,14 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     }
 
     return (
-        <GridList data={user1.pastTrips}
+        <GridList data={data.user.pastTrips}
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}
                   style={{
                     backgroundColor: Colors.background2,
                   }}
+                  keyExtractor={(item, index) => item.id.toString()}
             // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
         />
     )
