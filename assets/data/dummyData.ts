@@ -10,7 +10,6 @@ export const user1 : User = {
     eduEmail: 'hli427@gatech.edu',
     eduVerified: true,
     gender: 'male',
-
     pastTrips: [],
     upcomingTrips:[],
     rating: 4.67,
@@ -27,7 +26,6 @@ export const user2 : User = {
     eduEmail: 'rliu425@gatech.edu',
     eduVerified: true,
     gender: 'male',
-
     pastTrips: [],
     upcomingTrips:[],
     rating: 5,
@@ -44,7 +42,6 @@ export const user3: User = {
     eduEmail: 'jhill817@gatech.edu',
     eduVerified: true,
     gender: 'male',
-
     pastTrips: [],
     upcomingTrips:[],
     rating: 5,
@@ -61,7 +58,6 @@ export const user4: User = {
     eduEmail: 'jbryan279@gatech.edu',
     eduVerified: true,
     gender: 'male',
-
     pastTrips: [],
     upcomingTrips:[],
     rating: 5,
@@ -75,11 +71,10 @@ export const trip1: Trip = {
     roundTrip: false,
     date: 70000,
     returnDate: undefined,
-
+    type: "upcoming",
     seatsTaken: 2,
     seatsMax: 4,
     riders: [user1, user2],
-
     sameGender: false,
 };
 
@@ -90,11 +85,10 @@ export const trip2: Trip = {
     roundTrip: true,
     date: 70000,
     returnDate: 71000,
-
+    type: "upcoming",
     seatsTaken: 2,
     seatsMax: 4,
     riders: [user1, user2],
-
     sameGender: true,
 };
 
@@ -105,73 +99,58 @@ export const trip3: Trip = {
     roundTrip: false,
     date: 80000,
     returnDate: undefined,
-
+    type: "upcoming",
     seatsTaken: 1,
     seatsMax: 4,
     riders: [user1],
-
     sameGender: false,
 };
 
-export const pastTrip1: Trip = {
+export const trip4: Trip = {
     id: 3,
     from: "Hartsfield-Jackson Atlanta International Airport",
     to: "Georgia Tech",
     roundTrip: false,
     date: 30000,
     returnDate: undefined,
-
+    type: "past",
     seatsTaken: 3,
     seatsMax: 4,
     riders: [user1, user3, user4],
-
     sameGender: false,
 };
 
-export const pastTrip2: Trip = {
+export const trip5: Trip = {
     id: 4,
     from: "H Mart",
     to: "Georgia Tech",
     roundTrip: false,
     date: 100000,
     returnDate: undefined,
-
+    type: "past",
     seatsTaken: 3,
     seatsMax: 4,
     riders: [user1, user3, user4],
-
     sameGender: true,
 };
 
-export const pastTrip3: Trip = {
+export const trip6: Trip = {
     id: 5,
     from: "Regal Atlantic Station",
     to: "Georgia Tech",
     roundTrip: false,
     date: 150000,
     returnDate: undefined,
-
+    type: "past",
     seatsTaken: 3,
     seatsMax: 4,
     riders: [user1, user3, user4],
-
     sameGender: false,
 };
 
-user1.pastTrips = [...user3.pastTrips, pastTrip1, pastTrip2, pastTrip3];
-user3.pastTrips = [...user3.pastTrips, pastTrip1, pastTrip2, pastTrip3];
-user4.pastTrips = [...user4.pastTrips, pastTrip1, pastTrip2, pastTrip3];
+user1.pastTrips = [...user1.pastTrips, trip4, trip5, trip6];
+user3.pastTrips = [...user3.pastTrips, trip4, trip5, trip6];
+user4.pastTrips = [...user4.pastTrips, trip4, trip5, trip6];
 
-export const users : User[] = [user1, user2, user3, user4];
-export const upcomingTrips: Trip[] = [trip1, trip2, trip3];
-export const trips : Trip[] = [...upcomingTrips, pastTrip1, pastTrip2, pastTrip3];
-// export const trips = {
-//     [trip1.id]: trip1,
-//     [trip2.id]: trip2,
-//     [trip3.id]: trip3,
-//
-//     [pastTrip1.id]: pastTrip1,
-//     [pastTrip2.id]: pastTrip2,
-//     [pastTrip3.id]: pastTrip3,
-//
-// }
+export let users : User[] = [user1, user2, user3, user4];
+export let trips : Trip[] = [trip1, trip2, trip3, trip4, trip5, trip6];

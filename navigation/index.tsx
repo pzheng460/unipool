@@ -19,6 +19,7 @@ import {Colors} from "react-native-ui-lib";
 import TripDetailsScreen from "../screens/TripDetailsScreen";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import TripCreate1 from "../screens/TripCreate1";
+import RatingScreen from "../screens/RatingScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -52,6 +53,7 @@ function RootNavigator() {
         <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerShown: false}}/>
         <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerShown: false}}/>
       </Stack.Navigator> :
       <Stack.Navigator
         screenOptions={{

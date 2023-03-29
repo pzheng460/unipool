@@ -5,6 +5,7 @@ export interface Trip {
   roundTrip: boolean;
   date: number;
   returnDate?: number;
+  type: string;
   seatsTaken: number;
   seatsMax: number;
   riders: User[];

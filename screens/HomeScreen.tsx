@@ -11,7 +11,9 @@ import {AntDesign} from "@expo/vector-icons";
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
   const [refreshing, setRefreshing] = useState(false);
-  const [tripData, setTripData] = useState(upcomingTrips);
+  const [tripData, setTripData] = useState(trips.filter(trip => {
+      return trip.type === "upcoming";
+  }));
 
   const options = [{
     id: 0,
@@ -47,8 +49,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
       .then((response) => response.json())
       .then((responseJson) => {
         setRefreshing(false);
-        // let newData = tripData.concat([trip1]);
         let newData = [...tripData, trip1];
+        // trips = [...trips, trip1];
         setTripData(newData);
       })
       .catch((error) => {
