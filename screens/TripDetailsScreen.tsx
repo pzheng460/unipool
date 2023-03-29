@@ -1,13 +1,8 @@
-import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
-import { StyleSheet, Image, Dimensions } from "react-native";
-import {RootStackParamList, RootStackScreenProps, RootTabScreenProps} from "../types";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {trips} from "../assets/data/dummyData";
+import {Button, Colors, View} from "react-native-ui-lib";
+import {Dimensions, Image} from "react-native";
+import {RootStackScreenProps} from "../types";
 import PeopleList from "../components/PeopleList";
-import renderItem from "../components/PeopleList";
-import {Trip} from "../Interface/TripInterface";
-import {User} from "../Interface/TripInterface"
-import TripCard from "../components/TripCard";
+import {User} from "../Interface/TripInterface";
 import React, {useContext} from "react";
 import TripDetailsCard from "../components/TripDetailCard";
 import {DummyDataContext} from "../AppContextWrapper";
@@ -17,7 +12,7 @@ import EmptyScreen from "./EmptyScreen";
 export default function TripDetailsScreen({route, navigation}: RootStackScreenProps<'TripDetails'>) {
 
     const tripId = route.params?.id;
-    console.log(tripId)
+    // console.log(tripId)
     const data = useContext(DummyDataContext) as GlobalData;
     const trip = data.trips.find((item) => item.id === tripId)
     const windowWidth = Dimensions.get('window').width;

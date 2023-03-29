@@ -1,11 +1,10 @@
-import {Keyboard, StyleSheet, TextInput, Touchable, TouchableWithoutFeedback} from "react-native";
+import {Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback} from "react-native";
 import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
 import {AntDesign} from '@expo/vector-icons';
 import {useState} from "react";
 import {RootStackScreenProps} from "../types";
 import {auth} from "../configs/firebase/FirebaseConfig";
 import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
-import {SafeAreaView} from "react-native-safe-area-context";
 
 const {TextField} = Incubator;
 

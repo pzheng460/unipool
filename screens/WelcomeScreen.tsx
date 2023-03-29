@@ -1,7 +1,6 @@
-import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
+import {Button, Colors, Text, View} from "react-native-ui-lib";
 import {StyleSheet} from "react-native";
 import {RootStackScreenProps} from "../types";
-import {SafeAreaView} from "react-native-safe-area-context";
 
 export default function WelcomeScreen({route, navigation}: RootStackScreenProps<'Welcome'>) {
 

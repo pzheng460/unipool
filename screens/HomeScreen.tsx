@@ -3,7 +3,7 @@ import {RefreshControl, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../types";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
-import {trip1, trip3, trip6, trips, user1, user2} from "../assets/data/dummyData";
+import {trip3, user1, user2} from "../assets/data/dummyData";
 import React, {useContext, useEffect, useState} from "react";
 import {AntDesign} from "@expo/vector-icons";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";

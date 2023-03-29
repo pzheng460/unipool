@@ -1,18 +1,18 @@
-import {Alert, Keyboard, StyleSheet, TextInput, Touchable, TouchableWithoutFeedback, Dimensions} from "react-native";
+import {Dimensions, Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
 import {
-    Button,
-    Colors,
-    View,
-    TextField,
-    Chip,
-    Switch, Text, RadioButton, RadioGroup,DateTimePicker
+  Button,
+  Chip,
+  Colors,
+  DateTimePicker,
+  RadioButton,
+  RadioGroup,
+  Switch,
+  Text,
+  TextField,
+  View
 } from "react-native-ui-lib";
-import {AntDesign} from '@expo/vector-icons';
 import {SetStateAction, useState} from "react";
 import {RootStackScreenProps} from "../types";
-import {auth} from "../configs/firebase/FirebaseConfig";
-import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
-import {SafeAreaView} from "react-native-safe-area-context";
 // import {DateTimePickerEvent} from "@react-native-community/datetimepicker";
 
 export default function TripCreate1({route, navigation}: RootStackScreenProps<'TripCreate1'>) {

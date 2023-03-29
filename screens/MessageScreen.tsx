@@ -1,19 +1,9 @@
 import {RootTabScreenProps} from "../types";
-import {
-  Colors,
-  View,
-  Text,
-  TextField,
-  GridList,
-  Avatar,
-  Spacings,
-  Badge
-} from "react-native-ui-lib";
+import {Avatar, Badge, Colors, GridList, Spacings, Text, TextField, View} from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
 import React from "react";
-import {Keyboard, TouchableWithoutFeedback, TouchableHighlight} from "react-native";
-import {Room, User, MessageType} from "@flyerhq/react-native-firebase-chat-core";
-import {floor} from "react-native-reanimated";
+import {Keyboard, TouchableHighlight, TouchableWithoutFeedback} from "react-native";
+import {MessageType, Room, User} from "@flyerhq/react-native-firebase-chat-core";
 
 
 export default function MessageScreen({navigation}: RootTabScreenProps<'Messages'>) {

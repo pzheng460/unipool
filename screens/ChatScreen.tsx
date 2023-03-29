@@ -1,10 +1,7 @@
-import {RootStackScreenProps, RootTabScreenProps} from "../types";
+import {RootStackScreenProps} from "../types";
 import {Colors, View} from "react-native-ui-lib";
-import {Chat, MessageType, defaultTheme} from "@flyerhq/react-native-chat-ui";
-import React, {useState } from "react";
-import { ReactNode } from 'react'
-import {SafeAreaProvider} from "react-native-safe-area-context";
-import {Room} from "@flyerhq/react-native-firebase-chat-core";
+import {Chat, defaultTheme, MessageType} from "@flyerhq/react-native-chat-ui";
+import React, {ReactNode, useState} from "react";
 
 export default function ChatScreen({route, navigation}: RootStackScreenProps<'ChatScreen'>) {
 
