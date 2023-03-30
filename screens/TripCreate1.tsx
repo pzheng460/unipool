@@ -37,7 +37,12 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
 
             <View flex style={styles.container}>
 
-                <View style={{flex: 5, flexDirection: 'column'}}>
+                <View style={{flex: 5,
+                    flexDirection: 'column',
+                    backgroundColor: Colors.background2,
+                    paddingTop: 20,
+                    paddingBottom: 20
+                }}>
                     {/*start & destination*/}
 
                     <View style={{
@@ -64,7 +69,7 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                                 <TextField
                                     // floatingPlaceholder
                                     fieldStyle={{
-                                        backgroundColor: Colors.background2,
+                                        backgroundColor: Colors.white,
                                         padding: 10,
                                         borderRadius: 10,
                                         borderWidth: 0,
@@ -93,7 +98,7 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                                 <TextField
                                     // floatingPlaceholder
                                     fieldStyle={{
-                                        backgroundColor: Colors.background2,
+                                        backgroundColor: Colors.white,
                                         padding: 8,
                                         borderRadius: 10,
                                         borderWidth: 0,
@@ -114,7 +119,7 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                         paddingRight: 20
                     }}>
                         <View row
-                              style={{flex: 1, alignItems: 'center', backgroundColor: Colors.grey60, borderRadius: 10}}>
+                              style={{flex: 1, alignItems: 'center', borderRadius: 10}}>
                             <View style={{flex: 1, alignItems: 'center'}}>
                                 <Text style={{
                                     fontSize: 12,
@@ -124,7 +129,7 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                                         marginTop: 5,
                                     }}
                                     onColor={Colors.grey20}
-                                    offColor={Colors.grey60}
+                                    offColor={Colors.grey80}
                                     value={roundTrip}
                                     onValueChange={() => {
                                         setRoundTrip(!roundTrip);
@@ -140,7 +145,7 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                                         marginTop: 5,
                                     }}
                                     onColor={Colors.grey20}
-                                    offColor={Colors.grey60}
+                                    offColor={Colors.grey80}
                                     value={extraSpace}
                                     onValueChange={() => {
                                         setExtraSpace(!extraSpace);
@@ -154,7 +159,7 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                             alignItems: 'center',
                             paddingTop: -50,
                             marginTop: 5,
-                            backgroundColor: Colors.grey60,
+                            // backgroundColor: Colors.grey80,
                             borderRadius: 10,
 
                         }}>
@@ -193,16 +198,16 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                                 </RadioGroup>
                             </View>
                         </View>
-                        <View row marginT-10 style={{flex: 2, backgroundColor: Colors.grey60, borderRadius: 10}}>
+                        <View row marginT-10 style={{flex: 2,  borderRadius: 10}}>
                             <View style={{
                                 flex: 1,
                                 justifyContent: 'space-evenly',
-                                backgroundColor: Colors.grey60,
+                                // backgroundColor: Colors.grey80,
                                 borderRadius: 10,
                                 alignItems: 'center'
                             }}>
                                 <Text text65>For Start Time</Text>
-                                <DateTimePicker placeholder={startTime.getFullYear() > 1970 ? '✔' : 'Click'} mode={'datetime'}
+                                <DateTimePicker placeholder={startTime.getFullYear() > 1970 ? '✔' : 'Time'} mode={'datetime'}
                                                 minimumDate={new Date()} minuteInterval={30}
                                                 style={{fontSize: 22}}
                                                 date={startTime}
@@ -214,12 +219,12 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                                 display: roundTrip ? 'flex' : 'none',
                                 flex: 1,
                                 justifyContent: 'space-evenly',
-                                backgroundColor: Colors.grey60,
+                                // backgroundColor: Colors.grey80,
                                 borderRadius: 10,
                                 alignItems: 'center'
                             }}>
                                 <Text text65>For Back Time</Text>
-                                <DateTimePicker placeholder={backTime.getFullYear() > 1970 ? '✔' : 'Click'} mode={'datetime'}
+                                <DateTimePicker placeholder={backTime.getFullYear() > 1970 ? '✔' : 'Time'} mode={'datetime'}
                                                 minimumDate={new Date()} minuteInterval={30}
                                                 style={{fontSize: 22}}
                                                 date={backTime}
@@ -239,10 +244,10 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                     paddingRight: 20,
                     flexDirection: 'row',
                     justifyContent: 'space-around',
-                    alignItems: 'center'
+                    alignItems: 'center',
                 }}>
                     <Button label={'Cancel'}
-                            backgroundColor={Colors.$textDanger}
+                            backgroundColor={Colors.grey30}
                             square
                             container
                             style={{height: height/15, borderRadius:15}}
@@ -253,8 +258,6 @@ export default function TripCreate1({route, navigation}: RootStackScreenProps<'T
                             text41
                             backgroundColor={Colors.primary}
                             square
-                            marginL-20
-                            marginR-20
                             style={{height: height/15, borderRadius:15, }}
                     />
                 </View>
