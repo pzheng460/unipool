@@ -36,7 +36,8 @@ export default function PeopleList(props: {people: User[]}) {
 
 function renderItem(item: User) {
   return (
-      <Card style={{flex:1,
+      <Card
+          style={{flex:1,
                     flexDirection: 'row',
                     height:64,
                     padding: 8,

@@ -132,8 +132,9 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                   scrollEnabled={false}
                   style={{
                     backgroundColor: Colors.background2,
-                    overflow: 'visible',
-                    marginTop: Spacings.s2,
+                    // overflow: 'visible',
+                    // marginTop: Spacings.s2,
+                    paddingTop: Spacings.s2,
                   }}
                   keyExtractor={(item, index) => item.id.toString()}
           // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
@@ -158,8 +159,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                   scrollEnabled={false}
                   style={{
                     backgroundColor: Colors.background2,
-                    overflow: 'visible',
-                    marginTop: Spacings.s2,
+                    // overflow: 'visible',
+                    paddingTop: Spacings.s2,
                   }}
                   keyExtractor={(item, index) => item.id.toString()}
             // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}

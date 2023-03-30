@@ -18,15 +18,6 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
                     onPress={() => navigation.navigate('Login')}
             />
 
-            <Button label={'Test Rating'}
-                    backgroundColor={Colors.primary}
-                    square
-                    marginB-20
-                    marginL-32
-                    marginR-32
-                    onPress={() => navigation.navigate('Rating')}
-            />
-
         </View>
     );
 }

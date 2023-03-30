@@ -7,6 +7,7 @@ import {
     Avatar,
     Icon
 } from '@rneui/themed';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {DataActions, GlobalData} from "../reducer/ActionType";
 import {Trip} from "../Interface/TripInterface";
@@ -14,27 +15,29 @@ import {Trip} from "../Interface/TripInterface";
 type MenuList = {
     title: string;
     icon: string;
+    type: string
 };
 const list1: MenuList[] = [
     {
-        title: 'Appointments',
-        icon: 'av-timer',
+        title: 'Address',
+        icon: 'place',
+        type: 'material',
     },
     {
         title: 'Trips',
-        icon: 'directions-car',
+        icon: 'time',
+        type: 'ionicon',
     },
     {
-        title: 'Passwords',
-        icon: 'fingerprint',
+        title: 'Help',
+        icon: 'help',
+        type: 'material',
     },
     {
-        title: 'Pitches',
-        icon: 'lightbulb-outline',
-    },
-    {
-        title: 'Updates',
-        icon: 'track-changes',
+        title: 'Settings',
+        icon: 'settings',
+        type: 'material',
+
     },
 ];
 
@@ -59,7 +62,7 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
                 onPress={log}
                 bottomDivider
             >
-                <Icon name={item.icon} />
+                <Icon name={item.icon} type={item.type}/>
                 <ListItem.Content>
                     <ListItem.Title>{item.title}</ListItem.Title>
                 </ListItem.Content>

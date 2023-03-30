@@ -1,15 +1,20 @@
 import {Button, ButtonSize, Colors, FloatingButton, Text, View,} from "react-native-ui-lib";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {RootStackScreenProps} from "../types";
 import {Animated, Dimensions, Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback,} from "react-native";
 import {Avatar} from '@rneui/themed';
 import {MaterialIcons} from '@expo/vector-icons';
+import {DummyDataContext} from "../AppContextWrapper";
+import {GlobalData} from "../reducer/ActionType";
 
 export default function RatingScreen({route, navigation}: RootStackScreenProps<'Rating'>) {
 
     const onKeyboard = () => {
         Keyboard.dismiss();
     }
+    const userId = route.params?.userId;
+    const data = useContext(DummyDataContext) as GlobalData;
+    const user = data.user;
 
     const {height, width} = Dimensions.get('window');
     const [text, setText] = useState('');
@@ -52,12 +57,12 @@ export default function RatingScreen({route, navigation}: RootStackScreenProps<'
             <Avatar
                 size={80}
                 rounded
-                title='LL'
+                title= {user.firstName.charAt(0) + user.lastName.charAt(0)}
                 containerStyle={{ backgroundColor: Colors.purple40}}
             />
 
             <Text style={{fontSize: 15, fontWeight: 'bold', marginTop: 40, marginBottom:30}}>
-                How was your experience with Lucas Lee?
+                How was your experience with {user.firstName} {user.lastName}?
             </Text>
 
             <View style={styles.stars}>
