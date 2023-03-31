@@ -1,179 +1,190 @@
 import {RootTabScreenProps} from "../types";
 import React, {useContext, useEffect, useState} from 'react';
-import { View, StyleSheet, Image, ScrollView, FlatList } from 'react-native';
-import {
-    Text,
-    ListItem,
-    Avatar,
-    Icon
-} from '@rneui/themed';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {DataActions, GlobalData} from "../reducer/ActionType";
-import {Trip} from "../Interface/TripInterface";
+import {Trip, User} from "../Interface/TripInterface";
+import {Avatar, Colors, View, Text, Button, GridList} from "react-native-ui-lib";
+import {AntDesign} from "@expo/vector-icons";
+import {TouchableHighlight, TouchableOpacity} from "react-native";
+import {Divider} from "@rneui/themed";
 
-type MenuList = {
-    title: string;
-    icon: string;
-    type: string
+type MenuItem = {
+  title: string;
+  icon: string | undefined;
+  size: number;
 };
-const list1: MenuList[] = [
-    {
-        title: 'Address',
-        icon: 'place',
-        type: 'material',
-    },
-    {
-        title: 'Trips',
-        icon: 'time',
-        type: 'ionicon',
-    },
-    {
-        title: 'Help',
-        icon: 'help',
-        type: 'material',
-    },
-    {
-        title: 'Settings',
-        icon: 'settings',
-        type: 'material',
-
-    },
+const menuList: MenuItem[] = [
+  {
+    title: 'Address',
+    icon: 'enviromento',
+    size: 22,
+  },
+  {
+    title: 'Trips',
+    icon: 'clockcircleo',
+    size: 20,
+  },
+  {
+    title: 'Help',
+    icon: 'questioncircleo',
+    size: 20,
+  },
+  {
+    title: 'Settings',
+    icon: 'setting',
+    size: 22,
+  },
+  {
+    title: '===',
+    icon: '===',
+    size: 22,
+  },
+  {
+    title: 'About Us',
+    icon: undefined,
+    size: 22,
+  },
+  {
+    title: 'Privacy & Terms of Service',
+    icon: undefined,
+    size: 22,
+  },
+  {
+    title: 'Share UniPool to Friends',
+    icon: undefined,
+    size: 22,
+  },
 ];
 
 const log = () => console.log('this is an example method');
 
 export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
-    const data = useContext(DummyDataContext) as GlobalData;
-    const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
-
-    const [refreshing, setRefreshing] = useState(false);
-    const initTripData: Trip[] = [];
-    const [tripData, setTripData] = useState(initTripData);
-
-    useEffect(() => {
-        setTripData(data.trips.filter(trip => {
-            return trip.type === "upcoming";
-        }));
-    }, [data.trips]);
-    const RenderRow = ({ item }: { item: MenuList }) => {
-        return (
-            <ListItem.Swipeable
-                onPress={log}
-                bottomDivider
-            >
-                <Icon name={item.icon} type={item.type}/>
-                <ListItem.Content>
-                    <ListItem.Title>{item.title}</ListItem.Title>
-                </ListItem.Content>
-                <ListItem.Chevron />
-            </ListItem.Swipeable>
-        );
-    };
-  return(
-      <>
-          <View
-              style={{
-                  flex: 1,
-                  flexDirection: 'column',
-                  borderRadius: 5,
-                  alignItems: 'center',
-                  marginHorizontal: 10,
-                  height: 250,
-                  marginBottom: 0,
-              }}
-          >
-              <View style={{ flex: 3, flexDirection: 'row' }}>
-                  <View
-                      style={{
-                          flex: 1,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                      }}
-                  >
-                      <Avatar
-                          size={120}
-                          source={{
-                              uri: 'https://randomuser.me/api/portraits/men/1.jpg',
-                          }}
-                          avatarStyle={{ borderRadius: 120 / 2 }}
-                          overlayContainerStyle={{ backgroundColor: 'transparent' }}
-                      />
-                  </View>
-                  <View
-                      style={{
-                          flex: 1,
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                      }}
-                  >
-                      <View
-                          style={{
-                              flex: 1,
-                              marginTop: 10,
-                              justifyContent: 'center',
-                          }}
-                      >
-                          <Text
-                              style={styles.name}
-                          >
-                              {data.user.firstName+" "+data.user.lastName}
-                          </Text>
-                          <Text
-                              style={styles.email}
-                          >
-                              {data.user.email}
-                          </Text>
-                          <Image
-                              source={require('../assets/images/rating.png')}
-                              style={styles.ratingImage}
-                          />
-                      </View>
-                  </View>
+  const data = useContext(DummyDataContext) as GlobalData;
+  const user: User = data.user;
+  
+  function renderEntry(title: string, icon: string, size: number) {
+    if (title === "===") {
+      return (
+        <View
+          marginT-16
+          marginB-16
+          marginL-24
+          marginR-24
+          style={{
+            height: 1,
+            backgroundColor: "#d9d9d9"
+          }}
+        ></View>
+      )
+    } else {
+      return (
+        <TouchableOpacity
+        >
+          <View flex row style={{height: 56}} centerV marginL-32 marginR-32>
+            { icon &&
+              <View centerV
+                    marginR-16
+                    style={{width: 24}}
+              >
+                {/*@ts-ignore*/}
+                <AntDesign name={icon} size={size}/>
               </View>
+            }
+            <View centerV left>
+              <Text
+                style={{
+                  fontSize: 18,
+                  lineHeight: 20,
+                  fontWeight: 500,
+                }}
+              >
+                {title}
+              </Text>
+            </View>
           </View>
-      <FlatList
-          data={list1}
-          keyExtractor={(a: MenuList, index: number) => index.toString()}
-          renderItem={RenderRow}
-      />
-      </>
+        </TouchableOpacity>
+      )
+    }
+  }
+
+  return(
+    <View useSafeArea flex backgroundColor={Colors.white}>
+      <View
+        row
+        marginT-44
+        style={{
+          height: 64,
+        }}
+      >
+        <View centerV
+              paddingL-32
+              paddingR-16
+        >
+          <Avatar size={64}
+                  name={user.firstName}
+                  backgroundColor={Colors.$backgroundWarningLight}
+                  labelColor={Colors.$textMajor}
+          ></Avatar>
+        </View>
+        <View flex centerV marginT-4 marginB-4 marginR-32>
+          <View flex row>
+            <View left>
+              <Text
+                style={{
+                  fontSize: 24,
+                  lineHeight: 32,
+                  fontWeight: "bold",
+                }}
+              > {user.firstName + " " + user.lastName} </Text>
+            </View>
+            <View flex row right>
+              <View centerV>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    lineHeight: 32,
+                    fontWeight: 500,
+                  }}
+                > {user.rating} </Text>
+              </View>
+              <View centerV>
+                <AntDesign name={'star'} size={16} color={"gold"}
+                />
+              </View>
+            </View>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 16,
+                lineHeight: 24,
+                color: "#8c8c8c"
+              }}
+            > {"george.burdell@gatech.edu"} </Text>
+          </View>
+        </View>
+      </View>
+      <View margin-32 marginT-22>
+        <Button label={'View Profile'} backgroundColor={Colors.primary} fullWidth
+                style={{
+                  borderRadius: 8
+                }}
+        />
+      </View>
+      <View marginT-16
+            // style={{
+            // height: 56 * menuList.length
+            //}}
+      >
+        <GridList data={menuList}
+                  renderItem={({item}) => renderEntry(item.title, item.icon, item.size)}
+                  numColumns={1}
+                  scrollEnabled={false}
+                  itemSpacing={0}
+        >
+        </GridList>
+      </View>
+    </View>
   )
 }
 
-const styles = StyleSheet.create({
-    name: {
-        fontFamily: 'bold',
-        fontSize: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    email: {
-        color: 'grey',
-        fontSize: 12,
-        marginTop: 5,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    container: {
-        flex: 1,
-    },
-    list: {
-        borderTopWidth: 1,
-        borderColor: '#cbd2d9',
-    },
-    subtitleView: {
-        flexDirection: 'row',
-        paddingLeft: 10,
-        paddingTop: 5,
-    },
-    ratingImage: {
-        height: 19.21,
-        width: 100,
-        marginTop: 10,
-    },
-    ratingText: {
-        paddingLeft: 10,
-        color: 'grey',
-    },
-});
