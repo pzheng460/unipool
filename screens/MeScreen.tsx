@@ -1,12 +1,11 @@
 import {RootTabScreenProps} from "../types";
-import React, {useContext, useEffect, useState} from 'react';
-import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
-import {DataActions, GlobalData} from "../reducer/ActionType";
-import {Trip, User} from "../Interface/TripInterface";
-import {Avatar, Colors, View, Text, Button, GridList} from "react-native-ui-lib";
+import React, {useContext} from 'react';
+import {DummyDataContext} from "../AppContextWrapper";
+import {GlobalData} from "../reducer/ActionType";
+import {User} from "../Interface/TripInterface";
+import {Avatar, Button, Colors, GridList, Text, View} from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
-import {TouchableHighlight, TouchableOpacity} from "react-native";
-import {Divider} from "@rneui/themed";
+import {TouchableOpacity} from "react-native";
 
 type MenuItem = {
   title: string;
@@ -62,7 +61,7 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
   const data = useContext(DummyDataContext) as GlobalData;
   const user: User = data.user;
   
-  function renderEntry(title: string, icon: string, size: number) {
+  function renderEntry(title: string, icon: string | undefined, size: number) {
     if (title === "===") {
       return (
         <View
