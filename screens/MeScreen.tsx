@@ -5,7 +5,7 @@ import {GlobalData} from "../reducer/ActionType";
 import {User} from "../Interface/TripInterface";
 import {Avatar, Button, Colors, GridList, Text, View} from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
-import {TouchableOpacity} from "react-native";
+import {ScrollView, TouchableOpacity} from "react-native";
 
 type MenuItem = {
   title: string;
@@ -108,81 +108,83 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
 
   return(
     <View useSafeArea flex backgroundColor={Colors.white}>
-      <View
-        row
-        marginT-44
-        style={{
-          height: 64,
-        }}
-      >
-        <View centerV
-              paddingL-32
-              paddingR-16
+      <ScrollView bounces={false}>
+        <View
+          row
+          marginT-44
+          style={{
+            height: 64,
+          }}
         >
-          <Avatar size={64}
-                  name={user.firstName}
-                  backgroundColor={Colors.$backgroundWarningLight}
-                  labelColor={Colors.$textMajor}
-          ></Avatar>
-        </View>
-        <View flex centerV marginT-4 marginB-4 marginR-32>
-          <View flex row>
-            <View left>
-              <Text
-                style={{
-                  fontSize: 24,
-                  lineHeight: 32,
-                  fontWeight: "bold",
-                }}
-              > {user.firstName + " " + user.lastName} </Text>
-            </View>
-            <View flex row right>
-              <View centerV>
+          <View centerV
+                paddingL-32
+                paddingR-16
+          >
+            <Avatar size={64}
+                    name={user.firstName}
+                    backgroundColor={Colors.$backgroundWarningLight}
+                    labelColor={Colors.$textMajor}
+            ></Avatar>
+          </View>
+          <View flex centerV marginT-4 marginB-4 marginR-32>
+            <View flex row>
+              <View left>
                 <Text
                   style={{
-                    fontSize: 16,
+                    fontSize: 24,
                     lineHeight: 32,
-                    fontWeight: 500,
+                    fontWeight: "bold",
                   }}
-                > {user.rating} </Text>
+                > {user.firstName + " " + user.lastName} </Text>
               </View>
-              <View centerV>
-                <AntDesign name={'star'} size={16} color={"gold"}
-                />
+              <View flex row right>
+                <View centerV>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      lineHeight: 32,
+                      fontWeight: 500,
+                    }}
+                  > {user.rating} </Text>
+                </View>
+                <View centerV>
+                  <AntDesign name={'star'} size={16} color={"gold"}
+                  />
+                </View>
               </View>
             </View>
-          </View>
-          <View>
-            <Text
-              style={{
-                fontSize: 16,
-                lineHeight: 24,
-                color: "#8c8c8c"
-              }}
-            > {"george.burdell@gatech.edu"} </Text>
+            <View>
+              <Text
+                style={{
+                  fontSize: 16,
+                  lineHeight: 24,
+                  color: "#8c8c8c"
+                }}
+              > {"george.burdell@gatech.edu"} </Text>
+            </View>
           </View>
         </View>
-      </View>
-      <View margin-32 marginT-22>
-        <Button label={'View Profile'} backgroundColor={Colors.primary} fullWidth
-                style={{
-                  borderRadius: 8
-                }}
-        />
-      </View>
-      <View marginT-16
-            // style={{
-            // height: 56 * menuList.length
-            //}}
-      >
-        <GridList data={menuList}
-                  renderItem={({item}) => renderEntry(item.title, item.icon, item.size)}
-                  numColumns={1}
-                  scrollEnabled={false}
-                  itemSpacing={0}
+        <View margin-32 marginT-22>
+          <Button label={'View Profile'} backgroundColor={Colors.primary} fullWidth
+                  style={{
+                    borderRadius: 8
+                  }}
+          />
+        </View>
+        <View marginT-16
+          // style={{
+          // height: 56 * menuList.length
+          //}}
         >
-        </GridList>
-      </View>
+          <GridList data={menuList}
+                    renderItem={({item}) => renderEntry(item.title, item.icon, item.size)}
+                    numColumns={1}
+                    scrollEnabled={false}
+                    itemSpacing={0}
+          >
+          </GridList>
+        </View>
+      </ScrollView>
     </View>
   )
 }
