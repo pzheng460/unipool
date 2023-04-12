@@ -2,9 +2,10 @@ import {RootStackScreenProps} from "../types";
 import {Colors, View} from "react-native-ui-lib";
 import {Chat, defaultTheme, MessageType} from "@flyerhq/react-native-chat-ui";
 import React, {ReactNode, useState} from "react";
+import {useHeaderHeight} from "@react-navigation/elements";
 
 export default function ChatScreen({route, navigation}: RootStackScreenProps<'ChatScreen'>) {
-
+    const headerHeight = useHeaderHeight();
     const uuidv4 = () => {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
             const r = Math.floor(Math.random() * 16)
@@ -63,7 +64,9 @@ export default function ChatScreen({route, navigation}: RootStackScreenProps<'Ch
 
 
     return(
-        <View flex>
+        <View flex style={{
+          paddingTop: headerHeight
+        }}>
             <Chat
                 messages={messages}
                 onSendPress={handleSendPress}
