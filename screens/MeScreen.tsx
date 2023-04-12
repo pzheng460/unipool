@@ -1,11 +1,15 @@
 import {RootTabScreenProps} from "../types";
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {DummyDataContext} from "../AppContextWrapper";
 import {GlobalData} from "../reducer/ActionType";
 import {User} from "../Interface/TripInterface";
 import {Avatar, Button, Colors, GridList, Text, View} from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
-import {ScrollView, TouchableOpacity} from "react-native";
+import {ScrollView, TouchableOpacity, Dimensions} from "react-native";
+import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
+import {useHeaderHeight} from "@react-navigation/elements";
+import { useSignOut } from 'react-firebase-hooks/auth';
+import {auth} from "../configs/firebase/FirebaseConfig";
 
 type MenuItem = {
   title: string;
@@ -48,11 +52,11 @@ const menuList: MenuItem[] = [
     icon: undefined,
     size: 22,
   },
-  {
-    title: 'Share UniPool to Friends',
-    icon: undefined,
-    size: 22,
-  },
+  // {
+  //   title: 'Share UniPool to Friends',
+  //   icon: undefined,
+  //   size: 22,
+  // },
 ];
 
 const log = () => console.log('this is an example method');
@@ -60,6 +64,11 @@ const log = () => console.log('this is an example method');
 export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
   const data = useContext(DummyDataContext) as GlobalData;
   const user: User = data.user;
+  const screenHeight = Dimensions.get("window").height;
+  const headerHeight = useHeaderHeight();
+  const bottomHeight = useBottomTabBarHeight();
+  const [bounce, setBounce] = useState(false);
+  const [signOut, loading, error] = useSignOut(auth);
   
   function renderEntry(title: string, icon: string | undefined, size: number) {
     if (title === "===") {
@@ -108,7 +117,10 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
 
   return(
     <View useSafeArea flex backgroundColor={Colors.white}>
-      <ScrollView bounces={false}>
+      <ScrollView bounces={bounce}
+                  onContentSizeChange={(w, h) => {
+                    setBounce(screenHeight - h - headerHeight - bottomHeight < 0)
+                  }}>
         <View
           row
           marginT-44
@@ -183,6 +195,18 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
                     itemSpacing={0}
           >
           </GridList>
+        </View>
+        <View margin-32 marginT-22>
+          <Button label={'Log Out'} backgroundColor={Colors.background2} fullWidth
+                  color={Colors.error}
+                  labelStyle={{fontWeight: 500, fontVariant: 'underline'}}
+                  style={{
+                    borderRadius: 8
+                  }}
+                  onPress={async () => {
+                    const success = await signOut();
+                  }}
+          />
         </View>
       </ScrollView>
     </View>
