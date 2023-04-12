@@ -21,11 +21,18 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import TripCreate1 from "../screens/TripCreate1";
 import RatingScreen from "../screens/RatingScreen";
 
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: Colors.white,
+  },
+};
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
     <NavigationContainer
       // linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === 'dark' ? DarkTheme : navTheme}>
       <RootNavigator />
     </NavigationContainer>
   );
