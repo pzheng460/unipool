@@ -30,7 +30,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const initTripData: Trip[] = [];
   const [tripData, setTripData] = useState(initTripData);
   function plusIcon() {
-      return <AntDesign name="plus" size={45} color="white" />;
+      return <AntDesign name="plus" size={24} color="white" style={{padding: 16}} />;
   }
 
   useEffect(() => {
@@ -294,10 +294,11 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                 <FloatingButton
                     visible={true}
                     hideBackgroundOverlay={true}
-                    bottomMargin={20}
+                    bottomMargin={36}
                     button={{
                         iconSource: plusIcon,
                         onPress: () => {navigation.navigate('TripCreate1')},
+                        // size: 64,
                         backgroundColor: Colors.black,
                     }}
                 />
