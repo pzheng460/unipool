@@ -99,7 +99,9 @@ export default function TripCard(props: {trip: Trip, onPress: any}) {
     return (
       <Text
         style={{fontSize: 18, fontWeight: 600}}
-      > {text} </Text>
+      >
+        {text}
+      </Text>
     );
   }
 

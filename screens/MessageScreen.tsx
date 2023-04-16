@@ -131,7 +131,9 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                       fontSize: 16,
                       lineHeight: 24,
                       textAlign: 'left',
-                    }}> {item.name} </Text>
+                    }}>
+                      {item.name}
+                    </Text>
                   </View>
                   <View
                       right
@@ -147,7 +149,9 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                             lineHeight: 24,
                             color: '#8c8c8c'
                           }}
-                      > {"12:30"} </Text>
+                      >
+                        {"12:30"}
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -159,7 +163,6 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                       fontSize: 14,
                       color: '#8c8c8c',
                       lineHeight: 24,
-                      paddingLeft: 4
                     }}>
                       {/* @ts-ignore*/}
                       {item.lastMessages?.at(-1)?.author.firstName + ": " + item.lastMessages?.at(-1)?.text}
