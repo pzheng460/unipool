@@ -1,4 +1,4 @@
-import {Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback} from "react-native";
+import {Alert, Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback} from "react-native";
 import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
 import {AntDesign} from '@expo/vector-icons';
 import {useState} from "react";
@@ -26,7 +26,27 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
 
     function handleLogin() {
         signInWithEmailAndPassword(email, password);
-        if (error) {console.log(error.message)}
+
+        if (error) {
+            console.log(error.message);
+            let title;
+            let msg = undefined;
+            if (error.message === 'Firebase: Error (auth/invalid-email).') {
+                title = 'Your email or password is incorrect.';
+            } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
+                title = 'Your email or password is incorrect.';
+            } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
+                title = 'Account does not exist';
+                msg = 'Please sign up.'
+            } else if (error.message === 'Firebase: Error (auth/internal-error).') {
+                title = 'Your email or password is incorrect.'
+            } else {
+                title = error.message;
+            }
+            Alert.alert(title, msg,[
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+        }
     }
 
     return (
@@ -50,9 +70,6 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                     <TextField
                         placeholder={'Email'}
                         onChangeText={(v: string) => setEmail(v)}
-                        validateOnChange
-                        validate={['email']}
-                        validationMessage={['Email is invalid']}
                         fieldStyle={{backgroundColor: Colors.background,
                             padding: 12,
                             borderRadius: 5,
@@ -60,7 +77,6 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                             borderWidth: 2,
                         }}
                         style={{fontSize: 16}}
-                        validationMessagePosition={'bottom'}
                         enableErrors
                     />
                 </View>
