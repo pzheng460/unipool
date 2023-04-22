@@ -3,10 +3,9 @@
  * https://reactnavigation.org/docs/typescript/
  */
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import TripCreate1 from "./screens/TripCreate1";
+import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
+import {CompositeScreenProps, NavigatorScreenParams} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {MessageType} from "@flyerhq/react-native-chat-ui";
 
 declare global {
@@ -25,6 +24,9 @@ export type RootStackParamList = {
   TripCreate1: undefined;
   ChatScreen: {roomMessages: MessageType.Text[]};
   Rating: {userId: number} | undefined;
+  OnBoardBegin: undefined;
+  OnBoardEmail: undefined;
+  OnBoardPassword: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

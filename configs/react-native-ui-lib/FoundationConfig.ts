@@ -1,4 +1,4 @@
-import {Colors, Typography, Spacings} from 'react-native-ui-lib';
+import {Colors} from 'react-native-ui-lib';
 
 // TODO: Modify theme styles
 

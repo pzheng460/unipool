@@ -1,14 +1,14 @@
-import {RootTabScreenProps} from "../types";
+import {RootTabScreenProps} from "../navigation/types";
 import React, {useContext, useState} from 'react';
 import {DummyDataContext} from "../AppContextWrapper";
 import {GlobalData} from "../reducer/ActionType";
 import {User} from "../Interface/TripInterface";
 import {Avatar, Button, Colors, GridList, Text, View} from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
-import {ScrollView, TouchableOpacity, Dimensions} from "react-native";
+import {Dimensions, ScrollView, TouchableOpacity} from "react-native";
 import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 import {useHeaderHeight} from "@react-navigation/elements";
-import { useSignOut } from 'react-firebase-hooks/auth';
+import {useSignOut} from 'react-firebase-hooks/auth';
 import {auth} from "../configs/firebase/FirebaseConfig";
 
 type MenuItem = {

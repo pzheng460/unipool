@@ -1,13 +1,22 @@
-import {User, Trip} from "../Interface/TripInterface";
+import {Trip, User} from "../Interface/TripInterface";
 
 export type GlobalData = {user: User, trips: Trip[]}
 export enum ActionTypes {
   ADD_UPCOMING_TRIP = "ADD_UPCOMING_TRIP",
+  UPDATE_EMAIL_ADDRESS = "UPDATE_EMAIL_ADDRESS",
+  UPDATE_FULL_NAME = "UPDATE_FULL_NAME",
+  UPDATE_GENDER = "UPDATE_GENDER",
+  INIT_USER = "INIT_USER",
 }
 
 export namespace DataActions {
 
-  export type Any = DataActionTrip | DataActionTrips;
+  export type Any = DataActionBase
+    | DataActionTrip
+    | DataActionTrips
+    | DataActionName
+    | DataActionEmail
+    | DataActionGender;
 
   interface DataActionBase {
     type: ActionTypes,
@@ -19,5 +28,19 @@ export namespace DataActions {
 
   export interface DataActionTrips extends DataActionBase {
     trips: Trip[],
+  }
+
+  export interface DataActionEmail extends DataActionBase {
+    email: string,
+    eduEmail: string,
+  }
+
+  export interface DataActionName extends DataActionBase {
+    firstName: string,
+    lastName: string,
+  }
+
+  export interface DataActionGender extends DataActionBase {
+    gender: string,
   }
 }

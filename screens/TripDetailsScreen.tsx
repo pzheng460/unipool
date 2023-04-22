@@ -1,17 +1,6 @@
-import {
-    Avatar,
-    BorderRadiuses,
-    Button,
-    Card,
-    Colors,
-    GridList,
-    Incubator,
-    Spacings,
-    Text,
-    View
-} from "react-native-ui-lib";
+import {Avatar, BorderRadiuses, Button, Card, Colors, GridList, Spacings, Text, View} from "react-native-ui-lib";
 import {Dimensions, ScrollView, StyleSheet} from "react-native";
-import {RootStackParamList, RootStackScreenProps, RootTabScreenProps} from "../types";
+import {RootStackScreenProps} from "../navigation/types";
 // import PeopleList from "../components/PeopleList";
 import {User} from "../Interface/TripInterface"
 import React, {useContext} from "react";

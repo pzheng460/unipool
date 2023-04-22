@@ -1,160 +1,186 @@
-import {Alert, Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback} from "react-native";
-import {Button, Colors, Incubator, Text, View} from "react-native-ui-lib";
-import {AntDesign} from '@expo/vector-icons';
-import {useState} from "react";
-import {RootStackScreenProps} from "../types";
+import {
+  Alert,
+  Dimensions,
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View
+} from "react-native";
+import {Card, Checkbox, Text, TextInput} from "react-native-paper";
+import {Button} from "../components";
+import React, {useState} from "react";
+import {RootStackScreenProps} from "../navigation/types";
 import {auth} from "../configs/firebase/FirebaseConfig";
 import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
+import {useHeaderHeight} from "@react-navigation/elements";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
-const {TextField} = Incubator;
-
+const logo = require("../assets/icon.png");
 export default function LoginScreen({route, navigation}: RootStackScreenProps<'Login'>) {
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
+  const [remember, setRemember] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
 
-    const [
-        signInWithEmailAndPassword,
-        user,
-        loading,
-        error,
-    ] = useSignInWithEmailAndPassword(auth);
+  function onCheckRemember() {
+    const prevRemember = remember;
+    setRemember(!prevRemember);
+  }
 
-    const onKeyboard = () => {
-        Keyboard.dismiss();
+  function onPressEye() {
+    const prevShowPassword = showPassword;
+    setShowPassword(!prevShowPassword);
+  }
+
+  function handelKeyboardVisible(visible: boolean) {
+    if (visible === true) {
+      return Platform.OS === "ios" ? "ascii-capable" : "visible-password";
+    } else {
+      return "default";
     }
+  }
 
-    function handleLogin() {
-        signInWithEmailAndPassword(email, password);
+  function handleLogin() {
+    signInWithEmailAndPassword(email, password).catch((error) => {
+      console.log(error.message);
+      let title;
+      let msg = undefined;
+      if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        title = 'Your email or password is incorrect.';
+      } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
+        title = 'Your email or password is incorrect.';
+      } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
+        title = 'Account does not exist';
+        msg = 'Please sign up.'
+      } else if (error.message === 'Firebase: Error (auth/internal-error).') {
+        title = 'Your email or password is incorrect.'
+      } else {
+        title = error.message;
+      }
+      Alert.alert(title, msg,[
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    });
+  }
 
-        if (error) {
-            console.log(error.message);
-            let title;
-            let msg = undefined;
-            if (error.message === 'Firebase: Error (auth/invalid-email).') {
-                title = 'Your email or password is incorrect.';
-            } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
-                title = 'Your email or password is incorrect.';
-            } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
-                title = 'Account does not exist';
-                msg = 'Please sign up.'
-            } else if (error.message === 'Firebase: Error (auth/internal-error).') {
-                title = 'Your email or password is incorrect.'
-            } else {
-                title = error.message;
-            }
-            Alert.alert(title, msg,[
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ]);
-        }
-    }
-
-    return (
-        <TouchableWithoutFeedback
-            onPress={() =>{onKeyboard()}}
-        >
-        <View style={styles.container}>
-            <View style={{flex: 2}}>
-                <View style={{flexDirection: "row", justifyContent: "center"}}>
-                    <Text style={{color: Colors.primary, fontSize: 48, fontWeight: 'bold'}}>UniPool</Text>
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+    >
+      <View style={{flex: 1}}>
+        {/*<View*/}
+        {/*  style={{*/}
+        {/*      position: "absolute",*/}
+        {/*      backgroundColor: "#222A45",*/}
+        {/*      width: "100%",*/}
+        {/*      top: 0,*/}
+        {/*      height: "66.6%",*/}
+        {/*      left: 0,*/}
+        {/*      right: 0}}*/}
+        {/*>*/}
+        {/*</View>*/}
+        <View style={{
+          paddingTop: headerHeight,
+          paddingBottom: insets.bottom,
+          marginLeft: 12,
+          marginRight: 12,
+          flex: 1,
+          alignItems: "center",
+          justifyContent: 'center',
+          gap: 24,
+        }}>
+          <View style={{alignItems: "center", justifyContent: "flex-end", marginTop: 32}}>
+            <Image source={logo} style={{width: 100, height: 100}}/>
+            {/*<Text variant={"headlineMedium"} style={{fontWeight: "600"}}> Unipool </Text>*/}
+          </View>
+          <KeyboardAvoidingView behavior={"position"}>
+            <Card style={{marginRight: 'auto', marginLeft: 'auto', marginTop:  Dimensions.get('window').height / 8 - 32, minWidth: "100%"}}>
+              <Card.Content>
+                <View>
+                  <TextInput
+                    label={"Email Address"}
+                    autoComplete={"email"}
+                    autoFocus
+                    maxLength={50}
+                    onChangeText={(v) => setEmail(v)}
+                    /* @ts-ignore */
+                    enterKeyHint={"next"}
+                  />
                 </View>
-            </View>
-
-            <View style={{flex: 4}}>
-                <View style={{flexDirection: "row", justifyContent: "flex-start"}}>
-                    <Text
-                        style={{color: Colors.primary, fontSize: 30, fontWeight: 'bold'}}>Login</Text>
+                <View style={{marginTop: 16}}>
+                  <TextInput
+                    label={"Password"}
+                    autoComplete={"password"}
+                    maxLength={50}
+                    right={<TextInput.Icon icon={showPassword ? "eye" : "eye-off"} onPress={() => onPressEye()}/>}
+                    keyboardType={handelKeyboardVisible(showPassword)}
+                    onChangeText={(v) => setPassword(v)}
+                    onBlur={() => setShowPassword(false)}
+                    /* @ts-ignore */
+                    enterKeyHint={"done"}
+                    secureTextEntry={!showPassword}
+                  />
                 </View>
-
-                <View style={{marginTop: 20}}>
-                    <TextField
-                        placeholder={'Email'}
-                        onChangeText={(v: string) => setEmail(v)}
-                        fieldStyle={{backgroundColor: Colors.background,
-                            padding: 12,
-                            borderRadius: 5,
-                            borderColor: 'gray',
-                            borderWidth: 2,
-                        }}
-                        style={{fontSize: 16}}
-                        enableErrors
-                    />
+                <View style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "flex-start",
+                  marginTop: 8,
+                  marginBottom: 8,
+                }}>
+                  <Text style={{marginRight: -2}}>Remember Me</Text>
+                  <Checkbox.Android
+                    status={remember ? "checked" : "unchecked"}
+                    onPress={() => onCheckRemember()}
+                  />
+                  <View style={{flexDirection: "row", flex: 1, justifyContent: "flex-end"}}>
+                    <TouchableOpacity>
+                      <Text>Use FaceID</Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
-
-                <View style={{marginTop: 0}}>
-                    <TextInput
-                        placeholder={'Password'}
-                        onChangeText={(v) => setPassword(v)}
-                        secureTextEntry={true}
-                        style={{backgroundColor: Colors.background,
-                            padding: 12,
-                            borderRadius: 5,
-                            borderColor: 'gray',
-                            borderWidth: 2,
-                            fontSize: 16,
-                        }}
-                    />
+                <View>
+                  <Button onPress={() => {handleLogin()}}>Sign In</Button>
                 </View>
-
-                <View style={{flexDirection: "row", justifyContent: "flex-end", marginTop: 5}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 14, color: "#6C757D"}}>
-                        Forgot Password?
-                    </Text>
-                </View>
-            </View>
-
-            <View style={{flex: 2}}>
-                <View style={{marginTop: 10}}>
-                    <Button square onPress={() => handleLogin()}>
-                        <Text style={styles.loginButtonText}>Login</Text>
-                    </Button>
-                </View>
-
-                <View style={{marginTop: 10}}>
-                    <Button square>
-                        <AntDesign name="googleplus" size={24} color="#FFF" style={{marginRight: 10}}/>
-                        <Text style={styles.loginWithGoogleText}>Login With Google</Text>
-                    </Button>
-                </View>
-
-                <View style={{flexDirection: "row", justifyContent: "center", paddingTop: 10}}>
-                    <Text style={{color: "#6C757D", fontSize: 16}}>Do not have an account?</Text>
-                    <Text style={{marginLeft: 5, color: "rgba(64,147,227,0.88)", fontWeight: "500", fontSize: 16}}
-                          onPress={() => {
-                              navigation.navigate('Register')
-                          }}
-                    >
-                        Sign Up
-                    </Text>
-                </View>
-            </View>
+              </Card.Content>
+            </Card>
+          </KeyboardAvoidingView>
+          <Button style={{marginBottom: Dimensions.get('window').height / 10}} mode={"text"} labelStyle={{fontSize: 16}} contentStyle={{height: 38}} onPress={() => {}}>
+            Forget User ID / Password?
+          </Button>
+          <View style={{
+            flexDirection: "row",
+            position: "absolute",
+            bottom: insets.bottom + 8,
+          }}>
+            <Button
+              mode={"text"}
+              labelStyle={{fontSize: 16}}
+              contentStyle={{height: 38}}
+              onPress={() => {
+                navigation.navigate("OnBoardBegin");
+              }}
+            >
+              Sign Up
+            </Button>
+            <Button mode={"text"} labelStyle={{fontSize: 16}} contentStyle={{height: 38}} onPress={() => {}}>
+              Contact Us
+            </Button>
+          </View>
         </View>
-        </TouchableWithoutFeedback>
-    );
+      </View>
+    </TouchableWithoutFeedback>
+  );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#FFF',
-        flex: 1,
-        flexDirection: "column",
-        paddingTop: 100,
-        padding: 40,
-    },
-    loginWithGoogleText: {
-        color: "#FFF",
-        // fontFamily: "Oceanwide-Semibold",
-        fontWeight: 'bold',
-        paddingTop: 3,
-        paddingBottom: 3,
-        fontSize: 18,
-    },
-    loginButtonText: {
-        color: "#FFFFFF",
-        // fontFamily: "Oceanwide-Semibold",
-        fontWeight: 'bold',
-        paddingTop: 3,
-        paddingBottom: 3,
-        fontSize: 18,
-    }
-});

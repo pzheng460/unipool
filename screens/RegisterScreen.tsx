@@ -1,9 +1,10 @@
 import {useState} from "react";
 import {Alert, Keyboard, StyleSheet, TouchableWithoutFeedback} from "react-native";
-import {Button, Colors, Incubator, Text, View, Picker} from "react-native-ui-lib";
+import {Button, Colors, Incubator, Picker, Text, View} from "react-native-ui-lib";
 import {auth} from "../configs/firebase/FirebaseConfig";
-import {RootStackScreenProps} from "../types";
+import {RootStackScreenProps} from "../navigation/types";
 import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
+
 const {TextField} = Incubator;
 
 

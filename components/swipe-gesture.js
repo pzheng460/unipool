@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
-import {
-  View,
-  Animated,
-  PanResponder
-} from 'react-native';
+import React, {Component} from 'react';
+import {Animated, PanResponder, View} from 'react-native';
 
 export default class SwipeGesture extends Component {
 

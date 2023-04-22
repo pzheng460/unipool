@@ -1,8 +1,7 @@
-import {Avatar, Button, Card, Chip, Colors, Incubator, Text, View} from "react-native-ui-lib";
+import {Avatar, Card, Chip, Colors, Text, View} from "react-native-ui-lib";
 import {Trip, User} from "../Interface/TripInterface";
 import dayjs from "dayjs";
 import {StyleSheet} from "react-native";
-import {FontAwesome} from "@expo/vector-icons";
 
 let localizedFormat = require('dayjs/plugin/localizedFormat');
 dayjs.extend(localizedFormat);

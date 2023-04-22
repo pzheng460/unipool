@@ -16,18 +16,14 @@ export interface User {
   id: number;
   firstName: string;
   lastName: string;
-
   avatar?: string;
   phone: string;
   email: string;
   eduEmail: string;
   eduVerified: boolean;
   gender: string;
-
   pastTrips: Trip[];
   upcomingTrips: Trip[];
-
   rating: number;
   numOfRatings: number;
-
 }

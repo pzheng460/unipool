@@ -1,4 +1,4 @@
-import {RootTabScreenProps} from "../types";
+import {RootTabScreenProps} from "../navigation/types";
 import {Avatar, Badge, Colors, GridList, Spacings, Text, TextField, View} from "react-native-ui-lib";
 import {AntDesign} from "@expo/vector-icons";
 import React from "react";

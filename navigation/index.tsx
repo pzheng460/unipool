@@ -1,10 +1,10 @@
 import {AntDesign} from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
-import {RootStackParamList, RootTabParamList, RootTabScreenProps} from "../types";
+import {ColorSchemeName} from 'react-native';
+import {RootStackParamList, RootTabParamList, RootTabScreenProps} from "./types";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
@@ -21,6 +21,13 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import TripCreate1 from "../screens/TripCreate1";
 import RatingScreen from "../screens/RatingScreen";
 import RegisterCompleteScreen from "../screens/RegisterCompleteScreen";
+import {useColorScheme} from "../contexts/ColorSchemeContext";
+import {StatusBar} from "expo-status-bar";
+import {Provider as PaperProvider} from "react-native-paper";
+import {DefaultDarkTheme, DefaultLightTheme} from "../theme/global";
+import OnBoardScreenBegin from "../screens/onboard/OnboardScreen-Begin";
+import OnBoardScreenEmail from "../screens/onboard/OnboardScreen-Email";
+import OnBoardScreenPassword from "../screens/onboard/OnboardScreen-Password";
 
 const navTheme = {
   ...DefaultTheme,
@@ -30,12 +37,16 @@ const navTheme = {
   },
 };
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+  const [scheme, setColorScheme, setUseSystem] = useColorScheme();
   return (
-    <NavigationContainer
-      // linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : navTheme}>
-      <RootNavigator />
-    </NavigationContainer>
+    <>
+      <StatusBar style={scheme === "dark" ? "light" : "dark"}/>
+      <PaperProvider theme={scheme === 'dark' ? DefaultDarkTheme : DefaultLightTheme}>
+        <NavigationContainer theme={scheme === 'dark' ? DefaultDarkTheme : DefaultLightTheme}>
+          <RootNavigator />
+        </NavigationContainer>
+      </PaperProvider>
+    </>
   );
 }
 
@@ -58,9 +69,12 @@ function RootNavigator() {
         }}
       >
         <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
-        <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
-        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'OnBoardBegin'} component={OnBoardScreenBegin} />
+        <Stack.Screen name={'OnBoardEmail'} component={OnBoardScreenEmail} />
+        <Stack.Screen name={'OnBoardPassword'} component={OnBoardScreenPassword} />
+        <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
       </Stack.Navigator> :
       <Stack.Navigator
         screenOptions={{
@@ -74,6 +88,7 @@ function RootNavigator() {
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
         <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerTitle: 'Create Your Trip'}}/>
         <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerTitle: 'Rate Your Co-Rider'}}/>
+        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
       </Stack.Navigator>
   );
 }

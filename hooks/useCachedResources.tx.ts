@@ -1,7 +1,9 @@
-import { FontAwesome } from '@expo/vector-icons';
+import {FontAwesome} from '@expo/vector-icons';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
+import {Asset} from 'expo-asset';
+import {Image} from "react-native";
 import {loadColors} from "../configs/react-native-ui-lib/FoundationConfig";
 import {loadStyles} from "../configs/react-native-ui-lib/ComponentsConfig";
 
@@ -23,6 +25,10 @@ export default function useCachedResources() {
           'RobotoFlex': require('../assets/fonts/RobotoFlex.ttf'),
         });
 
+        await cacheImages([
+          require("../assets/icon.png"),
+        ]);
+
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);
@@ -37,4 +43,14 @@ export default function useCachedResources() {
   }, []);
 
   return isLoadingComplete;
+}
+
+async function cacheImages(images: any[]) {
+  return images.map(image => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
 }

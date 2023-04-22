@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Dimensions} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import MapView, {Marker, Polyline} from 'react-native-maps';
 
 function RouteMap(props: any) {

@@ -1,15 +1,4 @@
-import {
-    Avatar,
-    BorderRadiuses,
-    Button,
-    Card,
-    Colors,
-    GridList,
-    Spacings,
-    Text,
-    TextField,
-    View
-} from "react-native-ui-lib";
+import {Avatar, BorderRadiuses, Card, Colors, GridList, Spacings, Text, View} from "react-native-ui-lib";
 import {StyleSheet} from 'react-native';
 import {User} from "../Interface/TripInterface"
 import React from "react";

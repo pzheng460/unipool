@@ -1,6 +1,6 @@
-import {Button, ButtonSize, Colors, FloatingButton, Text, View,} from "react-native-ui-lib";
+import {Button, Colors, Text, View,} from "react-native-ui-lib";
 import React, {useContext, useState} from "react";
-import {RootStackScreenProps} from "../types";
+import {RootStackScreenProps} from "../navigation/types";
 import {Animated, Dimensions, Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback,} from "react-native";
 import {Avatar} from '@rneui/themed';
 import {MaterialIcons} from '@expo/vector-icons';

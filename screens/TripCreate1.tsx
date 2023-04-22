@@ -12,7 +12,7 @@ import {
   View
 } from "react-native-ui-lib";
 import {SetStateAction, useState} from "react";
-import {RootStackScreenProps} from "../types";
+import {RootStackScreenProps} from "../navigation/types";
 import dayjs from "dayjs";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {useHeaderHeight} from "@react-navigation/elements";

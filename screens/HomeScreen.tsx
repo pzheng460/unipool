@@ -1,16 +1,16 @@
 import {
-    Chip,
-    Colors,
-    FloatingButton,
-    GridList,
-    Spacings,
-    TabController,
-    Text,
-    TextField,
-    View
+  Chip,
+  Colors,
+  FloatingButton,
+  GridList,
+  Spacings,
+  TabController,
+  Text,
+  TextField,
+  View
 } from "react-native-ui-lib";
-import {Dimensions, FlatList, Keyboard, RefreshControl, ScrollView, StyleSheet, TextStyle} from "react-native";
-import {RootTabScreenProps} from "../types";
+import {Dimensions, Keyboard, RefreshControl, ScrollView, TextStyle} from "react-native";
+import {RootTabScreenProps} from "../navigation/types";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
 import {trip3, user1, user2} from "../assets/data/dummyData";
@@ -20,13 +20,12 @@ import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 import {Divider} from "@rneui/themed";
 import Animated, {
-    runOnJS,
-    useAnimatedScrollHandler,
-    useAnimatedStyle,
-    useSharedValue,
-    withTiming,
+  runOnJS,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from "react-native-reanimated";
-import SwipeGesture from "../components/swipe-gesture";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 

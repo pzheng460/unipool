@@ -1,47 +1,47 @@
-import {RootStackScreenProps} from "../types";
-import {StyleSheet, View,} from "react-native";
-import {Button, Colors, Text} from "react-native-ui-lib";
+import {RootStackScreenProps} from "../navigation/types";
+import {Keyboard, TouchableWithoutFeedback, View} from "react-native";
+import {Text} from "react-native-paper";
+import {Button} from "../components";
+import React from "react";
+import {useHeaderHeight} from "@react-navigation/elements";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function RegisterCompleteScreen({navigation}: RootStackScreenProps<'RegisterComplete'>) {
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
 
-    return (
-        <View style={styles.container}>
-            <View style={{flex: 7}}>
-                <Text
-                    style={{color: "#10274C", fontSize: 30, fontWeight: "500", fontFamily: "Oceanwide-Semibold"}}>
-                    You Are All Set!
-                </Text>
-
-                <Text
-                    style={{color: "#10274C", fontSize: 20, fontFamily: "Oceanwide", marginTop: 60}}>
-                    You will receive an email with a verification link.
-                    {'\n\n'}
-                    Click the link to get verified as a student before your first login.
-                </Text>
-            </View>
-            <View style={{flex: 1}}>
-                <Button style={{backgroundColor: Colors.primary, borderRadius: 8}} onPress={() => navigation.navigate('Login')}>
-                    <Text style={styles.button}>Done</Text>
-                </Button>
-            </View>
-        </View>
-
-    );
-}
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: '#FFF',
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => Keyboard.dismiss()}
+    >
+      <View style={{
+        paddingTop: headerHeight,
+        paddingBottom: insets.bottom,
+        paddingLeft: 24,
+        paddingRight: 24,
         flex: 1,
-        flexDirection: "column",
-        paddingTop: 100,
-        padding: 40,
-    },
-    button: {
-        color: "#FFFFFF",
-        fontFamily: "Oceanwide-Semibold",
-        paddingTop: 3,
-        paddingBottom: 3,
-        fontSize: 18
-    }
-});
+      }}>
+        <View style={{flex: 1, gap: 16}}>
+          <View>
+            <Text variant={"displaySmall"} style={{fontWeight: "bold"}}>
+              All Set!
+            </Text>
+          </View>
+          <View>
+            <Text variant={"bodyLarge"}>
+              You will receive an email with a verification link.
+            </Text>
+            <Text variant={"bodyLarge"}>
+              Click the link to get verified as a student before your first login.
+            </Text>
+          </View>
+        </View>
+        <View>
+          <Button onPress={() => navigation.navigate("Login")}>
+            Done
+          </Button>
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+}
