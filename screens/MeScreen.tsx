@@ -176,7 +176,7 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
                   lineHeight: 24,
                   color: "#8c8c8c"
                 }}
-              > {"george.burdell@gatech.edu"} </Text>
+              > {data.user.email} </Text>
             </View>
           </View>
         </View>
