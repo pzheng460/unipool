@@ -28,6 +28,7 @@ import {DefaultDarkTheme, DefaultLightTheme} from "../theme/global";
 import OnBoardScreenBegin from "../screens/onboard/OnboardScreen-Begin";
 import OnBoardScreenEmail from "../screens/onboard/OnboardScreen-Email";
 import OnBoardScreenPassword from "../screens/onboard/OnboardScreen-Password";
+import WaitingScreen from "../screens/WaitingScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const [scheme, setColorScheme, setUseSystem] = useColorScheme();
@@ -53,7 +54,7 @@ function RootNavigator() {
   const [user, loading, error] = useAuthState(auth);
 
   return (
-    user === null ?
+    user === null || user === undefined ?
       <Stack.Navigator
         screenOptions={{
           headerShadowVisible: false,
@@ -67,7 +68,7 @@ function RootNavigator() {
         <Stack.Screen name={'OnBoardEmail'} component={OnBoardScreenEmail} />
         <Stack.Screen name={'OnBoardPassword'} component={OnBoardScreenPassword} />
         <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
-        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
+        {/*<Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>*/}
       </Stack.Navigator> :
       <Stack.Navigator
         screenOptions={{
@@ -75,12 +76,14 @@ function RootNavigator() {
           headerTransparent: true,
         }}
       >
+        <Stack.Screen name={'Waiting'} component={WaitingScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="TripDetails"
                       component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
         <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerTitle: 'Create Your Trip'}}/>
         <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerTitle: 'Rate Your Co-Rider'}}/>
+        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
       </Stack.Navigator>
   );
 }

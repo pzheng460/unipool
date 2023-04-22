@@ -44,10 +44,7 @@ export default function RegisterCompleteScreen({navigation}: RootStackScreenProp
         </View>
         <View>
           <Button onPress={() => {
-            navigation.reset({
-              index: 1,
-              routes: [{name: "Welcome"}, {name: "Login"}],
-            });
+            navigation.navigate("Root");
           }}>
             Done
           </Button>

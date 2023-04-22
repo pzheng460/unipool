@@ -3,7 +3,7 @@ import DataActionTrip = DataActions.DataActionTrip;
 import DataActionName = DataActions.DataActionName;
 import DataActionGender = DataActions.DataActionGender;
 import DataActionEmail = DataActions.DataActionEmail;
-
+import DataActionFetch = DataActions.DataActionFetch;
 export function dummyDataReducer (data: GlobalData, action: DataActions.Any): GlobalData {
   switch (action.type) {
     case ActionTypes.ADD_UPCOMING_TRIP: {
@@ -69,7 +69,18 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
           eduEmail: emailAction.eduEmail,
         },
         trips: [...data.trips]
-      }
+      };
+    }
+
+    case ActionTypes.FETCH_USER: {
+      const userAction = action as DataActionFetch;
+      console.log(userAction);
+      return {
+        user: {
+          ...userAction.user,
+        },
+        trips: [...data.trips]
+      };
     }
   }
 }

@@ -11,12 +11,15 @@ import {
 } from "react-native";
 import {Card, Checkbox, Text, TextInput} from "react-native-paper";
 import {Button} from "../components";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {RootStackScreenProps} from "../navigation/types";
-import {auth} from "../configs/firebase/FirebaseConfig";
+import {auth, db} from "../configs/firebase/FirebaseConfig";
 import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {doc, getDoc} from "firebase/firestore";
+import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
+import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 
 const logo = require("../assets/icon.png");
 export default function LoginScreen({route, navigation}: RootStackScreenProps<'Login'>) {
@@ -26,6 +29,9 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
+  const data = useContext(DummyDataContext) as GlobalData;
 
   const [
     signInWithEmailAndPassword,
@@ -53,26 +59,64 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
   }
 
   function handleLogin() {
-    signInWithEmailAndPassword(email, password).catch((error) => {
-      console.log(error.message);
-      let title;
-      let msg = undefined;
-      if (error.message === 'Firebase: Error (auth/invalid-email).') {
-        title = 'Your email or password is incorrect.';
-      } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
-        title = 'Your email or password is incorrect.';
-      } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
-        title = 'Account does not exist';
-        msg = 'Please sign up.'
-      } else if (error.message === 'Firebase: Error (auth/internal-error).') {
-        title = 'Your email or password is incorrect.'
-      } else {
-        title = error.message;
-      }
-      Alert.alert(title, msg,[
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ]);
-    });
+    signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        console.log(error.message);
+        let title;
+        let msg = undefined;
+        if (error.message === 'Firebase: Error (auth/invalid-email).') {
+          title = 'Your email or password is incorrect.';
+        } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
+          title = 'Your email or password is incorrect.';
+        } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
+          title = 'Account does not exist';
+          msg = 'Please sign up.'
+        } else if (error.message === 'Firebase: Error (auth/internal-error).') {
+          title = 'Your email or password is incorrect.'
+        } else {
+          title = error.message;
+        }
+        Alert.alert(title, msg,[
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+        ]);
+      })
+      .then((user) => {
+        console.log(user);
+        if (user !== undefined) {
+          const uid = user.user.uid;
+          getDoc(doc(db, "users", uid))
+            .then((res) => {
+              if (res.exists()) {
+                console.log(res.data());
+                const userData = res.data();
+                dispatch({
+                  type: ActionTypes.FETCH_USER,
+                  user: {
+                    ...data.user,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
+                    email: userData.email,
+                    eduEmail: userData.email,
+                    gender: userData.gender,
+                    // TODO: How to parse trips?
+                    pastTrips: [],
+                    upcomingTrips: [],
+                    rating: userData.rating,
+                    numOfRatings: userData.numOfRatings,
+                  },
+                });
+              } else {
+                console.log("User does not exist");
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              Alert.alert("Connection Error");
+            })
+        } else {
+          Alert.alert("Login Failed, please check your connection.");
+        }
+      });
   }
 
   return (

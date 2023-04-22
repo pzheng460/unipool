@@ -43,7 +43,7 @@ const customLightTheme: typeof MD3LightTheme= {
   colors: {
     primary: "#303437",
     onPrimary: "rgb(255, 255, 255)",
-    primaryContainer: "rgb(220, 220, 250)",
+    primaryContainer: "rgb(220, 220, 220)",
     onPrimaryContainer: "rgb(0, 22, 77)",
     secondary: "rgb(89, 94, 114)",
     onSecondary: "rgb(255, 255, 255)",

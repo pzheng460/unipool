@@ -7,6 +7,7 @@ export enum ActionTypes {
   UPDATE_FULL_NAME = "UPDATE_FULL_NAME",
   UPDATE_GENDER = "UPDATE_GENDER",
   INIT_USER = "INIT_USER",
+  FETCH_USER = "FETCH_USER",
 }
 
 export namespace DataActions {
@@ -16,7 +17,8 @@ export namespace DataActions {
     | DataActionTrips
     | DataActionName
     | DataActionEmail
-    | DataActionGender;
+    | DataActionGender
+    | DataActionFetch;
 
   interface DataActionBase {
     type: ActionTypes,
@@ -42,5 +44,9 @@ export namespace DataActions {
 
   export interface DataActionGender extends DataActionBase {
     gender: string,
+  }
+
+  export interface DataActionFetch extends  DataActionBase {
+    user: User,
   }
 }

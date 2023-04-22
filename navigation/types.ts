@@ -27,6 +27,7 @@ export type RootStackParamList = {
   OnBoardBegin: undefined;
   OnBoardEmail: undefined;
   OnBoardPassword: undefined;
+  Waiting: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

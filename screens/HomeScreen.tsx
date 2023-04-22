@@ -75,7 +75,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   }
 
   useEffect(() => {
-    setTripData(data.trips.filter(trip => {
+    setTripData(data.trips?.filter(trip => {
       return trip.type === "upcoming";
     }));
   }, [data.trips]);
@@ -154,7 +154,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   }
 
   function renderUpcomingTrips() {
-    if (data.user.upcomingTrips.length === 0) {
+    if (data.user?.upcomingTrips.length === 0) {
       return (
           <Text text65 margin-20>
             No upcoming trips
@@ -164,7 +164,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
     return (
       <View flex-G>
-        <GridList data={data.user.upcomingTrips}
+        <GridList data={data.user?.upcomingTrips}
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}
@@ -182,7 +182,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     )
   }
   function renderPastTrips() {
-    if (user1.pastTrips.length === 0) {
+    if (data.user?.pastTrips.length === 0) {
       return (
           <Text text65 margin-20>
             No past trips
@@ -191,7 +191,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     }
 
     return (
-        <GridList data={data.user.pastTrips}
+        <GridList data={data.user?.pastTrips}
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}

@@ -8,7 +8,8 @@ import React, {useContext, useState} from "react";
 import {DummyDataContext, DummyDataDispatch} from "../../AppContextWrapper";
 import {DataActions, GlobalData} from "../../reducer/ActionType";
 import {useCreateUserWithEmailAndPassword, useSignOut} from "react-firebase-hooks/auth";
-import {auth} from "../../configs/firebase/FirebaseConfig";
+import {auth, db} from "../../configs/firebase/FirebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 export default function OnBoardScreenPassword({route, navigation}: RootStackScreenProps<'OnBoardPassword'>) {
   const headerHeight = useHeaderHeight();
@@ -52,12 +53,30 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
     )
       .then((res) => {
         console.log(res);
-        signOut().then((res) => {
-          navigation.reset({
-            index: 1,
-            routes: [{name: "Welcome"}, {name: "RegisterComplete"}],
-          });
-        });
+        if (res !== undefined) {
+          const uid = res.user.uid;
+          setDoc(doc(db, "users", uid), {
+            firstName: data.user.firstName,
+            lastName: data.user.lastName,
+            gender: data.user.gender,
+            email: data.user.email,
+            pastTrips: [],
+            rating: 5,
+            numOfRatings: 1,
+            upcomingTrips: [],
+            comments: [""],
+          }).then((res) => {
+            navigation.reset({
+              index: 1,
+              routes: [{name: "Root"}, {name: "RegisterComplete"}],
+            });
+          })
+            .catch((error) => {
+              console.log(error);
+            });
+        } else {
+          Alert.alert('Register Failed, please try again.');
+        }
       });
     // navigation.reset({
     //   index: 1,
