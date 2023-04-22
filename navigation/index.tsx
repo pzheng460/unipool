@@ -1,16 +1,16 @@
-import {AntDesign, FontAwesome} from '@expo/vector-icons';
+import {AntDesign} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName } from 'react-native';
 import {RootStackParamList, RootTabParamList, RootTabScreenProps} from "../types";
 import WelcomeScreen from "../screens/WelcomeScreen";
 import HomeScreen from "../screens/HomeScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ChatScreen from "../screens/ChatScreen";
 import RegisterScreen from '../screens/RegisterScreen';
-import {useAuthState} from "react-firebase-hooks/auth";;
+import {useAuthState} from "react-firebase-hooks/auth";
 import {auth} from "../configs/firebase/FirebaseConfig";
 import GroupScreen from "../screens/GroupScreen";
 import MessageScreen from "../screens/MessageScreen";
@@ -20,6 +20,7 @@ import TripDetailsScreen from "../screens/TripDetailsScreen";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import TripCreate1 from "../screens/TripCreate1";
 import RatingScreen from "../screens/RatingScreen";
+import RegisterCompleteScreen from "../screens/RegisterCompleteScreen";
 
 const navTheme = {
   ...DefaultTheme,
@@ -59,6 +60,7 @@ function RootNavigator() {
         <Stack.Screen name={'Welcome'} component={WelcomeScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name={'Register'} component={RegisterScreen} options={{headerShown: false}}/>
+        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen} options={{headerShown: false}}/>
       </Stack.Navigator> :
       <Stack.Navigator
         screenOptions={{

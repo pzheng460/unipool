@@ -1,5 +1,4 @@
 import {
-    Button,
     Chip,
     Colors,
     FloatingButton,
@@ -28,7 +27,6 @@ import Animated, {
     withTiming,
 } from "react-native-reanimated";
 import SwipeGesture from "../components/swipe-gesture";
-import AnimatedView from "react-native-reanimated/lib/types/lib/reanimated2/component/View";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -52,7 +50,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                 isScrolling.value
             ) {
                 translateY.value = 0;
-                console.log("scrolling up");
+                // console.log("scrolling up");
                 runOnJS(setShowSearch)(true);
                 runOnJS(Keyboard.dismiss)();
             } else if (
@@ -60,7 +58,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                 isScrolling.value
             ) {
                 translateY.value = 100;
-                console.log("scrolling down");
+                // console.log("scrolling down");
                 runOnJS(setShowSearch)(false);
                 runOnJS(Keyboard.dismiss)();
             }

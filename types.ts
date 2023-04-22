@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Login: undefined;
   Register: undefined;
+  RegisterComplete: undefined;
   Welcome: undefined;
   TripDetails: {id: number} | undefined;
   TripCreate1: undefined;
