@@ -33,15 +33,15 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
         </View>
       </View>
       <View style={{marginLeft: 12,  marginRight: 12}}>
-        <View style={{
-          flexDirection: "row",
-          marginBottom: 8,
-        }}>
-          <Switch value={scheme === "dark"} onValueChange={(v) => {
-            setColorScheme(v ? "dark" : "light");
-          }} theme={theme}/>
-          <Text variant="bodyLarge">  Dark Theme</Text>
-        </View>
+        {/*<View style={{*/}
+        {/*  flexDirection: "row",*/}
+        {/*  marginBottom: 8,*/}
+        {/*}}>*/}
+        {/*  <Switch value={scheme === "dark"} onValueChange={(v) => {*/}
+        {/*    setColorScheme(v ? "dark" : "light");*/}
+        {/*  }} theme={theme}/>*/}
+        {/*  <Text variant="bodyLarge">  Dark Theme</Text>*/}
+        {/*</View>*/}
         <View style={{marginBottom: 32}}>
           <Button onPress={() => navigation.navigate("OnBoardBegin")}>
             Get Started

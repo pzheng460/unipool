@@ -3,13 +3,16 @@ import React, {useContext, useState} from 'react';
 import {DummyDataContext} from "../AppContextWrapper";
 import {GlobalData} from "../reducer/ActionType";
 import {User} from "../Interface/TripInterface";
-import {Avatar, Button, Colors, GridList, Text, View} from "react-native-ui-lib";
+import {Avatar, Colors, GridList, View} from "react-native-ui-lib";
+import {Button} from "../components";
+import {Text} from "react-native-paper";
 import {AntDesign} from "@expo/vector-icons";
 import {Dimensions, ScrollView, TouchableOpacity} from "react-native";
 import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSignOut} from 'react-firebase-hooks/auth';
 import {auth} from "../configs/firebase/FirebaseConfig";
+import {useTheme} from "react-native-paper";
 
 type MenuItem = {
   title: string;
@@ -69,6 +72,7 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
   const bottomHeight = useBottomTabBarHeight();
   const [bounce, setBounce] = useState(false);
   const [signOut, loading, error] = useSignOut(auth);
+  const theme = useTheme();
   
   function renderEntry(title: string, icon: string | undefined, size: number) {
     if (title === "===") {
@@ -95,15 +99,15 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
                     style={{width: 24}}
               >
                 {/*@ts-ignore*/}
-                <AntDesign name={icon} size={size}/>
+                <AntDesign name={icon} size={size} color={theme.colors.onSurface}/>
               </View>
             }
             <View centerV left>
               <Text
                 style={{
-                  fontSize: 18,
+                  fontSize: 16,
                   lineHeight: 20,
-                  fontWeight: 500,
+                  fontWeight: "500",
                 }}
               >
                 {title}
@@ -116,7 +120,7 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
   }
 
   return(
-    <View useSafeArea flex backgroundColor={Colors.white}>
+    <View useSafeArea flex backgroundColor={theme.colors.background}>
       <ScrollView bounces={bounce}
                   onContentSizeChange={(w, h) => {
                     setBounce(screenHeight - h - headerHeight - bottomHeight < 0)
@@ -155,7 +159,7 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
                     style={{
                       fontSize: 16,
                       lineHeight: 32,
-                      fontWeight: 500,
+                      fontWeight: "500",
                     }}
                   > {user.rating} </Text>
                 </View>
@@ -177,11 +181,14 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
           </View>
         </View>
         <View margin-32 marginT-22>
-          <Button label={'View Profile'} backgroundColor={Colors.primary} fullWidth
+          <Button
                   style={{
                     borderRadius: 8
                   }}
-          />
+                  buttonColor={Colors.primary}
+          >
+            View Profile
+          </Button>
         </View>
         <View marginT-16
           // style={{
@@ -197,16 +204,15 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
           </GridList>
         </View>
         <View margin-32 marginT-22>
-          <Button label={'Log Out'} backgroundColor={Colors.background2} fullWidth
-                  color={Colors.error}
-                  labelStyle={{fontWeight: 500, fontVariant: 'underline'}}
-                  style={{
-                    borderRadius: 8
-                  }}
-                  onPress={async () => {
-                    const success = await signOut();
-                  }}
-          />
+          <Button
+            onPress={async () => {
+              const success = await signOut();
+            }}
+            mode={"text"}
+            textColor={Colors.error}
+          >
+            Log Out
+          </Button>
         </View>
       </ScrollView>
     </View>

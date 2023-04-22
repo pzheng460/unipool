@@ -3,9 +3,11 @@ import {Colors, View} from "react-native-ui-lib";
 import {Chat, defaultTheme, MessageType} from "@flyerhq/react-native-chat-ui";
 import React, {ReactNode, useState} from "react";
 import {useHeaderHeight} from "@react-navigation/elements";
+import {useTheme} from "react-native-paper";
 
 export default function ChatScreen({route, navigation}: RootStackScreenProps<'ChatScreen'>) {
     const headerHeight = useHeaderHeight();
+    const theme = useTheme();
     const uuidv4 = () => {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
             const r = Math.floor(Math.random() * 16)
@@ -76,9 +78,12 @@ export default function ChatScreen({route, navigation}: RootStackScreenProps<'Ch
                 theme={{
                     ...defaultTheme,
                     colors: { ...defaultTheme.colors,
-                        primary: Colors.primary,
-                        inputBackground: Colors.background2,
-                        inputText: Colors.black},
+                        primary: theme.colors.primary,
+                        inputBackground: theme.colors.elevation.level2,
+                        inputText: theme.colors.onBackground,
+                        background: theme.colors.surface,
+                        secondary: theme.colors.elevation.level1,
+                    },
                 }}
             />
         </View>

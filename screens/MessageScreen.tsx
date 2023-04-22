@@ -1,12 +1,16 @@
 import {RootTabScreenProps} from "../navigation/types";
-import {Avatar, Badge, Colors, GridList, Spacings, Text, TextField, View} from "react-native-ui-lib";
+import {Avatar, Badge, Colors, GridList, Spacings, TextField, View} from "react-native-ui-lib";
+import {Text} from "react-native-paper";
 import {AntDesign} from "@expo/vector-icons";
 import React from "react";
 import {Keyboard, TouchableHighlight, TouchableWithoutFeedback} from "react-native";
 import {MessageType, Room, User} from "@flyerhq/react-native-firebase-chat-core";
+import {useTheme} from "react-native-paper";
 
 
 export default function MessageScreen({navigation}: RootTabScreenProps<'Messages'>) {
+
+  const theme = useTheme();
 
   const userList: User[] = [
     {
@@ -91,6 +95,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
         <TouchableHighlight
           activeOpacity={0.9}
           onPress={() => navigation.navigate('ChatScreen',
+            // @ts-ignore
             {roomMessages: item.lastMessages})}>
           <View
               flex
@@ -99,7 +104,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                 height: 72,
                 borderRadius: 0,
                 overflow: 'hidden',
-                backgroundColor: Colors.white
+                backgroundColor: theme.colors.background
               }}
 
           >
@@ -127,7 +132,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                 <View flex row bottom>
                   <View flex left>
                     <Text style={{
-                      fontWeight: 500,
+                      fontWeight: "500",
                       fontSize: 16,
                       lineHeight: 24,
                       textAlign: 'left',
@@ -147,7 +152,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                           style={{
                             fontSize: 13,
                             lineHeight: 24,
-                            color: '#8c8c8c'
+                            color: '#8c8c8c',
                           }}
                       >
                         {"12:30"}
@@ -159,7 +164,7 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
                 <View flex top row>
                   <View flex left>
                     <Text style={{
-                      fontWeight: 400,
+                      fontWeight: "400",
                       fontSize: 14,
                       color: '#8c8c8c',
                       lineHeight: 24,
@@ -183,15 +188,18 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
     <TouchableWithoutFeedback
       onPress={() =>{Keyboard.dismiss()}}
     >
-      <View useSafeArea flex backgroundColor={Colors.background}>
+      <View useSafeArea flex backgroundColor={theme.colors.background}>
         <View>
-          <Text text40 marginT-12 marginL-8> Messages </Text>
+          <Text variant={"headlineMedium"} style={{marginTop: 12, marginLeft: 12, fontWeight: "bold"}}>
+            Messages
+          </Text>
         </View>
         <TextField
           marginT-8
           marginL-12
           marginR-12
           placeholder={'Search chats and messages'}
+          // placeholderTextColor={theme.colors.onSurfaceVariant}
           leadingAccessory={<AntDesign name="search1" size={18} color={'#8c8c8c'} style={{marginRight: 8}}/>}
           fieldStyle={{
             backgroundColor: Colors.background2,

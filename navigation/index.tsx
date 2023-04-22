@@ -23,7 +23,7 @@ import RatingScreen from "../screens/RatingScreen";
 import RegisterCompleteScreen from "../screens/RegisterCompleteScreen";
 import {useColorScheme} from "../contexts/ColorSchemeContext";
 import {StatusBar} from "expo-status-bar";
-import {Provider as PaperProvider} from "react-native-paper";
+import {Provider as PaperProvider, useTheme} from "react-native-paper";
 import {DefaultDarkTheme, DefaultLightTheme} from "../theme/global";
 import OnBoardScreenBegin from "../screens/onboard/OnboardScreen-Begin";
 import OnBoardScreenEmail from "../screens/onboard/OnboardScreen-Email";
@@ -81,7 +81,6 @@ function RootNavigator() {
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
         <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerTitle: 'Create Your Trip'}}/>
         <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerTitle: 'Rate Your Co-Rider'}}/>
-        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
       </Stack.Navigator>
   );
 }
@@ -94,6 +93,7 @@ const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
   const insets = useSafeAreaInsets();
+  const theme = useTheme();
   // @ts-ignore
   // @ts-ignore
   return (
@@ -102,8 +102,9 @@ function BottomTabNavigator() {
       screenOptions={{
         tabBarStyle: {
           height: 56 + insets.bottom,
+          backgroundColor: theme.colors.surface,
         },
-        tabBarActiveTintColor: Colors.primary,
+        tabBarActiveTintColor: theme.colors.inverseSurface,
         //@ts-ignore
         tabBarLabelStyle: {fontSize: 12, fontWeight: 600, marginBottom: 8},
     }}
