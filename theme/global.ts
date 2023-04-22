@@ -1,6 +1,7 @@
 import {DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationLightTheme, Theme} from '@react-navigation/native';
 import {adaptNavigationTheme, MD3DarkTheme, MD3LightTheme} from "react-native-paper";
 import deepmerge from "deepmerge";
+import {Colors} from "react-native-ui-lib";
 
 /**
  * Theme provider by React Navigation.
@@ -40,13 +41,13 @@ const customLightTheme: typeof MD3LightTheme= {
   ...MD3LightTheme,
   roundness: 2,
   colors: {
-    primary: "rgb(64, 90, 169)",
+    primary: Colors.primary,
     onPrimary: "rgb(255, 255, 255)",
-    primaryContainer: "rgb(220, 225, 255)",
+    primaryContainer: "rgb(220, 220, 250)",
     onPrimaryContainer: "rgb(0, 22, 77)",
     secondary: "rgb(89, 94, 114)",
     onSecondary: "rgb(255, 255, 255)",
-    secondaryContainer: "rgb(221, 225, 249)",
+    secondaryContainer: "rgb(221, 221, 221)",
     onSecondaryContainer: "rgb(22, 27, 44)",
     tertiary: "rgb(116, 84, 112)",
     onTertiary: "rgb(255, 255, 255)",
@@ -62,7 +63,7 @@ const customLightTheme: typeof MD3LightTheme= {
     surface: "rgb(255, 255, 255)",
     onSurface: "rgba(0, 0, 0, 0.85)",
     // +++++++++++++++++++++++++++++++++++++
-    surfaceVariant: "rgb(226, 225, 236)",
+    surfaceVariant: "rgb(226, 225, 226)",
     onSurfaceVariant: "rgb(69, 70, 79)",
     outline: "rgb(118, 118, 128)",
     outlineVariant: "rgb(198, 198, 208)",
@@ -73,11 +74,11 @@ const customLightTheme: typeof MD3LightTheme= {
     inversePrimary: "rgb(181, 196, 255)",
     elevation: {
       level0: "transparent",
-      level1: "rgb(245, 243, 251)",
-      level2: "rgb(239, 238, 248)",
-      level3: "rgb(233, 233, 246)",
-      level4: "rgb(231, 232, 245)",
-      level5: "rgb(227, 229, 243)"
+      level1: "rgb(243, 243, 243)",
+      level2: "rgb(239, 238, 238)",
+      level3: "rgb(233, 233, 233)",
+      level4: "rgb(231, 231, 231)",
+      level5: "rgb(227, 229, 228)"
     },
     surfaceDisabled: "rgba(27, 27, 31, 0.12)",
     onSurfaceDisabled: "rgba(27, 27, 31, 0.38)",
