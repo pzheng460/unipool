@@ -2,13 +2,19 @@ import {RootStackScreenProps} from "../navigation/types";
 import {Keyboard, TouchableWithoutFeedback, View} from "react-native";
 import {Text} from "react-native-paper";
 import {Button} from "../components";
-import React from "react";
+import React, {useEffect} from "react";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function RegisterCompleteScreen({navigation}: RootStackScreenProps<'RegisterComplete'>) {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    /**
+     * Put statements you hope to execute after render here.
+     */
+  }, [])
 
   return (
     <TouchableWithoutFeedback

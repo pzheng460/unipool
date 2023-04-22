@@ -29,13 +29,6 @@ import OnBoardScreenBegin from "../screens/onboard/OnboardScreen-Begin";
 import OnBoardScreenEmail from "../screens/onboard/OnboardScreen-Email";
 import OnBoardScreenPassword from "../screens/onboard/OnboardScreen-Password";
 
-const navTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: Colors.white,
-  },
-};
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const [scheme, setColorScheme, setUseSystem] = useColorScheme();
   return (
