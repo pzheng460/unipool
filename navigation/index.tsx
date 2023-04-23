@@ -53,6 +53,21 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const [user, loading, error] = useAuthState(auth);
 
+  if (user?.emailVerified === false) {
+    return (
+      <Stack.Navigator
+        screenOptions={{
+          headerShadowVisible: false,
+          headerTransparent: true,
+          title: "",
+        }}
+      >
+        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    );
+  }
+
   return (
     user === null || user === undefined ?
       <Stack.Navigator
@@ -83,7 +98,7 @@ function RootNavigator() {
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
         <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerTitle: 'Create Your Trip'}}/>
         <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerTitle: 'Rate Your Co-Rider'}}/>
-        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
+        {/*<Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>*/}
       </Stack.Navigator>
   );
 }

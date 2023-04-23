@@ -9,7 +9,7 @@ import {
   TextField,
   View
 } from "react-native-ui-lib";
-import {Dimensions, Keyboard, RefreshControl, ScrollView, TextStyle} from "react-native";
+import {Alert, Dimensions, Keyboard, RefreshControl, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../navigation/types";
 import TripCard from "../components/TripCard";
 import {Trip} from "../Interface/TripInterface";
@@ -26,6 +26,10 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {auth} from "../configs/firebase/FirebaseConfig";
+import {Modal, Portal, Text as PaperText, useTheme} from "react-native-paper";
+import {Button} from "../components";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -38,38 +42,83 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const [tabIndex, setTabIndex] = useState(0);
   const [showSearch, setShowSearch] = useState(true);
 
-    const lastContentOffset = useSharedValue(0);
-    const isScrolling = useSharedValue(false);
-    const translateY = useSharedValue(0);
+  const lastContentOffset = useSharedValue(0);
+  const isScrolling = useSharedValue(false);
+  const translateY = useSharedValue(0);
 
-    const scrollHandler = useAnimatedScrollHandler({
-        onScroll: (event) => {
-            if (
-                lastContentOffset.value > event.contentOffset.y &&
-                isScrolling.value
-            ) {
-                translateY.value = 0;
-                // console.log("scrolling up");
-                runOnJS(setShowSearch)(true);
-                runOnJS(Keyboard.dismiss)();
-            } else if (
-                lastContentOffset.value < event.contentOffset.y &&
-                isScrolling.value
-            ) {
-                translateY.value = 100;
-                // console.log("scrolling down");
-                runOnJS(setShowSearch)(false);
-                runOnJS(Keyboard.dismiss)();
-            }
-            lastContentOffset.value = event.contentOffset.y;
-        },
-        onBeginDrag: (e) => {
-            isScrolling.value = true;
-        },
-        onEndDrag: (e) => {
-            isScrolling.value = false;
-        },
-    });
+  const [user, loading, error] = useAuthState(auth);
+  const theme = useTheme();
+
+  const verifyModal = () => (
+    <Portal>
+      <Modal visible={!user?.emailVerified || true} dismissable={false}
+             contentContainerStyle={{
+               display: "flex",
+               alignItems: "center",
+               justifyContent: "center",
+             }}
+      >
+        <View style={{
+          marginRight: 24,
+          marginLeft: 24,
+          backgroundColor: theme.colors.background,
+          borderRadius: 8,
+          padding: 16,
+          gap: 16
+        }}>
+          <View>
+            <PaperText variant={"headlineLarge"} style={{fontWeight: "bold"}}>
+              Hey,
+            </PaperText>
+          </View>
+          <View>
+            <PaperText variant={"bodyLarge"}>
+              We noticed you have not verified your email address.
+            </PaperText>
+          </View>
+          <View>
+            <PaperText variant={"bodyLarge"}>
+              Click the link in your inbox to get verified as a student before your first login.
+            </PaperText>
+          </View>
+          <Button mode={"text"} labelStyle={{fontSize: 17}}
+                  onPress={() => navigation.replace("RegisterComplete")}
+          >
+            Missed Email? Go Back to Resend
+          </Button>
+        </View>
+      </Modal>
+    </Portal>
+  );
+
+  const scrollHandler = useAnimatedScrollHandler({
+      onScroll: (event) => {
+          if (
+              lastContentOffset.value > event.contentOffset.y &&
+              isScrolling.value
+          ) {
+              translateY.value = 0;
+              // console.log("scrolling up");
+              runOnJS(setShowSearch)(true);
+              runOnJS(Keyboard.dismiss)();
+          } else if (
+              lastContentOffset.value < event.contentOffset.y &&
+              isScrolling.value
+          ) {
+              translateY.value = 100;
+              // console.log("scrolling down");
+              runOnJS(setShowSearch)(false);
+              runOnJS(Keyboard.dismiss)();
+          }
+          lastContentOffset.value = event.contentOffset.y;
+      },
+      onBeginDrag: (e) => {
+          isScrolling.value = true;
+      },
+      onEndDrag: (e) => {
+          isScrolling.value = false;
+      },
+  });
   function plusIcon() {
       return <AntDesign name="plus" size={24} color="white" style={{padding: 16}} />;
   }
@@ -336,7 +385,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
   return (
     <View useSafeArea flexG style={{backgroundColor: Colors.$backgroundDefault}}>
-
+      {verifyModal()}
       <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]} initialIndex={tabIndex}>
 
         <TabController.TabBar
