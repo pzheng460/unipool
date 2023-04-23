@@ -85,7 +85,6 @@ export default function OnBoardScreenBegin({route, navigation}: RootStackScreenP
           </View>
           <View>
             <TextInput
-              autoFocus
               label={"Last Name"}
               autoComplete={"name-family"}
               maxLength={50}

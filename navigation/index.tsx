@@ -18,7 +18,7 @@ import MeScreen from "../screens/MeScreen";
 import {Colors} from "react-native-ui-lib";
 import TripDetailsScreen from "../screens/TripDetailsScreen";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
-import TripCreate1 from "../screens/TripCreate1";
+import CreateTripScreen from "../screens/CreateTripScreen";
 import RatingScreen from "../screens/RatingScreen";
 import RegisterCompleteScreen from "../screens/RegisterCompleteScreen";
 import {useColorScheme} from "../contexts/ColorSchemeContext";
@@ -83,7 +83,7 @@ function RootNavigator() {
         <Stack.Screen name="TripDetails"
                       component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
-        <Stack.Screen name={'TripCreate1'} component={TripCreate1} options={{headerTitle: 'Create Your Trip'}}/>
+        <Stack.Screen name={'TripCreate1'} component={CreateTripScreen} options={{ headerTransparent: true, title: "" }}/>
         <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerTitle: 'Rate Your Co-Rider'}}/>
         {/*<Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>*/}
       </Stack.Navigator>
