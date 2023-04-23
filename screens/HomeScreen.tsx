@@ -51,7 +51,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
   const verifyModal = () => (
     <Portal>
-      <Modal visible={!user?.emailVerified || true} dismissable={false}
+      <Modal visible={!user?.emailVerified as boolean} dismissable={false}
              contentContainerStyle={{
                display: "flex",
                alignItems: "center",
