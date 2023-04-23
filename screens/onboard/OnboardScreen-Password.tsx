@@ -1,7 +1,7 @@
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Alert, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, View} from "react-native";
-import {Text, TextInput} from "react-native-paper";
+import {HelperText, Text, TextInput} from "react-native-paper";
 import {Button} from "../../components";
 import {RootStackScreenProps} from "../../navigation/types";
 import React, {useContext, useState} from "react";
@@ -22,9 +22,12 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
     loading,
     error,
   ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
-  const [signOut,] = useSignOut(auth);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
+
+  const hasErrors = () => {
+    return password.length <= 5;
+  };
 
   function onPressEye() {
     const prevShowPassword = showPassword;
@@ -40,6 +43,9 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
   }
 
   function handlePasswordSubmit() {
+    if (hasErrors()) {
+      return;
+    }
     const userEmail = data.user.email;
     createUserWithEmailAndPassword(userEmail, password)
       .catch(error => {
@@ -120,7 +126,11 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
                 /* @ts-ignore */
                 enterKeyHint={"next"}
                 secureTextEntry={!showPassword}
+                error={hasErrors()}
               />
+              <HelperText type={"error"} visible={hasErrors()}>
+                Password should be at least 6 digits
+              </HelperText>
             </View>
           </View>
         </View>

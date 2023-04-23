@@ -1,7 +1,7 @@
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View} from "react-native";
-import {Text, TextInput} from "react-native-paper";
+import {HelperText, Text, TextInput} from "react-native-paper";
 import {Button} from "../../components";
 import {RootStackScreenProps} from "../../navigation/types";
 import React, {useContext, useState} from "react";
@@ -16,12 +16,18 @@ export default function OnBoardScreenEmail({route, navigation}: RootStackScreenP
   const [email, setEmail] = useState<string>(data.user.email);
 
   function handleEmailSubmit() {
-    dispatch({
-      type: ActionTypes.UPDATE_EMAIL_ADDRESS,
-      email: email,
-    })
-    navigation.navigate("OnBoardPassword");
+    if (!hasErrors()) {
+      dispatch({
+        type: ActionTypes.UPDATE_EMAIL_ADDRESS,
+        email: email,
+      })
+      navigation.navigate("OnBoardPassword");
+    }
   }
+
+  const hasErrors = () => {
+    return !/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.edu+$/.test(email);
+  };
 
   return (
     <TouchableWithoutFeedback
@@ -53,10 +59,16 @@ export default function OnBoardScreenEmail({route, navigation}: RootStackScreenP
               maxLength={50}
               onChangeText={(v) => setEmail(v)}
               keyboardType={"email-address"}
+              inputMode={"email"}
+              autoCapitalize={"none"}
               /* @ts-ignore */
               enterKeyHint={"next"}
               onSubmitEditing={() => handleEmailSubmit()}
+              error={hasErrors()}
             />
+            <HelperText type={"error"} visible={hasErrors()}>
+              Email Address is Invalid
+            </HelperText>
           </View>
         </View>
         <KeyboardAvoidingView style={{paddingBottom: 32}} behavior={"position"}>

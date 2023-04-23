@@ -1,10 +1,10 @@
-import {Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View} from "react-native";
+import {Alert, Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View} from "react-native";
 import {RootStackScreenProps} from "../../navigation/types";
 import {SegmentedButtons, Text, TextInput} from "react-native-paper";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Button} from "../../components";
-import React, {useContext, useEffect, useState} from "react";
+import React, {RefObject, useContext, useEffect, useRef, useState} from "react";
 import {DummyDataContext, DummyDataDispatch} from "../../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../../reducer/ActionType";
 
@@ -14,21 +14,29 @@ export default function OnBoardScreenBegin({route, navigation}: RootStackScreenP
 
   const data = useContext(DummyDataContext) as GlobalData;
   const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
-  const [name, setName] = useState<string>((data.user.firstName + " " + data.user.lastName).trim());
+  const [firstname, setFirstname] = useState<string>((data.user.firstName).trim());
+  const [lastname, setLastname] = useState<string>((data.user.lastName).trim());
   const [gender, setGender] = useState<string>(data.user.gender);
+
+  const lastNameRef= useRef();
   function handleSubmit() {
     /**
      * TODO: Check legal name format and gender selection.
      */
-    const userName = name.trim().split(" ");
+    if (firstname.trim().length <= 0
+      || lastname.trim().length <= 0
+      || gender === undefined || gender == "") {
+      Alert.alert("Please Input All Field Correctly");
+      return;
+    }
     dispatch({
       type: ActionTypes.UPDATE_GENDER,
       gender: gender,
     });
     dispatch({
       type: ActionTypes.UPDATE_FULL_NAME,
-      firstName:userName[0],
-      lastName: userName[1],
+      firstName:firstname,
+      lastName: lastname,
     })
     navigation.navigate("OnBoardEmail");
   }
@@ -64,14 +72,30 @@ export default function OnBoardScreenBegin({route, navigation}: RootStackScreenP
           <View>
             <TextInput
               autoFocus
-              label={"Full Name"}
-              autoComplete={"name"}
-              placeholder={"FirstName LastName"}
+              label={"First Name"}
+              autoComplete={"name-given"}
               maxLength={50}
-              onChangeText={(v) => setName(v.trim())}
+              onChangeText={(v) => setFirstname(v.trim())}
+              value={firstname.trim()}
+              /* @ts-ignore */
+              enterKeyHint={"next"}
+              /* @ts-ignore */
+              onSubmitEditing={() => lastNameRef.current.focus()}
+            />
+          </View>
+          <View>
+            <TextInput
+              autoFocus
+              label={"Last Name"}
+              autoComplete={"name-family"}
+              maxLength={50}
+              onChangeText={(v) => setLastname(v.trim())}
+              value={lastname.trim()}
               /* @ts-ignore */
               enterKeyHint={"next"}
               onSubmitEditing={() => Keyboard.dismiss()}
+              /* @ts-ignore */
+              ref={lastNameRef}
             />
           </View>
           <View>
