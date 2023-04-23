@@ -19,7 +19,6 @@ export default function OnBoardScreenEmail({route, navigation}: RootStackScreenP
     dispatch({
       type: ActionTypes.UPDATE_EMAIL_ADDRESS,
       email: email,
-      eduEmail: email,
     })
     navigation.navigate("OnBoardPassword");
   }

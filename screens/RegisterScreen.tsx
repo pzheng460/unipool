@@ -202,7 +202,7 @@ export default function RegisterScreen({navigation}: RootStackScreenProps<'Regis
                     label="Gender"
                     labelStyle={{fontSize:16, marginBottom:3}}
                     value={gender}
-                    onChange={v => setGender(v)}
+                    onChange={(v: string) => setGender(v)}
                     // renderPicker={() => {
                     //   return (
                     //     <WheelPicker

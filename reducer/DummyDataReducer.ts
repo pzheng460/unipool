@@ -22,14 +22,10 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
       const currentTrips = data.trips;
       return {
         user: {
-          id: 0,
+          id: '0',
           firstName: "",
           lastName: "",
-          avatar: "",
-          phone: "",
           email: "",
-          eduEmail: "",
-          eduVerified: false,
           gender: "",
           pastTrips: [],
           upcomingTrips: [],
@@ -66,7 +62,6 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
         user: {
           ...data.user,
           email: emailAction.email,
-          eduEmail: emailAction.eduEmail,
         },
         trips: [...data.trips]
       };

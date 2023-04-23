@@ -121,7 +121,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
             ...trip3,
             type: 'upcoming',
             riders: [user1, user2],
-            id: Date.now(),
+            id: Date.now().toString(),
           }
         });
       })
@@ -304,7 +304,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                     bottomMargin={36}
                     button={{
                         iconSource: plusIcon,
-                        onPress: () => {navigation.navigate('TripCreate1')},
+                        onPress: () => { // @ts-ignore
+                            navigation.navigate('TripCreate1')},
                         // size: 64,
                         backgroundColor: Colors.black,
                     }}

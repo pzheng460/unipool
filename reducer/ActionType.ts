@@ -34,7 +34,6 @@ export namespace DataActions {
 
   export interface DataActionEmail extends DataActionBase {
     email: string,
-    eduEmail: string,
   }
 
   export interface DataActionName extends DataActionBase {

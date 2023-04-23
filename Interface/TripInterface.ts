@@ -1,5 +1,5 @@
 export interface Trip {
-  id: number;
+  id: string;
   from: string;
   to: string;
   roundTrip: boolean;
@@ -8,22 +8,18 @@ export interface Trip {
   type: string;
   seatsTaken: number;
   seatsMax: number;
-  riders: User[];
+  riders: any[];
   sameGender: boolean;
 }
 
 export interface User {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
-  avatar?: string;
-  phone: string;
   email: string;
-  eduEmail: string;
-  eduVerified: boolean;
   gender: string;
-  pastTrips: Trip[];
-  upcomingTrips: Trip[];
+  pastTrips: any[];
+  upcomingTrips: any[];
   rating: number;
   numOfRatings: number;
 }

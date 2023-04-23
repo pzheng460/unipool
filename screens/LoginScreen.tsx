@@ -20,6 +20,7 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {doc, getDoc} from "firebase/firestore";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
+import {user1, user2} from "../assets/data/dummyData";
 
 const logo = require("../assets/icon.png");
 export default function LoginScreen({route, navigation}: RootStackScreenProps<'Login'>) {
@@ -60,25 +61,8 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
 
   function handleLogin() {
     signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        console.log(error.message);
-        let title;
-        let msg = undefined;
-        if (error.message === 'Firebase: Error (auth/invalid-email).') {
-          title = 'Your email or password is incorrect.';
-        } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
-          title = 'Your email or password is incorrect.';
-        } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
-          title = 'Account does not exist';
-          msg = 'Please sign up.'
-        } else if (error.message === 'Firebase: Error (auth/internal-error).') {
-          title = 'Your email or password is incorrect.'
-        } else {
-          title = error.message;
-        }
-        Alert.alert(title, msg,[
-          {text: 'OK', onPress: () => console.log('OK Pressed')},
-        ]);
+      .catch(error => {
+        Alert.alert(error.message);
       })
       .then((user) => {
         console.log(user);
@@ -89,14 +73,39 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
               if (res.exists()) {
                 console.log(res.data());
                 const userData = res.data();
+                // const pastTrips: {
+                //     id: string; from: any; to: any; roundTrip: any; date: any; returnDate: any; type: any; seatsTaken: any; seatsMax: any;
+                //     riders: any[], sameGender: any;
+                // }[] = [];
+                // const upcomingTrips = [];
+                // userData.pastTrips.foreach((tripID: string) => {
+                //   console.log(tripID);
+                //   getDoc(doc(db, tripID)).then(res => {
+                //     const tripData = res.data();
+                //     const trip = {
+                //       id: res.id,
+                //       from: tripData.from,
+                //       to: tripData.to,
+                //       roundTrip: tripData.roundTrip,
+                //       date: tripData.date,
+                //       returnDate: tripData.returnData,
+                //       type: tripData.type,
+                //       seatsTaken: tripData.seatsTaken,
+                //       seatsMax: tripData.seatsMax,
+                //       riders: [],
+                //       sameGender: tripData.sameGender,
+                //     }
+                //     pastTrips.push(trip);
+                //   })
+                // })
                 dispatch({
                   type: ActionTypes.FETCH_USER,
                   user: {
                     ...data.user,
+                    id: uid,
                     firstName: userData.firstName,
                     lastName: userData.lastName,
                     email: userData.email,
-                    eduEmail: userData.email,
                     gender: userData.gender,
                     // TODO: How to parse trips?
                     pastTrips: [],
@@ -114,7 +123,28 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
               Alert.alert("Connection Error");
             })
         } else {
-          Alert.alert("Login Failed, please check your connection.");
+          if (error) {
+            console.log(error.message);
+            let title;
+            let msg = undefined;
+            if (error.message === 'Firebase: Error (auth/invalid-email).') {
+              title = 'Your email or password is incorrect.';
+            } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
+              title = 'Your email or password is incorrect.';
+            } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
+              title = 'Account does not exist';
+              msg = 'Please sign up.'
+            } else if (error.message === 'Firebase: Error (auth/internal-error).') {
+              title = 'Your email or password is incorrect.'
+            } else {
+              title = error.message;
+            }
+            Alert.alert(title, msg,[
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
+          } else {
+            Alert.alert("Login Failed, please check your connection.");
+          }
         }
       });
   }
