@@ -56,21 +56,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const [user,] = useAuthState(auth);
 
-  if (user?.emailVerified === false) {
-    return (
-      <Stack.Navigator
-        screenOptions={{
-          headerShadowVisible: false,
-          headerTransparent: true,
-          title: "",
-        }}
-      >
-        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
-        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    );
-  }
-
   return (
     user === null || user === undefined ?
       <Stack.Navigator

@@ -8,18 +8,14 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {auth} from "../configs/firebase/FirebaseConfig";
 import {useAuthState, useSendEmailVerification} from "react-firebase-hooks/auth";
 
-export default function RegisterCompleteScreen({navigation}: RootStackScreenProps<'RegisterComplete'>) {
-  const headerHeight = useHeaderHeight();
-  const insets = useSafeAreaInsets();
+export default function RegisterCompleteScreen() {
+  // const headerHeight = useHeaderHeight();
+  // const insets = useSafeAreaInsets();
 
   const [countDown, setCountDown] = useState<number>(45);
-  const [block, setBlock] = useState<boolean>(true);
+  const [block, setBlock] = useState<boolean>(false);
 
   const [sendEmailVerification, sending, error2] = useSendEmailVerification(auth);
-
-  useEffect(() => {
-    handleSendCode();
-  }, []);
 
   // Not good, need a global timer.
   useEffect(() => {
@@ -54,43 +50,21 @@ export default function RegisterCompleteScreen({navigation}: RootStackScreenProp
   }
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => Keyboard.dismiss()}
-    >
       <View style={{
-        paddingTop: headerHeight,
-        paddingBottom: insets.bottom,
-        paddingLeft: 24,
-        paddingRight: 24,
-        flex: 1,
+        padding: 16,
       }}>
         <ActivityIndicator animating={sending} size={"large"} style={{position: "absolute",  top: "60%", alignSelf:"center"}}/>
-        <View style={{flex: 1, gap: 16}}>
-          <View>
-            <Text variant={"displaySmall"} style={{fontWeight: "bold"}}>
-              All Set!
-            </Text>
-          </View>
-          <View>
-            <Text variant={"bodyLarge"}>
-              You will receive an email with a verification link.
-            </Text>
-            <Text variant={"bodyLarge"}>
-              Click the link to get verified as a student before your first login.
-            </Text>
-          </View>
-        </View>
         <View style={{gap: 16}}>
+          <Text variant={"titleLarge"} style={{fontWeight: "600"}}>
+            We've sent you an email with a verification link.
+          </Text>
+          <Text variant={"bodyLarge"}>
+            Click the link to get verified as a student before your first login.
+          </Text>
           <Button onPress={() => {handleSendCode()}} mode={"text"} disabled={block}>
             Resend Verification Email {block && "(" + countDown + "s)"}
           </Button>
-          <Button onPress={() => {
-            navigation.replace("Root");
-          }}>
-            Done
-          </Button>
         </View>
       </View>
-    </TouchableWithoutFeedback>
   );
 }

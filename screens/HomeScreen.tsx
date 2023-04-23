@@ -26,12 +26,13 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import {useAuthState} from "react-firebase-hooks/auth";
+import {useAuthState, useSendEmailVerification, useSignOut} from "react-firebase-hooks/auth";
 import {auth, db} from "../configs/firebase/FirebaseConfig";
 import {Modal, Portal, Text as PaperText, useTheme} from "react-native-paper";
 import {Button} from "../components";
 import {collection, getDocs} from "firebase/firestore";
 import {useLoading} from "../contexts/LoadingContext";
+import RegisterCompleteScreen from "./RegisterCompleteScreen";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -51,6 +52,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const [user,] = useAuthState(auth);
   const [loading, setLoading] = useLoading();
   const theme = useTheme();
+  const [sendEmailVerification, sending, error2] = useSendEmailVerification(auth);
+  const [signOut,] = useSignOut(auth);
 
   const verifyModal = () => (
     <Portal>
@@ -59,37 +62,20 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                display: "flex",
                alignItems: "center",
                justifyContent: "center",
+               backgroundColor: theme.colors.background,
+               borderRadius: 8,
+               margin: 16
              }}
       >
-        <View style={{
-          marginRight: 24,
-          marginLeft: 24,
-          backgroundColor: theme.colors.background,
-          borderRadius: 8,
-          padding: 16,
-          gap: 16
-        }}>
-          <View>
-            <PaperText variant={"headlineLarge"} style={{fontWeight: "bold"}}>
-              Hey,
-            </PaperText>
-          </View>
-          <View>
-            <PaperText variant={"bodyLarge"}>
-              We noticed you have not verified your email address.
-            </PaperText>
-          </View>
-          <View>
-            <PaperText variant={"bodyLarge"}>
-              Click the link in your inbox to get verified as a student before your first login.
-            </PaperText>
-          </View>
-          <Button mode={"text"} labelStyle={{fontSize: 17}}
-                  onPress={() => navigation.replace("RegisterComplete")}
-          >
-            Missed Email? Go Back to Resend
-          </Button>
-        </View>
+        <RegisterCompleteScreen/>
+        <Button mode={"text"} onPress={async () => {
+          const success = await signOut();
+          if (success) {
+            navigation.replace("Login");
+          }
+        }} style={{marginTop: -16, marginBottom: 8}}>
+          Go Back To Login
+        </Button>
       </Modal>
     </Portal>
   );
@@ -154,7 +140,9 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
         });
       })
       .finally(() => {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 500);
       })
   }, []);
 
@@ -385,7 +373,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                 <FloatingButton
                     visible={true}
                     hideBackgroundOverlay={true}
-                    bottomMargin={36}
+                    bottomMargin={16}
                     button={{
                         iconSource: plusIcon,
                         onPress: () => { // @ts-ignore
