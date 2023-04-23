@@ -73,31 +73,6 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
               if (res.exists()) {
                 console.log(res.data());
                 const userData = res.data();
-                // const pastTrips: {
-                //     id: string; from: any; to: any; roundTrip: any; date: any; returnDate: any; type: any; seatsTaken: any; seatsMax: any;
-                //     riders: any[], sameGender: any;
-                // }[] = [];
-                // const upcomingTrips = [];
-                // userData.pastTrips.foreach((tripID: string) => {
-                //   console.log(tripID);
-                //   getDoc(doc(db, tripID)).then(res => {
-                //     const tripData = res.data();
-                //     const trip = {
-                //       id: res.id,
-                //       from: tripData.from,
-                //       to: tripData.to,
-                //       roundTrip: tripData.roundTrip,
-                //       date: tripData.date,
-                //       returnDate: tripData.returnData,
-                //       type: tripData.type,
-                //       seatsTaken: tripData.seatsTaken,
-                //       seatsMax: tripData.seatsMax,
-                //       riders: [],
-                //       sameGender: tripData.sameGender,
-                //     }
-                //     pastTrips.push(trip);
-                //   })
-                // })
                 dispatch({
                   type: ActionTypes.FETCH_USER,
                   user: {
@@ -107,9 +82,8 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                     lastName: userData.lastName,
                     email: userData.email,
                     gender: userData.gender,
-                    // TODO: How to parse trips?
-                    pastTrips: [],
-                    upcomingTrips: [],
+                    pastTrips: userData.pastTrips,
+                    upcomingTrips: userData.upcomingTrips,
                     rating: userData.rating,
                     numOfRatings: userData.numOfRatings,
                   },
