@@ -93,6 +93,7 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
 
     case ActionTypes.UPDATE_UPCOMING_TRIPS: {
       const tripAction = action as DataActionTrips;
+      console.log(tripAction);
       return {
         user: {
           ...data.user,
@@ -104,6 +105,7 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
 
     case ActionTypes.UPDATE_PAST_TRIPS: {
       const tripAction = action as DataActionTrips;
+      console.log(tripAction);
       return {
         user: {
           ...data.user,

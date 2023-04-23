@@ -12,7 +12,7 @@ import {
 import {Alert, Dimensions, Keyboard, RefreshControl, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../navigation/types";
 import TripCard from "../components/TripCard";
-import {Trip} from "../Interface/TripInterface";
+import {Trip, User} from "../Interface/TripInterface";
 import {trip3, user1, user2} from "../assets/data/dummyData";
 import React, {useContext, useEffect, useState} from "react";
 import {AntDesign} from "@expo/vector-icons";
@@ -30,7 +30,7 @@ import {useAuthState, useSendEmailVerification, useSignOut} from "react-firebase
 import {auth, db} from "../configs/firebase/FirebaseConfig";
 import {Modal, Portal, Text as PaperText, useTheme} from "react-native-paper";
 import {Button} from "../components";
-import {collection, getDocs} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs} from "firebase/firestore";
 import {useLoading} from "../contexts/LoadingContext";
 import RegisterCompleteScreen from "./RegisterCompleteScreen";
 
@@ -131,7 +131,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
             riders: doc.data().riders,
             sameGender: doc.data().sameGender,
           }
-          console.log("trip => " + JSON.stringify(trip));
+          // console.log("trip => " + JSON.stringify(trip));
           trips.push(trip);
         });
         dispatch({
@@ -143,7 +143,66 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
         setTimeout(() => {
           setLoading(false);
         }, 500);
-      })
+      });
+
+    const upcomingTrips: Trip[] = [];
+    data.user.upcomingTrips.forEach(async (upcomingTripID) => {
+        const docSnap = await getDoc(doc(db, "trips", upcomingTripID));
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+            let trip: Trip = {
+                id: upcomingTripID,
+                from: docSnap.data().from,
+                to: docSnap.data().to,
+                roundTrip: docSnap.data().roundTrip,
+                date: docSnap.data().date,
+                returnDate: docSnap.data().returnDate,
+                type: docSnap.data().type,
+                seatsTaken: docSnap.data().seatsTaken,
+                seatsMax: docSnap.data().seatsMax,
+                riders: docSnap.data().riders,
+                sameGender: docSnap.data().sameGender,
+            };
+            upcomingTrips.push(trip);
+        } else {
+            console.log("No such document!");
+        }
+    });
+
+      dispatch({
+          type: ActionTypes.UPDATE_UPCOMING_TRIPS,
+          trips: upcomingTrips,
+      });
+
+      const pastTrips: Trip[] = [];
+      data.user.pastTrips.forEach(async (pastTripID) => {
+          const docSnap = await getDoc(doc(db, "trips", pastTripID));
+          if (docSnap.exists()) {
+              console.log("Document data:", docSnap.data());
+              let trip: Trip = {
+                  id: pastTripID,
+                  from: docSnap.data().from,
+                  to: docSnap.data().to,
+                  roundTrip: docSnap.data().roundTrip,
+                  date: docSnap.data().date,
+                  returnDate: docSnap.data().returnDate,
+                  type: docSnap.data().type,
+                  seatsTaken: docSnap.data().seatsTaken,
+                  seatsMax: docSnap.data().seatsMax,
+                  riders: docSnap.data().riders,
+                  sameGender: docSnap.data().sameGender,
+              };
+              pastTrips.push(trip);
+          } else {
+              console.log("No such document!");
+          }
+      });
+
+      dispatch({
+          type: ActionTypes.UPDATE_PAST_TRIPS,
+          trips: pastTrips,
+      });
+
   }, []);
 
   useEffect(() => {
@@ -220,7 +279,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                   backgroundColor: Colors.background2,
                 }}
                 keyExtractor={(item, index) => item.id.toString()}
-                refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
+                // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
       />
     )
   }
@@ -233,6 +292,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
           </Text>
       )
     }
+
 
     return (
       <View flex-G>
@@ -247,7 +307,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                     // marginTop: Spacings.s2,
                     paddingTop: Spacings.s2,
                   }}
-                  keyExtractor={(item, index) => item.id.toString()}
+                  keyExtractor={(item, index) => item.id}
           // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
         />
       </View>
@@ -273,7 +333,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
                     // overflow: 'visible',
                     paddingTop: Spacings.s2,
                   }}
-                  keyExtractor={(item, index) => item.id.toString()}
+                  keyExtractor={(item, index) => item.id}
             // refreshControl={<RefreshControl refreshing={refreshing} title="refreshing" onRefresh={refreshTrips} />}
         />
     )
@@ -408,7 +468,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
   return (
     <View useSafeArea flexG style={{backgroundColor: Colors.$backgroundDefault}}>
-      {verifyModal()}
+      {/*{verifyModal()}*/}
       <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]} initialIndex={tabIndex}>
 
         <TabController.TabBar

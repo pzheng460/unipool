@@ -20,10 +20,10 @@ export type RootStackParamList = {
   Register: undefined;
   RegisterComplete: undefined;
   Welcome: undefined;
-  TripDetails: {id: number} | undefined;
+  TripDetails: {id: string} | undefined;
   TripCreate1: undefined;
   ChatScreen: {roomMessages: MessageType.Text[]};
-  Rating: {userId: number} | undefined;
+  Rating: {userId: string} | undefined;
   OnBoardBegin: undefined;
   OnBoardEmail: undefined;
   OnBoardPassword: undefined;
