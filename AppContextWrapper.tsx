@@ -3,6 +3,7 @@ import {trips, user1} from "./assets/data/dummyData";
 import {dummyDataReducer} from "./reducer/DummyDataReducer";
 import {GlobalData} from "./reducer/ActionType";
 import {ColorSchemeProvider} from "./contexts/ColorSchemeContext";
+import {LoadingProvider} from "./contexts/LoadingContext";
 
 
 const initialData: GlobalData = {user: user1, trips: trips};
@@ -18,7 +19,9 @@ export default function AppContextWrapper (props: any) {
     <DummyDataContext.Provider value={data}>
       <DummyDataDispatch.Provider value={dispatch}>
         <ColorSchemeProvider>
-          {props.children}
+          <LoadingProvider>
+            {props.children}
+          </LoadingProvider>
         </ColorSchemeProvider>
       </DummyDataDispatch.Provider>
     </DummyDataContext.Provider>

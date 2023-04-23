@@ -4,6 +4,8 @@ import DataActionName = DataActions.DataActionName;
 import DataActionGender = DataActions.DataActionGender;
 import DataActionEmail = DataActions.DataActionEmail;
 import DataActionFetch = DataActions.DataActionFetch;
+import DataActionTrips = DataActions.DataActionTrips;
+
 export function dummyDataReducer (data: GlobalData, action: DataActions.Any): GlobalData {
   switch (action.type) {
     case ActionTypes.ADD_UPCOMING_TRIP: {
@@ -76,6 +78,17 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
         },
         trips: [...data.trips]
       };
+    }
+
+    case ActionTypes.FETCH_TRIP: {
+      const tripAction = action as DataActionTrips;
+      console.log(tripAction)
+      return {
+        user: {
+          ...data.user,
+        },
+        trips: [...tripAction.trips]
+      }
     }
   }
 }

@@ -1,21 +1,12 @@
-import {Text, View, LoaderScreen} from "react-native-ui-lib";
+import {LoaderScreen} from "react-native-ui-lib";
 import {GlobalData} from "../reducer/ActionType";
 import {DummyDataContext} from "../AppContextWrapper";
-import {useContext, useEffect} from "react";
-import {RootStackScreenProps} from "../navigation/types";
+import {useContext} from "react";
+import {useTheme} from "react-native-paper";
 
-export default function WaitingScreen({route, navigation}: RootStackScreenProps<'Waiting'>) {
-  const data = useContext(DummyDataContext) as GlobalData;
-
-  useEffect(() => {
-    if (data !== undefined && data.user !== undefined && data.trips !== undefined) {
-      console.log(data);
-      // setTimeout(() => {
-        navigation.replace("Root");
-      // }, 1000);
-    }
-  }, [data]);
+export default function WaitingScreen() {
+  const theme = useTheme();
   return (
-    <LoaderScreen message={'Loading'}/>
+    <LoaderScreen overlay backgroundColor={theme.colors.surface} loaderColor={theme.colors.primary}/>
   )
 }

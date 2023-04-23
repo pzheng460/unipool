@@ -29,14 +29,17 @@ import OnBoardScreenBegin from "../screens/onboard/OnboardScreen-Begin";
 import OnBoardScreenEmail from "../screens/onboard/OnboardScreen-Email";
 import OnBoardScreenPassword from "../screens/onboard/OnboardScreen-Password";
 import WaitingScreen from "../screens/WaitingScreen";
+import {useLoading} from "../contexts/LoadingContext";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   const [scheme, setColorScheme, setUseSystem] = useColorScheme();
+  const [loading, setLoading] = useLoading();
   return (
     <>
       <StatusBar style={scheme === "dark" ? "light" : "dark"}/>
       <PaperProvider theme={scheme === 'dark' ? DefaultDarkTheme : DefaultLightTheme}>
         <NavigationContainer theme={scheme === 'dark' ? DefaultDarkTheme : DefaultLightTheme}>
+          {loading && <WaitingScreen/>}
           <RootNavigator />
         </NavigationContainer>
       </PaperProvider>
@@ -51,7 +54,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const [user, loading, error] = useAuthState(auth);
+  const [user,] = useAuthState(auth);
 
   if (user?.emailVerified === false) {
     return (
@@ -91,7 +94,6 @@ function RootNavigator() {
           headerTransparent: true,
         }}
       >
-        <Stack.Screen name={'Waiting'} component={WaitingScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="TripDetails"
                       component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>

@@ -27,9 +27,11 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import {useAuthState} from "react-firebase-hooks/auth";
-import {auth} from "../configs/firebase/FirebaseConfig";
+import {auth, db} from "../configs/firebase/FirebaseConfig";
 import {Modal, Portal, Text as PaperText, useTheme} from "react-native-paper";
 import {Button} from "../components";
+import {collection, getDocs} from "firebase/firestore";
+import {useLoading} from "../contexts/LoadingContext";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -46,7 +48,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const isScrolling = useSharedValue(false);
   const translateY = useSharedValue(0);
 
-  const [user, loading, error] = useAuthState(auth);
+  const [user,] = useAuthState(auth);
+  const [loading, setLoading] = useLoading();
   const theme = useTheme();
 
   const verifyModal = () => (
@@ -122,6 +125,38 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   function plusIcon() {
       return <AntDesign name="plus" size={24} color="white" style={{padding: 16}} />;
   }
+
+  useEffect(() => {
+    setLoading(true);
+    getDocs(collection(db, "trips"))
+      .then(querySnapshot => {
+        const trips: Trip[] = [];
+        querySnapshot.forEach((doc) => {
+          const trip: Trip = {
+            id: doc.id,
+            from: doc.data().from,
+            to: doc.data().to,
+            roundTrip: doc.data().roundTrip,
+            date: doc.data().date,
+            returnDate: doc.data().returnDate,
+            type: doc.data().type,
+            seatsTaken: doc.data().seatsTaken,
+            seatsMax: doc.data().seatsMax,
+            riders: doc.data().riders,
+            sameGender: doc.data().sameGender,
+          }
+          console.log("trip => " + JSON.stringify(trip));
+          trips.push(trip);
+        });
+        dispatch({
+          type: ActionTypes.FETCH_TRIP,
+          trips: trips
+        });
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+  }, []);
 
   useEffect(() => {
     setTripData(data.trips?.filter(trip => {

@@ -16,6 +16,7 @@ export default function App() {
     return (
       <AppContextWrapper>
         <SafeAreaProvider>
+
           <Navigation colorScheme={colorScheme} />
         </SafeAreaProvider>
       </AppContextWrapper>
