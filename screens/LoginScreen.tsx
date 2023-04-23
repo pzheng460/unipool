@@ -14,13 +14,14 @@ import {Button} from "../components";
 import React, {useContext, useState} from "react";
 import {RootStackScreenProps} from "../navigation/types";
 import {auth, db} from "../configs/firebase/FirebaseConfig";
-import {useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
+import {useSendEmailVerification, useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {doc, getDoc} from "firebase/firestore";
+import {doc, getDoc, getDocs, collection} from "firebase/firestore";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
-import {user1, user2} from "../assets/data/dummyData";
+import {user1, user2, user3, user4} from "../assets/data/dummyData";
+import {Trip} from "../Interface/TripInterface";
 
 const logo = require("../assets/icon.png");
 export default function LoginScreen({route, navigation}: RootStackScreenProps<'Login'>) {
@@ -40,7 +41,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
     loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
-
+  const [sendEmailVerification, sending, error2] = useSendEmailVerification(auth);
   function onCheckRemember() {
     const prevRemember = remember;
     setRemember(!prevRemember);
@@ -65,8 +66,9 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
         Alert.alert(error.message);
       })
       .then((user) => {
-        console.log(user);
         if (user !== undefined) {
+          console.log("Verified: " + user.user.emailVerified);
+
           const uid = user.user.uid;
           getDoc(doc(db, "users", uid))
             .then((res) => {
@@ -87,6 +89,26 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                     rating: userData.rating,
                     numOfRatings: userData.numOfRatings,
                   },
+                });
+
+                getDocs(collection(db, "trips")).then(querySnapshot => {
+                  querySnapshot.forEach((doc) => {
+                    const trip: Trip = {
+                      id: doc.id,
+                      from: doc.data().from,
+                      to: doc.data().to,
+                      roundTrip: doc.data().roundTrip,
+                      date: doc.data().date,
+                      returnDate: doc.data().returnDate,
+                      type: doc.data().type,
+                      seatsTaken: doc.data().seatsTaken,
+                      seatsMax: doc.data().seatsMax,
+                      riders: doc.data().riders,
+                      sameGender: doc.data().sameGender,
+                    }
+                    console.log("trip => " + JSON.stringify(trip));
+                    // TODO: dispatch to context
+                  });
                 });
               } else {
                 console.log("User does not exist");
