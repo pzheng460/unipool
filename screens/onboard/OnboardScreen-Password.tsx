@@ -21,7 +21,7 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
     user,
     loading,
     error,
-  ] = useCreateUserWithEmailAndPassword(auth);
+  ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
   const [signOut,] = useSignOut(auth);
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
@@ -42,13 +42,8 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
   function handlePasswordSubmit() {
     const userEmail = data.user.email;
     createUserWithEmailAndPassword(userEmail, password)
-      .catch(
-      (error) => {
-        if (error.code === 'auth/email-already-in-use') {
-          Alert.alert('Email address already in use.');
-        } else {
-          Alert.alert(error.message);
-        }
+      .catch(error => {
+        Alert.alert(error.message);
       }
     )
       .then((res) => {
@@ -75,7 +70,11 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
               console.log(error);
             });
         } else {
-          Alert.alert('Register Failed, please try again.');
+          if (error) {
+            Alert.alert('Registration Failed', error.code);
+          } else {
+            Alert.alert('Registration failed, please try again.');
+          }
         }
       });
     // navigation.reset({
