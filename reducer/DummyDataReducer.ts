@@ -90,5 +90,27 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
         trips: [...tripAction.trips]
       }
     }
+
+    case ActionTypes.UPDATE_UPCOMING_TRIPS: {
+      const tripAction = action as DataActionTrips;
+      return {
+        user: {
+          ...data.user,
+          upcomingTrips: tripAction.trips,
+        },
+        trips: [...tripAction.trips]
+      }
+    }
+
+    case ActionTypes.UPDATE_PAST_TRIPS: {
+      const tripAction = action as DataActionTrips;
+      return {
+        user: {
+          ...data.user,
+          pastTrips: tripAction.trips,
+        },
+        trips: [...tripAction.trips]
+      }
+    }
   }
 }

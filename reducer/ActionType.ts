@@ -9,6 +9,8 @@ export enum ActionTypes {
   INIT_USER = "INIT_USER",
   FETCH_USER = "FETCH_USER",
   FETCH_TRIP = "FETCH_TRIP",
+  UPDATE_UPCOMING_TRIPS = "UPDATE_UPCOMING_TRIPS",
+  UPDATE_PAST_TRIPS = "UPDATE_PAST_TRIPS",
 }
 
 export namespace DataActions {
