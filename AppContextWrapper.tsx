@@ -12,7 +12,7 @@ export const DummyDataDispatch = createContext({});
 export default function AppContextWrapper (props: any) {
   const [data, dispatch] = useReducer(dummyDataReducer, initialData);
   useEffect(() => {
-    // console.log(data.trips);
+    console.log(data.trips);
     console.log(data.user)
   }, [data]);
   return (

@@ -20,6 +20,7 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {collection, doc, getDoc, getDocs} from "firebase/firestore";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
+import {useLoading} from "../contexts/LoadingContext";
 
 const logo = require("../assets/icon.png");
 export default function LoginScreen({route, navigation}: RootStackScreenProps<'Login'>) {
@@ -29,14 +30,13 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useLoading();
 
   const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
   const data = useContext(DummyDataContext) as GlobalData;
 
   const [
     signInWithEmailAndPassword,
-    user,
-    loading,
     error,
   ] = useSignInWithEmailAndPassword(auth);
   const [sendEmailVerification, sending, error2] = useSendEmailVerification(auth);
@@ -59,9 +59,11 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
   }
 
   function handleLogin() {
+    setLoading(true);
     signInWithEmailAndPassword(email, password)
       .catch(error => {
         Alert.alert(error.message);
+        setLoading(false);
       })
       .then((user) => {
         if (user !== undefined) {
@@ -91,10 +93,13 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
               } else {
                 console.log("User does not exist");
               }
+              setLoading(false);
+              navigation.navigate("Root");
             })
             .catch((error) => {
               console.log(error);
               Alert.alert("Connection Error");
+              setLoading(false);
             })
         } else {
           if (error) {

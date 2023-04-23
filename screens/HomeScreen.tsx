@@ -30,7 +30,7 @@ import {useAuthState, useSendEmailVerification, useSignOut} from "react-firebase
 import {auth, db} from "../configs/firebase/FirebaseConfig";
 import {Modal, Portal, Text as PaperText, useTheme} from "react-native-paper";
 import {Button} from "../components";
-import {collection, doc, getDoc, getDocs} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, query} from "firebase/firestore";
 import {useLoading} from "../contexts/LoadingContext";
 import RegisterCompleteScreen from "./RegisterCompleteScreen";
 
@@ -112,97 +112,114 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
       return <AntDesign name="plus" size={24} color="white" style={{padding: 16}} />;
   }
 
-  useEffect(() => {
-    setLoading(true);
-    getDocs(collection(db, "trips"))
-      .then(querySnapshot => {
-        const trips: Trip[] = [];
-        querySnapshot.forEach((doc) => {
-          const trip: Trip = {
-            id: doc.id,
-            from: doc.data().from,
-            to: doc.data().to,
-            roundTrip: doc.data().roundTrip,
-            date: doc.data().date,
-            returnDate: doc.data().returnDate,
-            type: doc.data().type,
-            seatsTaken: doc.data().seatsTaken,
-            seatsMax: doc.data().seatsMax,
-            riders: doc.data().riders,
-            sameGender: doc.data().sameGender,
-          }
-          // console.log("trip => " + JSON.stringify(trip));
-          trips.push(trip);
-        });
-        dispatch({
-          type: ActionTypes.FETCH_TRIP,
-          trips: trips
-        });
-      })
-      .finally(() => {
-        setTimeout(() => {
-          setLoading(false);
-        }, 500);
-      });
-
-    const upcomingTrips: Trip[] = [];
-    data.user.upcomingTrips.forEach(async (upcomingTripID) => {
-        const docSnap = await getDoc(doc(db, "trips", upcomingTripID));
-        if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-            let trip: Trip = {
-                id: upcomingTripID,
-                from: docSnap.data().from,
-                to: docSnap.data().to,
-                roundTrip: docSnap.data().roundTrip,
-                date: docSnap.data().date,
-                returnDate: docSnap.data().returnDate,
-                type: docSnap.data().type,
-                seatsTaken: docSnap.data().seatsTaken,
-                seatsMax: docSnap.data().seatsMax,
-                riders: docSnap.data().riders,
-                sameGender: docSnap.data().sameGender,
-            };
-            upcomingTrips.push(trip);
-        } else {
-            console.log("No such document!");
-        }
+  async function loadTrips() {
+    const querySnapshot = await getDocs(collection(db, "trips"));
+    const trips: Trip[] = [];
+    querySnapshot.forEach((doc) => {
+      const trip: Trip = {
+        id: doc.id,
+        from: doc.data().from,
+        to: doc.data().to,
+        roundTrip: doc.data().roundTrip,
+        date: doc.data().date,
+        returnDate: doc.data().returnDate,
+        type: doc.data().type,
+        seatsTaken: doc.data().seatsTaken,
+        seatsMax: doc.data().seatsMax,
+        riders: doc.data().riders,
+        sameGender: doc.data().sameGender,
+      }
+      // console.log("trip => " + JSON.stringify(trip));
+      trips.push(trip);
     });
 
-      dispatch({
-          type: ActionTypes.UPDATE_UPCOMING_TRIPS,
-          trips: upcomingTrips,
-      });
+    dispatch({
+      type: ActionTypes.FETCH_TRIP,
+      trips: trips
+    });
+  }
 
+  async function loadUpcomingTrips() {
+    const upcomingTrips: Trip[] = [];
+
+    const upcomingTripIds = data.user.upcomingTrips;
+    if (upcomingTripIds.length > 0 && typeof upcomingTripIds[0] === "string") {
+      for (const pastTripID of upcomingTripIds) {
+        const docSnap = await getDoc(doc(db, "trips", pastTripID));
+        if (docSnap.exists()) {
+          console.log("Document data:", docSnap.data());
+          let trip: Trip = {
+            id: pastTripID,
+            from: docSnap.data().from,
+            to: docSnap.data().to,
+            roundTrip: docSnap.data().roundTrip,
+            date: docSnap.data().date,
+            returnDate: docSnap.data().returnDate,
+            type: docSnap.data().type,
+            seatsTaken: docSnap.data().seatsTaken,
+            seatsMax: docSnap.data().seatsMax,
+            riders: docSnap.data().riders,
+            sameGender: docSnap.data().sameGender,
+          };
+          upcomingTrips.push(trip);
+        } else {
+          console.log("No such document!");
+        }
+      }
+      dispatch({
+        type: ActionTypes.UPDATE_UPCOMING_TRIPS,
+        trips: upcomingTrips,
+      });
+    }
+  }
+
+    async function loadPastTrips() {
       const pastTrips: Trip[] = [];
-      data.user.pastTrips.forEach(async (pastTripID) => {
+      const pastTripIDs = data.user.pastTrips;
+      console.log("++++++++++++++++++++++++++++++")
+      console.log(pastTripIDs)
+
+      if (pastTripIDs.length > 0 && typeof pastTripIDs[0] === "string") {
+        for (const pastTripID of pastTripIDs) {
           const docSnap = await getDoc(doc(db, "trips", pastTripID));
           if (docSnap.exists()) {
-              console.log("Document data:", docSnap.data());
-              let trip: Trip = {
-                  id: pastTripID,
-                  from: docSnap.data().from,
-                  to: docSnap.data().to,
-                  roundTrip: docSnap.data().roundTrip,
-                  date: docSnap.data().date,
-                  returnDate: docSnap.data().returnDate,
-                  type: docSnap.data().type,
-                  seatsTaken: docSnap.data().seatsTaken,
-                  seatsMax: docSnap.data().seatsMax,
-                  riders: docSnap.data().riders,
-                  sameGender: docSnap.data().sameGender,
-              };
-              pastTrips.push(trip);
+            console.log("Document data:", docSnap.data());
+            let trip: Trip = {
+              id: pastTripID,
+              from: docSnap.data().from,
+              to: docSnap.data().to,
+              roundTrip: docSnap.data().roundTrip,
+              date: docSnap.data().date,
+              returnDate: docSnap.data().returnDate,
+              type: docSnap.data().type,
+              seatsTaken: docSnap.data().seatsTaken,
+              seatsMax: docSnap.data().seatsMax,
+              riders: docSnap.data().riders,
+              sameGender: docSnap.data().sameGender,
+            };
+            pastTrips.push(trip);
           } else {
-              console.log("No such document!");
+            console.log("No such document!");
           }
-      });
-
-      dispatch({
+        }
+        dispatch({
           type: ActionTypes.UPDATE_PAST_TRIPS,
           trips: pastTrips,
-      });
+        });
+      }
+    }
 
+  async function loadData() {
+    await loadTrips();
+    await loadUpcomingTrips();
+    await loadPastTrips();
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    loadData()
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
   }, []);
 
   useEffect(() => {

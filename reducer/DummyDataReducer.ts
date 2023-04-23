@@ -99,7 +99,7 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
           ...data.user,
           upcomingTrips: tripAction.trips,
         },
-        trips: [...tripAction.trips]
+        trips: [...data.trips]
       }
     }
 
@@ -111,7 +111,7 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
           ...data.user,
           pastTrips: tripAction.trips,
         },
-        trips: [...tripAction.trips]
+        trips: [...data.trips]
       }
     }
   }
