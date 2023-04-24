@@ -94,37 +94,38 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                 console.log("User does not exist");
               }
               setLoading(false);
-              navigation.navigate("Root");
+              navigation.replace("Root");
             })
             .catch((error) => {
               console.log(error);
               Alert.alert("Connection Error");
               setLoading(false);
             })
-        } else {
-          if (error) {
-            console.log(error.message);
-            let title;
-            let msg = undefined;
-            if (error.message === 'Firebase: Error (auth/invalid-email).') {
-              title = 'Your email or password is incorrect.';
-            } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
-              title = 'Your email or password is incorrect.';
-            } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
-              title = 'Account does not exist';
-              msg = 'Please sign up.'
-            } else if (error.message === 'Firebase: Error (auth/internal-error).') {
-              title = 'Your email or password is incorrect.'
-            } else {
-              title = error.message;
-            }
-            Alert.alert(title, msg,[
-              {text: 'OK', onPress: () => console.log('OK Pressed')},
-            ]);
-          } else {
-            Alert.alert("Login Failed, please check your connection.");
-          }
         }
+        // } else {
+        //   if (error) {
+        //     console.log(error.message);
+        //     let title;
+        //     let msg = undefined;
+        //     if (error.message === 'Firebase: Error (auth/invalid-email).') {
+        //       title = 'Your email or password is incorrect.';
+        //     } else if (error.message === 'Firebase: Error (auth/wrong-password).') {
+        //       title = 'Your email or password is incorrect.';
+        //     } else if (error.message === 'Firebase: Error (auth/user-not-found).') {
+        //       title = 'Account does not exist';
+        //       msg = 'Please sign up.'
+        //     } else if (error.message === 'Firebase: Error (auth/internal-error).') {
+        //       title = 'Your email or password is incorrect.'
+        //     } else {
+        //       title = error.message;
+        //     }
+        //     Alert.alert(title, msg,[
+        //       {text: 'OK', onPress: () => console.log('OK Pressed')},
+        //     ]);
+        //   } else {
+        //     Alert.alert("Login Failed, please check your connection.");
+        //   }
+        // }
       });
   }
 
