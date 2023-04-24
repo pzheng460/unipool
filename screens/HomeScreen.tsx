@@ -225,6 +225,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   useEffect(() => {
     setTripData(data.trips?.filter(trip => {
       return trip.type === "upcoming";
+    }).filter(trip => {
+        return !trip.riders.includes(data.user.id);
     }));
   }, [data.trips]);
 

@@ -22,6 +22,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     const [loading, setLoading] = useLoading();
     const [riders, setRiders] = useState<User[]>([]);
     const [tripCreator, setTripCreator] = useState('');
+    const [showJoin, setShowJoin] = useState(true);
 
     useEffect(() => {
         setLoading(true);
@@ -32,6 +33,9 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
                 if (docSnap.exists()) {
                     if (i === 0) {
                         setTripCreator(docSnap.data().firstName);
+                        if (docSnap.id === data.user.id) {
+                            setShowJoin(false);
+                        }
                     }
                     let user: User = {
                         id: riderID,
@@ -127,7 +131,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
 
             <PeopleList people={riders}></PeopleList>
             <View centerH paddingT-20>
-              <Button
+                {showJoin && <Button
                 label={'Join'}
                 size={Button.sizes.medium}
                 backgroundColor={Colors.primary}
@@ -136,7 +140,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
                   width: 100,
                   height: 50,
                 }}
-              />
+              />}
             </View>
           </View>
         </ScrollView>
