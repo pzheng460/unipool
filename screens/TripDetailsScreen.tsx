@@ -71,6 +71,10 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
         if (joined) {
             setJoined(false);
 
+
+
+
+
         } else {
             setJoined(true);
             //TODO: handle join query

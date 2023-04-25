@@ -1,27 +1,47 @@
-import {Button, Colors, Text, View,} from "react-native-ui-lib";
-import React, {useContext, useState} from "react";
+import {Button, Colors, Text, View, Avatar,} from "react-native-ui-lib";
+import React, {useContext, useEffect, useState} from "react";
 import {RootStackScreenProps} from "../navigation/types";
 import {Animated, Dimensions, Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback,} from "react-native";
-import {Avatar} from '@rneui/themed';
 import {MaterialIcons} from '@expo/vector-icons';
 import {DummyDataContext} from "../AppContextWrapper";
 import {GlobalData} from "../reducer/ActionType";
+import {useLoading} from "../contexts/LoadingContext";
+import {doc, getDoc} from "firebase/firestore";
+import {db} from "../configs/firebase/FirebaseConfig";
+
 
 export default function RatingScreen({route, navigation}: RootStackScreenProps<'Rating'>) {
 
     const onKeyboard = () => {
         Keyboard.dismiss();
     }
-    const userId = route.params?.userId;
-    const data = useContext(DummyDataContext) as GlobalData;
-    const user = data.user;
+    const userId = route.params?.userId as string;
 
     const {height, width} = Dimensions.get('window');
     const [text, setText] = useState('');
     const [starRating, setStarRating] = useState(0);
+    const [loading, setLoading] = useLoading();
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const starRatingOptions = [1, 2, 3, 4, 5];
     const animatedButtonScale = new Animated.Value(1);
+
+    useEffect(async () => {
+        setLoading(true);
+        const docSnap = await getDoc(doc(db, "users", userId));
+
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+            setFirstName(docSnap.data().firstName);
+            setLastName(docSnap.data().lastName);
+        } else {
+            console.log("No such document!");
+        }
+        setTimeout(()=>{
+            setLoading(false)
+        }, 300)
+    }, []);
 
     const handlePressIn = () => {
         Animated.spring(animatedButtonScale, {
@@ -54,15 +74,14 @@ export default function RatingScreen({route, navigation}: RootStackScreenProps<'
 
         <View useSafeArea flexG backgroundColor={Colors.white} style={styles.container}>
 
-            <Avatar
-                size={80}
-                rounded
-                title= {user.firstName.charAt(0) + user.lastName.charAt(0)}
-                containerStyle={{ backgroundColor: Colors.purple40}}
-            />
+            <Avatar size={64}
+                    name={firstName}
+                    backgroundColor={Colors.$backgroundWarningLight}
+                    labelColor={Colors.$textMajor}
+            ></Avatar>
 
-            <Text style={{fontSize: 15, fontWeight: 'bold', marginTop: 40, marginBottom:30}}>
-                How was your experience with {user.firstName} {user.lastName}?
+            <Text style={{fontSize: 15, fontWeight: 'bold', marginTop: 30, marginBottom:30}}>
+                How was your experience with {firstName} {lastName}?
             </Text>
 
             <View style={styles.stars}>
@@ -123,7 +142,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         padding: 20,
     },
     heading: {
