@@ -157,7 +157,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
           gap: 24,
         }}>
           <View style={{alignItems: "center", justifyContent: "flex-end", marginTop: 32}}>
-            <Image source={logo} style={{width: 100, height: 100}}/>
+            <Image source={logo} style={{width: 250, height: 100}}/>
             {/*<Text variant={"headlineMedium"} style={{fontWeight: "600"}}> Unipool </Text>*/}
           </View>
           <KeyboardAvoidingView behavior={"position"}>
@@ -226,6 +226,9 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
               labelStyle={{fontSize: 16}}
               contentStyle={{height: 38}}
               onPress={() => {
+                dispatch({
+                  type: ActionTypes.INIT_USER,
+                });
                 navigation.navigate("OnBoardBegin");
               }}
             >

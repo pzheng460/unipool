@@ -41,11 +41,11 @@ export default function OnBoardScreenBegin({route, navigation}: RootStackScreenP
     navigation.navigate("OnBoardEmail");
   }
 
-  useEffect(() => {
-    dispatch({
-      type: ActionTypes.INIT_USER,
-    })
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: ActionTypes.INIT_USER,
+  //   })
+  // }, []);
 
   return (
     <TouchableWithoutFeedback

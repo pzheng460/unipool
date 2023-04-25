@@ -4,6 +4,9 @@ import {Button} from "../components";
 import {RootStackScreenProps} from "../navigation/types";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useColorScheme} from "../contexts/ColorSchemeContext";
+import {ActionTypes, DataActions} from "../reducer/ActionType";
+import React, {useContext} from "react";
+import {DummyDataDispatch} from "../AppContextWrapper";
 
 const logo = require("../assets/icon.png");
 
@@ -11,6 +14,7 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
 
   const theme = useTheme();
   const [scheme, setColorScheme, setUseSystem] = useColorScheme();
+  const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
 
   return (
     <SafeAreaView style={{flex: 1, paddingRight: 12, paddingLeft: 12}}>
@@ -25,9 +29,9 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
         alignItems: 'center',
       }}>
         <Image source={logo} style={{width: 200, height: 200}}/>
-        <View style={{marginTop: 16}}>
-          <Text variant="headlineLarge" style={{fontWeight: "bold"}}>Unipool</Text>
-        </View>
+        {/*<View style={{marginTop: 16}}>*/}
+        {/*  <Text variant="headlineLarge" style={{fontWeight: "bold"}}>Unipool</Text>*/}
+        {/*</View>*/}
         <View>
           <Text variant="titleMedium">Wait Less, Save More, Find Friends</Text>
         </View>
@@ -43,7 +47,13 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
         {/*  <Text variant="bodyLarge">  Dark Theme</Text>*/}
         {/*</View>*/}
         <View style={{marginBottom: 32}}>
-          <Button onPress={() => navigation.navigate("OnBoardBegin")}>
+          <Button onPress={() =>
+          {
+            dispatch({
+              type: ActionTypes.INIT_USER,
+            });
+            navigation.navigate("OnBoardBegin")
+          }}>
             Get Started
           </Button>
         </View>
