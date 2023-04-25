@@ -53,7 +53,7 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
       }
     )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res !== undefined) {
           const uid = res.user.uid;
           setDoc(doc(db, "users", uid), {

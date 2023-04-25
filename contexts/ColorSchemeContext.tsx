@@ -23,7 +23,7 @@ export const ColorSchemeProvider = ({ children }: props) => {
   const [useSystem, setUseSystem] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(colorScheme);
+    // console.log(colorScheme);
   }, [colorScheme, setColorScheme])
 
   return (

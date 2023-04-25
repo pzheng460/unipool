@@ -25,9 +25,9 @@ export default function useCachedResources() {
           'RobotoFlex': require('../assets/fonts/RobotoFlex.ttf'),
         });
 
-        await cacheImages([
+        await Promise.all(cacheImages([
           require("../assets/icon.png"),
-        ]);
+        ]));
 
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -45,7 +45,7 @@ export default function useCachedResources() {
   return isLoadingComplete;
 }
 
-async function cacheImages(images: any[]) {
+function cacheImages(images: any[]) {
   return images.map(image => {
     if (typeof image === 'string') {
       return Image.prefetch(image);

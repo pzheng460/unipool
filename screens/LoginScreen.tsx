@@ -73,7 +73,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
           getDoc(doc(db, "users", uid))
             .then((res) => {
               if (res.exists()) {
-                console.log(res.data());
+                // console.log(res.data());
                 const userData = res.data();
                 dispatch({
                   type: ActionTypes.FETCH_USER,

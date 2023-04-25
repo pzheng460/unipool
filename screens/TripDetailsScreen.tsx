@@ -57,7 +57,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
                 alert(error);
             }
         });
-        console.log(users);
+        // console.log(users);
         setTimeout(() => setLoading(false), 500)
 
     }, [data.trips]);
