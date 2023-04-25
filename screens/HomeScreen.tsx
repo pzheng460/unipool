@@ -225,12 +225,23 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   }, []);
 
   useEffect(() => {
+      console.log("++++++++++++++++++++++++++++" + data.trips[0].riders[0]);
     setTripData(data.trips?.filter(trip => {
       return trip.type === "upcoming";
+    }).filter(trip =>{
+        return trip.seatsTaken < trip.seatsMax;
     }).filter(trip => {
+
+
         return !trip.riders.includes(data.user.id);
-    }).filter(trip => {
-        return (trip.sameGender === false) || (trip.sameGender === true && trip.riders[0].gender === data.user.gender);
+    }).filter(async trip => {
+        // console.log("++++++++++++++++++++++++++++" + trip.riders[0]);
+        const docSnap = await getDoc(doc(db, "users", trip.riders[0]));
+        let ownerGender = '';
+        if (docSnap.exists()) {
+            ownerGender = docSnap.data().gender;
+        }
+        return (trip.sameGender === false) || (trip.sameGender === true && ownerGender === data.user.gender);
     }));
 
     setUpcomingTripData(data.user.upcomingTrips);

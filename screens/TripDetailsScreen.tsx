@@ -22,7 +22,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     const [loading, setLoading] = useLoading();
     const [riders, setRiders] = useState<User[]>([]);
     const [tripCreator, setTripCreator] = useState('');
-    const [showJoin, setShowJoin] = useState(true);
+    const [joined, setJoined] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -35,7 +35,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
                         setTripCreator(docSnap.data().firstName);
                     }
                     if (docSnap.id === data.user.id) {
-                        setShowJoin(false);
+                        setJoined(true);
                     }
                     let user: User = {
                         id: riderID,
@@ -60,7 +60,19 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
         console.log(users);
         setTimeout(() => setLoading(false), 500)
 
-    }, []);
+    }, [data.trips]);
+
+    function handlePress() {
+
+        if (joined) {
+            setJoined(false);
+
+        } else {
+            setJoined(true);
+            //TODO: handle join query
+        }
+    }
+
 
     function PeopleList(props: {people: User[]}) {
         return (
@@ -111,7 +123,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
                 </View>
                 <View flex-2 center>
                     {
-                        item.firstName === tripCreator && <Text $textDefault>{"Group Creator"}</Text>
+                        item.firstName === tripCreator && <Text $textDefault>{"Group Owner"}</Text>
                     }
                 </View>
                 {/*<View flex-1></View>*/}
@@ -131,16 +143,17 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
 
             <PeopleList people={riders}></PeopleList>
             <View centerH paddingT-20>
-                {showJoin && <Button
-                label={'Join'}
+                <Button
+                label={joined ? 'Leave' : 'Join'}
                 size={Button.sizes.medium}
-                backgroundColor={Colors.primary}
+                backgroundColor={joined ? Colors.red20 : Colors.primary}
                 labelStyle={{fontWeight: '500', letterSpacing: -0.5}}
+                onPress={() => handlePress()}
                 style={{
                   width: 100,
                   height: 50,
                 }}
-              />}
+              />
             </View>
           </View>
         </ScrollView>
