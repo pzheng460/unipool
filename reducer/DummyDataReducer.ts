@@ -28,9 +28,17 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
       return {
         user: {
           ...data.user,
-          upcomingTrips: [...upcomingTrips]
+          upcomingTrips: [...upcomingTrips, tripAction.trip]
         },
-        trips: [...currentTrips]
+        trips: currentTrips.map((trip) => {
+          if (trip.id === tripAction.trip.id) {
+            return {
+              ...tripAction.trip
+            }
+          } else {
+            return trip;
+          }
+        })
       };
     }
 

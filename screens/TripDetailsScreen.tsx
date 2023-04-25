@@ -14,12 +14,12 @@ import {db} from "../configs/firebase/FirebaseConfig";
 import {useLoading} from "../contexts/LoadingContext";
 
 export default function TripDetailsScreen({route, navigation}: RootStackScreenProps<'TripDetails'>) {
-    const tripId = route.params?.id;
+    const tripId = route.params?.id as string;
     const data = useContext(DummyDataContext) as GlobalData;
     const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
-    const trip = data.trips.find((item) => item.id === tripId)
     const windowWidth = Dimensions.get('window').width;
     const locations = [[33.7722, -84.3902], [48.8223785, 2.3361663]];
+    const [trip, setTrip] = useState<Trip>(data.trips.find((item) => item.id === tripId) as Trip);
     const [loading, setLoading] = useLoading();
     const [riders, setRiders] = useState<User[]>([]);
     const [tripCreator, setTripCreator] = useState('');
@@ -27,11 +27,18 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     const [isPast, setIsPast] = useState(false);
 
     useEffect(() => {
+        console.log("---------------------------")
+        console.log(data.trips.find((item) => item.id === tripId));
+        setTrip(data.trips.find((item) => item.id === tripId) as Trip);
+    }, [data.trips])
+
+    useEffect(() => {
         setLoading(true);
         if (trip.type === 'past') {
             setIsPast(true);
         }
         const users: User[] = [];
+        console.log("+++++++++++++++++++++++++")
         trip?.riders.forEach(async (riderID, i) => {
             try {
                 const docSnap = await getDoc(doc(db, "users", riderID));
@@ -63,9 +70,9 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
             }
         });
         // console.log(users);
-        setTimeout(() => setLoading(false), 500)
+        setTimeout(() => setLoading(false), 500);
 
-    }, [data.trips]);
+    }, [trip]);
 
     async function handlePress() {
         if (joined) {
@@ -76,26 +83,40 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
             //TODO: handle join query
             setLoading(true);
             try {
+
                 const upcomingTrips: string[] = [];
                 data.user.upcomingTrips.forEach(upcomingTrip => {
                     upcomingTrips.push(upcomingTrip.id);
                 });
 
+                console.log(upcomingTrips)
+
                 await updateDoc(doc(db, "users", data.user.id), {
                     upcomingTrips: [...upcomingTrips, trip?.id],
                 });
 
-                // @ts-ignore
-                let tripRiders = trip?.riders;
+                let tripRiders = trip?.riders as string[];
+
+                console.log(tripRiders)
+                const newRiders = [...tripRiders, data.user.id];
+
+                console.log(newRiders)
+
+                // setRiders((riders) => ([...riders, {...data.user, upcomingTrips: [...upcomingTrips, trip?.id]}]));
+
                 await updateDoc(doc(db, "trips", tripId), {
-                    riders: [...tripRiders, data.user.id],
+                    riders: newRiders,
+                    seatsTaken: newRiders.length,
                 });
 
                 dispatch({
                     type: ActionTypes.JOIN_TRIP,
                     trip: {
+                        ...trip,
+                        riders: newRiders,
+                        seatsTaken: newRiders.length,
                     }
-                })
+                });
 
             } catch (e) {
                 console.log(e);

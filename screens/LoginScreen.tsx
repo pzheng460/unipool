@@ -59,6 +59,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
   }
 
   function handleLogin() {
+    Keyboard.dismiss();
     setLoading(true);
     signInWithEmailAndPassword(email, password)
       .catch(error => {
