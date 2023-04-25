@@ -24,9 +24,13 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     const [riders, setRiders] = useState<User[]>([]);
     const [tripCreator, setTripCreator] = useState('');
     const [joined, setJoined] = useState(false);
+    const [isPast, setIsPast] = useState(false);
 
     useEffect(() => {
         setLoading(true);
+        if (trip.type === 'past') {
+            setIsPast(true);
+        }
         const users: User[] = [];
         trip?.riders.forEach(async (riderID, i) => {
             try {
@@ -173,7 +177,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
 
             <PeopleList people={riders}></PeopleList>
             <View centerH paddingT-20>
-                <Button
+                {!isPast && <Button
                 label={joined ? 'Leave' : 'Join'}
                 size={Button.sizes.medium}
                 backgroundColor={joined ? Colors.red20 : Colors.primary}
@@ -183,7 +187,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
                   width: 100,
                   height: 50,
                 }}
-              />
+              />}
             </View>
           </View>
         </ScrollView>
