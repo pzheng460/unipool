@@ -89,7 +89,7 @@ export default function TripDetailsCard(props: {trip: Trip}) {
   function TimeText(date?: number) {
     return (
       <Text style={{fontSize: 15, color: "#8c8c8c"}}>
-        {dayjs(date).format('llll')}
+        {dayjs(1000 * (date || 0)).format('llll')}
       </Text>
     );
   }
