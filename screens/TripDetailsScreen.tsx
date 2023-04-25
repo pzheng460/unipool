@@ -75,13 +75,51 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     }, [trip]);
 
     async function handlePress() {
+        setLoading(true);
         if (joined) {
             setJoined(false);
+            try {
 
+                const upcomingTrips = data.user.upcomingTrips.filter((thisTrip) => (trip.id !== thisTrip.id));
+
+                console.log(upcomingTrips)
+
+                await updateDoc(doc(db, "users", data.user.id), {
+                    upcomingTrips: [...upcomingTrips],
+                });
+
+                let tripRiders = trip?.riders as string[];
+
+                console.log(tripRiders)
+                const newRiders = tripRiders.filter((id) => id !== data.user.id);
+
+                console.log(newRiders)
+
+                // setRiders((riders) => ([...riders, {...data.user, upcomingTrips: [...upcomingTrips, trip?.id]}]));
+
+                await updateDoc(doc(db, "trips", tripId), {
+                    riders: newRiders,
+                    seatsTaken: newRiders.length,
+                });
+
+                dispatch({
+                    type: ActionTypes.LEAVE_TRIP,
+                    trip: {
+                        ...trip,
+                        riders: newRiders,
+                        seatsTaken: newRiders.length,
+                    }
+                });
+
+            } catch (e) {
+                    console.log(e);
+                    Alert.alert("Connection Error");
+            } finally {
+                setLoading(false);
+                Alert.alert("Success");
+            }
         } else {
             setJoined(true);
-            //TODO: handle join query
-            setLoading(true);
             try {
 
                 const upcomingTrips: string[] = [];

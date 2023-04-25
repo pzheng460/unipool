@@ -172,6 +172,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                     onChangeText={(v) => setEmail(v)}
                     /* @ts-ignore */
                     enterKeyHint={"next"}
+                    autoCapitalize={"none"}
                   />
                 </View>
                 <View style={{marginTop: 16}}>

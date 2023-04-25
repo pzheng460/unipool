@@ -42,6 +42,29 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
       };
     }
 
+    case ActionTypes.LEAVE_TRIP: {
+      const tripAction = action as DataActionTrip;
+      const upcomingTrips = data.user.upcomingTrips;
+      const currentTrips = data.trips;
+      return {
+        user: {
+          ...data.user,
+          upcomingTrips: upcomingTrips.filter((trip) => (
+            trip.id !== tripAction.trip.id
+          ))
+        },
+        trips: currentTrips.map((trip) => {
+          if (trip.id === tripAction.trip.id) {
+            return {
+              ...tripAction.trip
+            }
+          } else {
+            return trip;
+          }
+        })
+      };
+    }
+
     case ActionTypes.INIT_USER: {
       const currentTrips = data.trips;
       return {
