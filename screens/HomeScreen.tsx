@@ -42,6 +42,8 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const [refreshing, setRefreshing] = useState(false);
   const initTripData: Trip[] = [];
   const [tripData, setTripData] = useState(initTripData);
+  const [upcomingTripData, setUpcomingTripData] = useState(initTripData);
+
   const [tabIndex, setTabIndex] = useState(0);
   const [showSearch, setShowSearch] = useState(true);
 
@@ -227,7 +229,11 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
       return trip.type === "upcoming";
     }).filter(trip => {
         return !trip.riders.includes(data.user.id);
+    }).filter(trip => {
+        return (trip.sameGender === false) || (trip.sameGender === true && trip.riders[0].gender === data.user.gender);
     }));
+
+    setUpcomingTripData(data.user.upcomingTrips);
   }, [data.trips]);
 
   const options = [{
@@ -315,7 +321,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
     return (
       <View flex-G>
-        <GridList data={data.user?.upcomingTrips}
+        <GridList data={upcomingTripData}
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}

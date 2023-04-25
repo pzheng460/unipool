@@ -33,9 +33,9 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
                 if (docSnap.exists()) {
                     if (i === 0) {
                         setTripCreator(docSnap.data().firstName);
-                        if (docSnap.id === data.user.id) {
-                            setShowJoin(false);
-                        }
+                    }
+                    if (docSnap.id === data.user.id) {
+                        setShowJoin(false);
                     }
                     let user: User = {
                         id: riderID,

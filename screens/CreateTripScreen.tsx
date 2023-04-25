@@ -9,10 +9,10 @@ import {auth, db} from "../configs/firebase/FirebaseConfig";
 import {Checkbox, SegmentedButtons, Text, TextInput} from "react-native-paper";
 import {DateTimePicker} from "react-native-ui-lib";
 import {Button} from "../components";
-import {addDoc, collection} from "firebase/firestore";
+import {addDoc, collection, doc, updateDoc} from "firebase/firestore";
 import {useLoading} from "../contexts/LoadingContext";
-import {DummyDataDispatch} from "../AppContextWrapper";
-import {ActionTypes, DataActions} from "../reducer/ActionType";
+import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
+import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 
 let localizedFormat = require('dayjs/plugin/localizedFormat');
 dayjs.extend(localizedFormat);
@@ -41,11 +41,11 @@ export default function CreateTripScreen({route, navigation}: RootStackScreenPro
   const [user,] = useAuthState(auth);
   const [loading, setLoading] = useLoading();
 
+  const data = useContext(DummyDataContext) as GlobalData;
   const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
 
   async function handleCreatTrip() {
-    if (startTime > backTime ||
-      from === "" || from === undefined || from.trim().length <= 0 ||
+    if ((roundTrip && startTime > backTime) || from === "" || from === undefined || from.trim().length <= 0 ||
       to === "" || to === undefined || to.trim().length <= 0
     ) {
       Alert.alert("Please Input Valid Location and Time");
@@ -56,7 +56,7 @@ export default function CreateTripScreen({route, navigation}: RootStackScreenPro
       to: to.trim(),
       type: "upcoming",
       date: dayjs(startTime).unix(),
-      returnDate: dayjs(backTime).unix(),
+      returnDate: roundTrip ? dayjs(backTime).unix() : null,
       roundTrip: roundTrip,
       sameGender: sameGender,
       riders: [user?.uid],
@@ -64,11 +64,22 @@ export default function CreateTripScreen({route, navigation}: RootStackScreenPro
       seatsTaken: 1,
     }
     console.log(newTrip);
+
+    const upcomingTrips: string[] = [];
+    data.user.upcomingTrips.forEach(upcomingTrip => {
+      upcomingTrips.push(upcomingTrip.id);
+    });
+
     setLoading(true);
     try {
       const docRef = await addDoc(collection(db, "trips"), {
         ...newTrip
       });
+
+      await updateDoc(doc(db, "users", data.user.id), {
+        upcomingTrips: [...upcomingTrips, docRef.id],
+      });
+
       dispatch({
         type: ActionTypes.ADD_UPCOMING_TRIP,
         trip: {
@@ -76,6 +87,7 @@ export default function CreateTripScreen({route, navigation}: RootStackScreenPro
           id: docRef.id
         }
       })
+
     } catch (e) {
       console.log(e);
       Alert.alert("Connection Error");
