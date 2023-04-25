@@ -9,7 +9,7 @@ import RouteMap from "../components/RouteMap";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 import EmptyScreen from "./EmptyScreen";
-import {addDoc, collection, doc, getDoc, getDocs, updateDoc} from "firebase/firestore";
+import {deleteDoc, doc, getDoc, updateDoc} from "firebase/firestore";
 import {db} from "../configs/firebase/FirebaseConfig";
 import {useLoading} from "../contexts/LoadingContext";
 
@@ -95,21 +95,30 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
 
                 console.log(newRiders)
 
-                // setRiders((riders) => ([...riders, {...data.user, upcomingTrips: [...upcomingTrips, trip?.id]}]));
+                if (newRiders.length <= 0) {
+                    await deleteDoc(doc(db, "trips", tripId));
 
-                await updateDoc(doc(db, "trips", tripId), {
-                    riders: newRiders,
-                    seatsTaken: newRiders.length,
-                });
+                    dispatch({
+                        type: ActionTypes.LEAVE_TRIP_AND_DELETE,
+                        trip: trip
+                    })
 
-                dispatch({
-                    type: ActionTypes.LEAVE_TRIP,
-                    trip: {
-                        ...trip,
+                    navigation.goBack();
+                } else {
+                    await updateDoc(doc(db, "trips", tripId), {
                         riders: newRiders,
                         seatsTaken: newRiders.length,
-                    }
-                });
+                    });
+
+                    dispatch({
+                        type: ActionTypes.LEAVE_TRIP,
+                        trip: {
+                            ...trip,
+                            riders: newRiders,
+                            seatsTaken: newRiders.length,
+                        }
+                    });
+                }
 
             } catch (e) {
                     console.log(e);

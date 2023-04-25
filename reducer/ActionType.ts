@@ -13,6 +13,7 @@ export enum ActionTypes {
   UPDATE_PAST_TRIPS = "UPDATE_PAST_TRIPS",
   JOIN_TRIP = "JOIN_TRIP",
   LEAVE_TRIP = "LEAVE_TRIP",
+  LEAVE_TRIP_AND_DELETE = "LEAVE_TRIP_AND_DELETE",
 }
 
 export namespace DataActions {
