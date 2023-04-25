@@ -65,6 +65,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     function handlePress() {
 
         if (joined) {
+            //
             setJoined(false);
 
         } else {
