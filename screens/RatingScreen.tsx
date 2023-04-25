@@ -26,7 +26,6 @@ export default function RatingScreen({route, navigation}: RootStackScreenProps<'
 
     const starRatingOptions = [1, 2, 3, 4, 5];
     const animatedButtonScale = new Animated.Value(1);
-    //
 
     useEffect(() => {
         const load = async () => {

@@ -28,12 +28,12 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-        <Image source={logo} style={{width: 250, height:36}} resizeMethod={"resize"}/>
+        <Image source={logo} style={{width: 450, height:64.8}} resizeMethod={"resize"}/>
         {/*<View style={{marginTop: 16}}>*/}
         {/*  <Text variant="headlineLarge" style={{fontWeight: "bold"}}>Unipool</Text>*/}
         {/*</View>*/}
-        <View>
-          <Text variant="titleMedium">Wait Less, Save More, Find Friends</Text>
+        <View style={{marginTop:20}}>
+          <Text variant="titleSmall">Wait Less, Save More, Find Friends</Text>
         </View>
       </View>
       <View style={{marginLeft: 12,  marginRight: 12}}>
