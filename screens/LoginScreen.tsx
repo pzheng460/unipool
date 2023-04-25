@@ -59,6 +59,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
   }
 
   function handleLogin() {
+    Keyboard.dismiss();
     setLoading(true);
     signInWithEmailAndPassword(email, password)
       .catch(error => {
@@ -171,6 +172,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                     onChangeText={(v) => setEmail(v)}
                     /* @ts-ignore */
                     enterKeyHint={"next"}
+                    autoCapitalize={"none"}
                   />
                 </View>
                 <View style={{marginTop: 16}}>

@@ -28,9 +28,57 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
       return {
         user: {
           ...data.user,
-          upcomingTrips: [...upcomingTrips]
+          upcomingTrips: [...upcomingTrips, tripAction.trip]
         },
-        trips: [...currentTrips]
+        trips: currentTrips.map((trip) => {
+          if (trip.id === tripAction.trip.id) {
+            return {
+              ...tripAction.trip
+            }
+          } else {
+            return trip;
+          }
+        })
+      };
+    }
+
+    case ActionTypes.LEAVE_TRIP: {
+      const tripAction = action as DataActionTrip;
+      const upcomingTrips = data.user.upcomingTrips;
+      const currentTrips = data.trips;
+      return {
+        user: {
+          ...data.user,
+          upcomingTrips: upcomingTrips.filter((trip) => (
+            trip.id !== tripAction.trip.id
+          ))
+        },
+        trips: currentTrips.map((trip) => {
+          if (trip.id === tripAction.trip.id) {
+            return {
+              ...tripAction.trip
+            }
+          } else {
+            return trip;
+          }
+        })
+      };
+    }
+
+    case ActionTypes.LEAVE_TRIP_AND_DELETE: {
+      const tripAction = action as DataActionTrip;
+      const upcomingTrips = data.user.upcomingTrips;
+      const currentTrips = data.trips;
+      return {
+        user: {
+          ...data.user,
+          upcomingTrips: upcomingTrips.filter((trip) => (
+            trip.id !== tripAction.trip.id
+          ))
+        },
+        trips: currentTrips.filter((trip) => (
+          trip.id !== tripAction.trip.id
+        ))
       };
     }
 
