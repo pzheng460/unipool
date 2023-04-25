@@ -2,6 +2,7 @@ import {Avatar, Card, Chip, Colors, Text, View} from "react-native-ui-lib";
 import {Trip, User} from "../Interface/TripInterface";
 import dayjs from "dayjs";
 import {StyleSheet} from "react-native";
+import React from "react";
 
 let localizedFormat = require('dayjs/plugin/localizedFormat');
 dayjs.extend(localizedFormat);
@@ -24,26 +25,14 @@ export default function TripDetailsCard(props: {trip: Trip}) {
             centerV
           >
             {/*<View style={styles.circle}></View>*/}
-            {LocationText(trip.from)}
+            {LocationText(trip.from, "From: ")}
           </View>
           <View flex row
             centerV
           >
             {/*<View style={styles.circle}></View>*/}
-            {LocationText(trip.to)}
+            {LocationText(trip.to, "To: ")}
           </View>
-        </View>
-        <View
-          flex
-        >
-          {
-            trip.roundTrip ?
-            <Chip
-              backgroundColor={'#e3e5e5'}
-              label={'Round'}
-              containerStyle={{borderWidth: 0}}
-            ></Chip> : null
-          }
         </View>
       </View>
       <View flex
@@ -56,19 +45,17 @@ export default function TripDetailsCard(props: {trip: Trip}) {
             // style={{backgroundColor: 'green', opacity: 0.1}}
         // style={{height: 24}}
       >
-        <View flex-1 row paddingL-8>
+        <View flex-1 row >
           {
-            props.trip.riders?.map((rider: User) => (
-              <Avatar size={24}
-                      name={rider.firstName}
-                      backgroundColor={Colors.$backgroundWarningLight}
-                      labelColor={Colors.$textMajor}
-                      containerStyle={{marginLeft: -8}}
-              ></Avatar>
-            ))
+            trip.roundTrip ?
+              <Chip
+                backgroundColor={'#e3e5e5'}
+                label={'Round Trip'}
+                containerStyle={{borderWidth: 0}}
+              ></Chip> : null
           }
         </View>
-        <View flex-3 row right>
+        <View flex-2 row right>
           {
             trip.sameGender ?
               <Chip
@@ -89,11 +76,13 @@ export default function TripDetailsCard(props: {trip: Trip}) {
     </Card>
   );
 
-  function LocationText(text?: string) {
+  function LocationText(text?: string, prefix?: string) {
     return (
       <Text
         style={{fontSize: 18, fontWeight: 600}}
-      > {text} </Text>
+      >
+        {prefix + text}
+      </Text>
     );
   }
 
