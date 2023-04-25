@@ -79,14 +79,14 @@ function RootNavigator() {
           headerTransparent: true,
         }}
       >
-        <Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>
+        {/*<Stack.Screen name={'Login'} component={LoginScreen} options={{headerShown: false}}/>*/}
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="TripDetails"
                       component={TripDetailsScreen} options={{ headerTitle: 'Trip Details'}}/>
         <Stack.Screen name="ChatScreen" component={ChatScreen} options={{ headerTitle: 'Chat Room'}}/>
         <Stack.Screen name={'TripCreate1'} component={CreateTripScreen} options={{ headerTransparent: true, title: "" }}/>
         <Stack.Screen name={'Rating'} component={RatingScreen} options={{headerTitle: 'Rate Your Co-Rider'}}/>
-        {/*<Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>*/}
+        <Stack.Screen name={'RegisterComplete'} component={RegisterCompleteScreen}/>
       </Stack.Navigator>
   );
 }

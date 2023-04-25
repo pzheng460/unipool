@@ -28,20 +28,20 @@ export default function RatingScreen({route, navigation}: RootStackScreenProps<'
     const animatedButtonScale = new Animated.Value(1);
     //
 
-    useEffect(async () => {
-        setLoading(true);
-        const docSnap = await getDoc(doc(db, "users", userId));
+    useEffect(() => {
+        const load = async () => {
+            setLoading(true);
+            const docSnap = await getDoc(doc(db, "users", userId));
 
-        if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
-            setFirstName(docSnap.data().firstName);
-            setLastName(docSnap.data().lastName);
-        } else {
-            console.log("No such document!");
+            if (docSnap.exists()) {
+                console.log("Document data:", docSnap.data());
+                setFirstName(docSnap.data().firstName);
+                setLastName(docSnap.data().lastName);
+            } else {
+                console.log("No such document!");
+            }
         }
-        setTimeout(()=>{
-            setLoading(false)
-        }, 300)
+        load().then(setLoading(false));
     }, []);
 
     const handlePressIn = () => {

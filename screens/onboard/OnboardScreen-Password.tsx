@@ -67,10 +67,10 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
             upcomingTrips: [],
             comments: [""],
           }).then((res) => {
-            // navigation.reset({
-            //   index: 1,
-            //   routes: [{name: "Root"}, {name: "RegisterComplete"}],
-            // });
+            navigation.reset({
+              index: 1,
+              routes: [{name: "Root"}, {name: "RegisterComplete"}],
+            });
           })
             .catch((error) => {
               console.log(error);

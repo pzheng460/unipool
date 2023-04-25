@@ -505,7 +505,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
   return (
     <View useSafeArea flexG style={{backgroundColor: Colors.$backgroundDefault}}>
-      {/*{verifyModal()}*/}
+      {verifyModal()}
       <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]} initialIndex={tabIndex}>
 
         <TabController.TabBar

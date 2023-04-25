@@ -97,13 +97,13 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
 
                 if (newRiders.length <= 0) {
                     await deleteDoc(doc(db, "trips", tripId));
-
-                    dispatch({
-                        type: ActionTypes.LEAVE_TRIP_AND_DELETE,
-                        trip: trip
-                    })
-
                     navigation.goBack();
+                    setTimeout(() => {
+                        dispatch({
+                            type: ActionTypes.LEAVE_TRIP_AND_DELETE,
+                            trip: trip
+                        })
+                    }, 100);
                 } else {
                     await updateDoc(doc(db, "trips", tripId), {
                         riders: newRiders,
@@ -199,7 +199,7 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
     function renderItem(item: User) {
         return (
             <Card
-                onPress={() => navigation.navigate('Rating', {userId: item.id})}
+                onPress={() => joined && trip.type === "past" && navigation.navigate('Rating', {userId: item.id})}
                 style={{flex:1,
                     flexDirection: 'row',
                     height:64,
