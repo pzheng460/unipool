@@ -42,19 +42,14 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   const [refreshing, setRefreshing] = useState(false);
   const initTripData: Trip[] = [];
   const [tripData, setTripData] = useState(initTripData);
-  const [upcomingTripData, setUpcomingTripData] = useState(initTripData);
-
   const [tabIndex, setTabIndex] = useState(0);
   const [showSearch, setShowSearch] = useState(true);
-
   const lastContentOffset = useSharedValue(0);
   const isScrolling = useSharedValue(false);
   const translateY = useSharedValue(0);
-
   const [user,] = useAuthState(auth);
   const [loading, setLoading] = useLoading();
   const theme = useTheme();
-  const [sendEmailVerification, sending, error2] = useSendEmailVerification(auth);
   const [signOut,] = useSignOut(auth);
 
   const verifyModal = () => (
@@ -175,11 +170,11 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     }
   }
 
-    async function loadPastTrips() {
+  async function loadPastTrips() {
       const pastTrips: Trip[] = [];
       const pastTripIDs = data.user.pastTrips;
-      console.log("++++++++++++++++++++++++++++++")
-      console.log(pastTripIDs)
+      // console.log("++++++++++++++++++++++++++++++")
+      // console.log(pastTripIDs)
 
       if (pastTripIDs.length > 0 && typeof pastTripIDs[0] === "string") {
         for (const pastTripID of pastTripIDs) {
@@ -212,9 +207,11 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
     }
 
   async function loadData() {
-    await loadTrips();
-    await loadUpcomingTrips();
-    await loadPastTrips();
+    return Promise.all([
+      await loadTrips(),
+      await loadUpcomingTrips(),
+      await loadPastTrips(),
+    ]);
   }
 
   useEffect(() => {
@@ -225,26 +222,30 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
   }, []);
 
   useEffect(() => {
-      console.log("++++++++++++++++++++++++++++" + data.trips[0].riders[0]);
-    setTripData(data.trips?.filter(trip => {
-      return trip.type === "upcoming";
-    }).filter(trip =>{
-        return trip.seatsTaken < trip.seatsMax;
-    }).filter(trip => {
+    setLoading(true);
+    // console.log("++++++++++++++++++++++++++++" + data.trips[0].riders[0]);
+    const validTrips = data.trips?.filter((trip) => {
+      return trip.type === "upcoming"
+        && trip.seatsTaken < trip.seatsMax
+        && !trip.riders.includes(data.user.id);
+    });
 
-
-        return !trip.riders.includes(data.user.id);
-    }).filter(async trip => {
-        // console.log("++++++++++++++++++++++++++++" + trip.riders[0]);
+    (async () => {
+      const shouldFilter = await Promise.all(validTrips?.map(async (trip) => {
         const docSnap = await getDoc(doc(db, "users", trip.riders[0]));
-        let ownerGender = '';
+        let sameGender = trip.sameGender === false;
         if (docSnap.exists()) {
-            ownerGender = docSnap.data().gender;
+          const ownerGender = docSnap.data().gender;
+          // console.log(ownerGender);
+          sameGender = sameGender || (trip.sameGender === true && ownerGender === data.user.gender);
         }
-        return (trip.sameGender === false) || (trip.sameGender === true && ownerGender === data.user.gender);
-    }));
+        return sameGender;
+      }));
+      const sameGenderTrips = validTrips?.filter((trip, i) => (shouldFilter[i]));
+      setTripData(sameGenderTrips);
+      setLoading(false);
+    })();
 
-    setUpcomingTripData(data.user.upcomingTrips);
   }, [data.trips]);
 
   const options = [{
@@ -332,7 +333,7 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
     return (
       <View flex-G>
-        <GridList data={upcomingTripData}
+        <GridList data={data.user?.upcomingTrips}
                   renderItem={({item}) => renderItem(item)}
                   numColumns={1}
                   itemSpacing={Spacings.s2}
