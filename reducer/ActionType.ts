@@ -11,6 +11,8 @@ export enum ActionTypes {
   FETCH_TRIP = "FETCH_TRIP",
   UPDATE_UPCOMING_TRIPS = "UPDATE_UPCOMING_TRIPS",
   UPDATE_PAST_TRIPS = "UPDATE_PAST_TRIPS",
+
+  JOIN_TRIP = "JOIN_TRIP",
 }
 
 export namespace DataActions {

@@ -20,6 +20,20 @@ export function dummyDataReducer (data: GlobalData, action: DataActions.Any): Gl
         trips: [...currentTrips, tripAction.trip]
       };
     }
+
+    case ActionTypes.JOIN_TRIP: {
+      const tripAction = action as DataActionTrip;
+      const upcomingTrips = data.user.upcomingTrips;
+      const currentTrips = data.trips;
+      return {
+        user: {
+          ...data.user,
+          upcomingTrips: [...upcomingTrips]
+        },
+        trips: [...currentTrips]
+      };
+    }
+
     case ActionTypes.INIT_USER: {
       const currentTrips = data.trips;
       return {

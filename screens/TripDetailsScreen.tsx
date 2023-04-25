@@ -1,21 +1,22 @@
 import {Avatar, BorderRadiuses, Button, Card, Colors, GridList, Spacings, Text, View} from "react-native-ui-lib";
-import {Dimensions, ScrollView, StyleSheet} from "react-native";
+import {Alert, Dimensions, ScrollView, StyleSheet} from "react-native";
 import {RootStackScreenProps} from "../navigation/types";
 // import PeopleList from "../components/PeopleList";
 import {Trip, User} from "../Interface/TripInterface"
 import React, {useContext, useEffect, useState} from "react";
 import TripDetailsCard from "../components/TripDetailCard";
 import RouteMap from "../components/RouteMap";
-import {DummyDataContext} from "../AppContextWrapper";
-import {ActionTypes, GlobalData} from "../reducer/ActionType";
+import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
+import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 import EmptyScreen from "./EmptyScreen";
-import {collection, doc, getDoc, getDocs} from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, updateDoc} from "firebase/firestore";
 import {db} from "../configs/firebase/FirebaseConfig";
 import {useLoading} from "../contexts/LoadingContext";
 
 export default function TripDetailsScreen({route, navigation}: RootStackScreenProps<'TripDetails'>) {
     const tripId = route.params?.id;
     const data = useContext(DummyDataContext) as GlobalData;
+    const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
     const trip = data.trips.find((item) => item.id === tripId)
     const windowWidth = Dimensions.get('window').width;
     const locations = [[33.7722, -84.3902], [48.8223785, 2.3361663]];
@@ -62,15 +63,43 @@ export default function TripDetailsScreen({route, navigation}: RootStackScreenPr
 
     }, [data.trips]);
 
-    function handlePress() {
-
+    async function handlePress() {
         if (joined) {
-            //
             setJoined(false);
 
         } else {
             setJoined(true);
             //TODO: handle join query
+            setLoading(true);
+            try {
+                const upcomingTrips: string[] = [];
+                data.user.upcomingTrips.forEach(upcomingTrip => {
+                    upcomingTrips.push(upcomingTrip.id);
+                });
+
+                await updateDoc(doc(db, "users", data.user.id), {
+                    upcomingTrips: [...upcomingTrips, trip?.id],
+                });
+
+                // @ts-ignore
+                let tripRiders = trip?.riders;
+                await updateDoc(doc(db, "trips", tripId), {
+                    riders: [...tripRiders, data.user.id],
+                });
+
+                dispatch({
+                    type: ActionTypes.JOIN_TRIP,
+                    trip: {
+                    }
+                })
+
+            } catch (e) {
+                console.log(e);
+                Alert.alert("Connection Error");
+            } finally {
+                setLoading(false);
+                Alert.alert("Success");
+            }
         }
     }
 
