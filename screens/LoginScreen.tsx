@@ -22,7 +22,7 @@ import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 import {useLoading} from "../contexts/LoadingContext";
 
-const logo = require("../assets/icon.png");
+const logo = require("../assets/logo-no-background.png");
 export default function LoginScreen({route, navigation}: RootStackScreenProps<'Login'>) {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
@@ -157,7 +157,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
           gap: 24,
         }}>
           <View style={{alignItems: "center", justifyContent: "flex-end", marginTop: 32}}>
-            <Image source={logo} style={{width: 250, height: 100}}/>
+            <Image source={logo} style={{width: 200, height: 36}}/>
             {/*<Text variant={"headlineMedium"} style={{fontWeight: "600"}}> Unipool </Text>*/}
           </View>
           <KeyboardAvoidingView behavior={"position"}>

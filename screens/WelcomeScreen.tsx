@@ -28,7 +28,7 @@ export default function WelcomeScreen({route, navigation}: RootStackScreenProps<
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-        <Image source={logo} style={{width: 200, height: 200}}/>
+        <Image source={logo} style={{width: 250, height:36}} resizeMethod={"resize"}/>
         {/*<View style={{marginTop: 16}}>*/}
         {/*  <Text variant="headlineLarge" style={{fontWeight: "bold"}}>Unipool</Text>*/}
         {/*</View>*/}

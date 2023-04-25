@@ -27,6 +27,7 @@ export default function useCachedResources() {
 
         await Promise.all(cacheImages([
           require("../assets/icon.png"),
+          require("../assets/logo-no-background.png"),
         ]));
 
       } catch (e) {
