@@ -33,6 +33,7 @@ import {Button} from "../components";
 import {collection, doc, getDoc, getDocs, query} from "firebase/firestore";
 import {useLoading} from "../contexts/LoadingContext";
 import RegisterCompleteScreen from "./RegisterCompleteScreen";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -502,9 +503,14 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
       </View>
     )
   }
-
+  const insets = useSafeAreaInsets();
   return (
-    <View useSafeArea flexG style={{backgroundColor: Colors.$backgroundDefault}}>
+    <View flexG style={{backgroundColor: Colors.$backgroundDefault,
+      // paddingBottom: insets.bottom,
+      paddingTop: insets.top,
+      paddingLeft: insets.left,
+      paddingRight: insets.right
+    }}>
       {verifyModal()}
       <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]} initialIndex={tabIndex}>
 
@@ -546,7 +552,6 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
         </View>
       </TabController>
-
     </View>
   );
 }

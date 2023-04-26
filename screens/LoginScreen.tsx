@@ -187,6 +187,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                     /* @ts-ignore */
                     enterKeyHint={"done"}
                     secureTextEntry={!showPassword}
+                    autoCapitalize={"none"}
                   />
                 </View>
                 <View style={{

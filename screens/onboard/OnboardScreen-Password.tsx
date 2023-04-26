@@ -126,6 +126,7 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
                 /* @ts-ignore */
                 enterKeyHint={"next"}
                 secureTextEntry={!showPassword}
+                autoCapitalize={"none"}
                 error={hasErrors()}
               />
               <HelperText type={"error"} visible={hasErrors()}>
@@ -134,7 +135,7 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
             </View>
           </View>
         </View>
-        <KeyboardAvoidingView style={{paddingBottom: 32}} behavior={"position"}>
+        <KeyboardAvoidingView style={{marginBottom: 24, paddingBottom: 8}} behavior={"position"}>
           <Button onPress={() => handlePasswordSubmit()}>
             Continue
           </Button>

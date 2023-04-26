@@ -13,6 +13,7 @@ import {useHeaderHeight} from "@react-navigation/elements";
 import {useSignOut} from 'react-firebase-hooks/auth';
 import {auth} from "../configs/firebase/FirebaseConfig";
 import {useTheme} from "react-native-paper";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 type MenuItem = {
   title: string;
@@ -118,9 +119,16 @@ export default function MeScreen({navigation}: RootTabScreenProps<'Me'>) {
       )
     }
   }
-
+  const insets = useSafeAreaInsets();
   return(
-    <View useSafeArea flex backgroundColor={theme.colors.background}>
+    <View flex backgroundColor={theme.colors.background}
+      style={{
+        // paddingBottom: insets.bottom,
+        paddingTop: insets.top,
+        paddingLeft: insets.left,
+        paddingRight: insets.right
+      }}
+    >
       <ScrollView bounces={bounce}
                   onContentSizeChange={(w, h) => {
                     setBounce(screenHeight - h - headerHeight - bottomHeight < 0)

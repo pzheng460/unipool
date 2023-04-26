@@ -4,7 +4,7 @@ import {Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View} from "re
 import {HelperText, Text, TextInput} from "react-native-paper";
 import {Button} from "../../components";
 import {RootStackScreenProps} from "../../navigation/types";
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {DummyDataContext, DummyDataDispatch} from "../../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../../reducer/ActionType";
 
@@ -14,6 +14,7 @@ export default function OnBoardScreenEmail({route, navigation}: RootStackScreenP
   const data = useContext(DummyDataContext) as GlobalData;
   const dispatch = useContext(DummyDataDispatch) as React.Dispatch<DataActions.Any>;
   const [email, setEmail] = useState<string>(data.user.email);
+  const inputRef = useRef(null);
 
   function handleEmailSubmit() {
     if (!hasErrors()) {
@@ -21,6 +22,7 @@ export default function OnBoardScreenEmail({route, navigation}: RootStackScreenP
         type: ActionTypes.UPDATE_EMAIL_ADDRESS,
         email: email,
       })
+      Keyboard.dismiss();
       navigation.navigate("OnBoardPassword");
     }
   }
@@ -53,6 +55,7 @@ export default function OnBoardScreenEmail({route, navigation}: RootStackScreenP
           </View>
           <View>
             <TextInput
+              ref={inputRef}
               autoFocus
               label={"Email Address"}
               autoComplete={"email"}
@@ -71,7 +74,7 @@ export default function OnBoardScreenEmail({route, navigation}: RootStackScreenP
             </HelperText>
           </View>
         </View>
-        <KeyboardAvoidingView style={{paddingBottom: 32}} behavior={"position"}>
+        <KeyboardAvoidingView style={{marginBottom: 24, paddingBottom: 8}} behavior={"position"}>
           <Button onPress={() => handleEmailSubmit()}>
             Continue
           </Button>

@@ -6,6 +6,7 @@ import React from "react";
 import {Keyboard, TouchableHighlight, TouchableWithoutFeedback} from "react-native";
 import {MessageType, Room, User} from "@flyerhq/react-native-firebase-chat-core";
 import {useTheme} from "react-native-paper";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 
 export default function MessageScreen({navigation}: RootTabScreenProps<'Messages'>) {
@@ -184,11 +185,17 @@ export default function MessageScreen({navigation}: RootTabScreenProps<'Messages
 
     )
   }
+  const insets = useSafeAreaInsets();
   return(
     <TouchableWithoutFeedback
       onPress={() =>{Keyboard.dismiss()}}
     >
-      <View useSafeArea flex backgroundColor={theme.colors.background}>
+      <View flex backgroundColor={theme.colors.background} style={{
+        // paddingBottom: insets.bottom,
+        paddingTop: insets.top,
+        paddingLeft: insets.left,
+        paddingRight: insets.right
+      }}>
         <View>
           <Text variant={"headlineMedium"} style={{marginTop: 12, marginLeft: 12, fontWeight: "bold"}}>
             Messages
