@@ -9,10 +9,10 @@ import {
   TextField,
   View
 } from "react-native-ui-lib";
-import {Alert, Dimensions, Keyboard, RefreshControl, ScrollView, TextStyle} from "react-native";
+import {Dimensions, Keyboard, ScrollView, TextStyle} from "react-native";
 import {RootTabScreenProps} from "../navigation/types";
 import TripCard from "../components/TripCard";
-import {Trip, User} from "../Interface/TripInterface";
+import {Trip} from "../Interface/TripInterface";
 import {trip3, user1, user2} from "../assets/data/dummyData";
 import React, {useContext, useEffect, useState} from "react";
 import {AntDesign} from "@expo/vector-icons";
@@ -26,13 +26,14 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import {useAuthState, useSendEmailVerification, useSignOut} from "react-firebase-hooks/auth";
+import {useAuthState, useSignOut} from "react-firebase-hooks/auth";
 import {auth, db} from "../configs/firebase/FirebaseConfig";
-import {Modal, Portal, Text as PaperText, useTheme} from "react-native-paper";
+import {Modal, Portal, useTheme} from "react-native-paper";
 import {Button} from "../components";
-import {collection, doc, getDoc, getDocs, query} from "firebase/firestore";
+import {collection, doc, getDoc, getDocs} from "firebase/firestore";
 import {useLoading} from "../contexts/LoadingContext";
 import RegisterCompleteScreen from "./RegisterCompleteScreen";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
@@ -502,9 +503,14 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
       </View>
     )
   }
-
+  const insets = useSafeAreaInsets();
   return (
-    <View useSafeArea flexG style={{backgroundColor: Colors.$backgroundDefault}}>
+    <View flexG style={{backgroundColor: Colors.$backgroundDefault,
+      // paddingBottom: insets.bottom,
+      paddingTop: insets.top,
+      paddingLeft: insets.left,
+      paddingRight: insets.right
+    }}>
       {verifyModal()}
       <TabController items={[{label: 'Explore'}, {label: 'My Trips'}]} initialIndex={tabIndex}>
 
@@ -546,8 +552,6 @@ export default function HomeScreen({navigation}: RootTabScreenProps<'Home'>) {
 
         </View>
       </TabController>
-
     </View>
   );
 }
-

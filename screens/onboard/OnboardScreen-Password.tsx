@@ -7,9 +7,9 @@ import {RootStackScreenProps} from "../../navigation/types";
 import React, {useContext, useState} from "react";
 import {DummyDataContext, DummyDataDispatch} from "../../AppContextWrapper";
 import {DataActions, GlobalData} from "../../reducer/ActionType";
-import {useCreateUserWithEmailAndPassword, useSignOut} from "react-firebase-hooks/auth";
+import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
 import {auth, db} from "../../configs/firebase/FirebaseConfig";
-import { doc, setDoc } from "firebase/firestore";
+import {doc, setDoc} from "firebase/firestore";
 
 export default function OnBoardScreenPassword({route, navigation}: RootStackScreenProps<'OnBoardPassword'>) {
   const headerHeight = useHeaderHeight();
@@ -126,6 +126,7 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
                 /* @ts-ignore */
                 enterKeyHint={"next"}
                 secureTextEntry={!showPassword}
+                autoCapitalize={"none"}
                 error={hasErrors()}
               />
               <HelperText type={"error"} visible={hasErrors()}>
@@ -134,7 +135,7 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
             </View>
           </View>
         </View>
-        <KeyboardAvoidingView style={{paddingBottom: 32}} behavior={"position"}>
+        <KeyboardAvoidingView style={{marginBottom: 24, paddingBottom: 8}} behavior={"position"}>
           <Button onPress={() => handlePasswordSubmit()}>
             Continue
           </Button>

@@ -17,7 +17,7 @@ import {auth, db} from "../configs/firebase/FirebaseConfig";
 import {useSendEmailVerification, useSignInWithEmailAndPassword} from "react-firebase-hooks/auth";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
-import {collection, doc, getDoc, getDocs} from "firebase/firestore";
+import {doc, getDoc} from "firebase/firestore";
 import {DummyDataContext, DummyDataDispatch} from "../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../reducer/ActionType";
 import {useLoading} from "../contexts/LoadingContext";
@@ -102,6 +102,9 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
               Alert.alert("Connection Error");
               setLoading(false);
             })
+        } else {
+          Alert.alert("Login Failed");
+          setLoading(false);
         }
         // } else {
         //   if (error) {
@@ -187,6 +190,7 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
                     /* @ts-ignore */
                     enterKeyHint={"done"}
                     secureTextEntry={!showPassword}
+                    autoCapitalize={"none"}
                   />
                 </View>
                 <View style={{

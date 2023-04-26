@@ -4,7 +4,7 @@ import {SegmentedButtons, Text, TextInput} from "react-native-paper";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Button} from "../../components";
-import React, {RefObject, useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {DummyDataContext, DummyDataDispatch} from "../../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../../reducer/ActionType";
 
@@ -38,6 +38,7 @@ export default function OnBoardScreenBegin({route, navigation}: RootStackScreenP
       firstName:firstname,
       lastName: lastname,
     })
+    Keyboard.dismiss();
     navigation.navigate("OnBoardEmail");
   }
 
@@ -118,7 +119,7 @@ export default function OnBoardScreenBegin({route, navigation}: RootStackScreenP
             />
           </View>
         </View>
-        <KeyboardAvoidingView style={{paddingBottom: 32}} behavior={"position"}>
+        <KeyboardAvoidingView style={{marginBottom: 24, paddingBottom: 8}} behavior={"position"}>
           <Button onPress={() => handleSubmit()}>
             Continue
           </Button>

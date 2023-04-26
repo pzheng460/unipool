@@ -1,5 +1,5 @@
-import {Avatar, Card, Chip, Colors, Text, View} from "react-native-ui-lib";
-import {Trip, User} from "../Interface/TripInterface";
+import {Card, Chip, Text, View} from "react-native-ui-lib";
+import {Trip} from "../Interface/TripInterface";
 import dayjs from "dayjs";
 import {StyleSheet} from "react-native";
 import React from "react";

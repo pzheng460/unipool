@@ -1,5 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from "react";
-import {useColorScheme as useSystemColorScheme} from "react-native";
+import React, {createContext, useContext, useState} from "react";
 
 interface props {
   children: React.ReactNode,

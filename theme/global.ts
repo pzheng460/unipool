@@ -1,7 +1,6 @@
 import {DarkTheme as NavigationDarkTheme, DefaultTheme as NavigationLightTheme, Theme} from '@react-navigation/native';
 import {adaptNavigationTheme, MD3DarkTheme, MD3LightTheme} from "react-native-paper";
 import deepmerge from "deepmerge";
-import {Colors} from "react-native-ui-lib";
 
 /**
  * Theme provider by React Navigation.

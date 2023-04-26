@@ -1,6 +1,6 @@
 import {AntDesign} from '@expo/vector-icons';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import * as React from 'react';
 import {ColorSchemeName} from 'react-native';
@@ -15,7 +15,6 @@ import {auth} from "../configs/firebase/FirebaseConfig";
 import GroupScreen from "../screens/GroupScreen";
 import MessageScreen from "../screens/MessageScreen";
 import MeScreen from "../screens/MeScreen";
-import {Colors} from "react-native-ui-lib";
 import TripDetailsScreen from "../screens/TripDetailsScreen";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import CreateTripScreen from "../screens/CreateTripScreen";
