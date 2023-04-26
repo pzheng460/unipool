@@ -68,8 +68,8 @@ export default function OnBoardScreenPassword({route, navigation}: RootStackScre
             comments: [""],
           }).then((res) => {
             navigation.reset({
-              index: 1,
-              routes: [{name: "Root"}, {name: "RegisterComplete"}],
+              index: 0,
+              routes: [{name: "Root"}],
             });
           })
             .catch((error) => {

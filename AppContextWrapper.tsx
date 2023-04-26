@@ -4,7 +4,6 @@ import {dummyDataReducer} from "./reducer/DummyDataReducer";
 import {GlobalData} from "./reducer/ActionType";
 import {ColorSchemeProvider} from "./contexts/ColorSchemeContext";
 import {LoadingProvider} from "./contexts/LoadingContext";
-import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 
 const initialData: GlobalData = {user: user1, trips: trips};
@@ -22,9 +21,7 @@ export default function AppContextWrapper (props: any) {
       <DummyDataDispatch.Provider value={dispatch}>
         <ColorSchemeProvider>
           <LoadingProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-            {props.children}
-            </GestureHandlerRootView>
+              {props.children}
           </LoadingProvider>
         </ColorSchemeProvider>
       </DummyDataDispatch.Provider>
