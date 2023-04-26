@@ -1,10 +1,8 @@
-import {Button, Colors, Text, View, Avatar,} from "react-native-ui-lib";
-import React, {useContext, useEffect, useState} from "react";
+import {Avatar, Button, Colors, Text, View,} from "react-native-ui-lib";
+import React, {useEffect, useState} from "react";
 import {RootStackScreenProps} from "../navigation/types";
 import {Animated, Dimensions, Keyboard, StyleSheet, TextInput, TouchableWithoutFeedback,} from "react-native";
 import {MaterialIcons} from '@expo/vector-icons';
-import {DummyDataContext} from "../AppContextWrapper";
-import {GlobalData} from "../reducer/ActionType";
 import {useLoading} from "../contexts/LoadingContext";
 import {doc, getDoc} from "firebase/firestore";
 import {db} from "../configs/firebase/FirebaseConfig";

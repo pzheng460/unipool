@@ -4,7 +4,7 @@ import {Keyboard, KeyboardAvoidingView, TouchableWithoutFeedback, View} from "re
 import {HelperText, Text, TextInput} from "react-native-paper";
 import {Button} from "../../components";
 import {RootStackScreenProps} from "../../navigation/types";
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {DummyDataContext, DummyDataDispatch} from "../../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../../reducer/ActionType";
 

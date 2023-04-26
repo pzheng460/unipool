@@ -1,5 +1,5 @@
 import {Image, View} from "react-native";
-import {Switch, Text, useTheme} from 'react-native-paper';
+import {Text, useTheme} from 'react-native-paper';
 import {Button} from "../components";
 import {RootStackScreenProps} from "../navigation/types";
 import {SafeAreaView} from "react-native-safe-area-context";

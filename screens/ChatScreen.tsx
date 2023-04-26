@@ -1,5 +1,5 @@
 import {RootStackScreenProps} from "../navigation/types";
-import {Colors, View} from "react-native-ui-lib";
+import {View} from "react-native-ui-lib";
 import {Chat, defaultTheme, MessageType} from "@flyerhq/react-native-chat-ui";
 import React, {ReactNode, useState} from "react";
 import {useHeaderHeight} from "@react-navigation/elements";

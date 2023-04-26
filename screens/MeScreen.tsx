@@ -5,14 +5,13 @@ import {GlobalData} from "../reducer/ActionType";
 import {User} from "../Interface/TripInterface";
 import {Avatar, Colors, GridList, View} from "react-native-ui-lib";
 import {Button} from "../components";
-import {Text} from "react-native-paper";
+import {Text, useTheme} from "react-native-paper";
 import {AntDesign} from "@expo/vector-icons";
 import {Dimensions, ScrollView, TouchableOpacity} from "react-native";
 import {useBottomTabBarHeight} from "@react-navigation/bottom-tabs";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSignOut} from 'react-firebase-hooks/auth';
 import {auth} from "../configs/firebase/FirebaseConfig";
-import {useTheme} from "react-native-paper";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 type MenuItem = {

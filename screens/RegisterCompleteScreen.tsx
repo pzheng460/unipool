@@ -1,12 +1,9 @@
-import {RootStackScreenProps} from "../navigation/types";
-import {Alert, Keyboard, TouchableWithoutFeedback, View, ActivityIndicator} from "react-native";
+import {ActivityIndicator, Alert, View} from "react-native";
 import {Text} from "react-native-paper";
 import {Button} from "../components";
 import React, {useEffect, useState} from "react";
-import {useHeaderHeight} from "@react-navigation/elements";
-import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {auth} from "../configs/firebase/FirebaseConfig";
-import {useAuthState, useSendEmailVerification} from "react-firebase-hooks/auth";
+import {useSendEmailVerification} from "react-firebase-hooks/auth";
 
 export default function RegisterCompleteScreen() {
   // const headerHeight = useHeaderHeight();

@@ -4,7 +4,7 @@ import {SegmentedButtons, Text, TextInput} from "react-native-paper";
 import {useHeaderHeight} from "@react-navigation/elements";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Button} from "../../components";
-import React, {RefObject, useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import {DummyDataContext, DummyDataDispatch} from "../../AppContextWrapper";
 import {ActionTypes, DataActions, GlobalData} from "../../reducer/ActionType";
 

@@ -1,11 +1,10 @@
 import {RootTabScreenProps} from "../navigation/types";
 import {Avatar, Badge, Colors, GridList, Spacings, TextField, View} from "react-native-ui-lib";
-import {Text} from "react-native-paper";
+import {Text, useTheme} from "react-native-paper";
 import {AntDesign} from "@expo/vector-icons";
 import React from "react";
 import {Keyboard, TouchableHighlight, TouchableWithoutFeedback} from "react-native";
 import {MessageType, Room, User} from "@flyerhq/react-native-firebase-chat-core";
-import {useTheme} from "react-native-paper";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 
