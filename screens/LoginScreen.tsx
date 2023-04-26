@@ -102,6 +102,9 @@ export default function LoginScreen({route, navigation}: RootStackScreenProps<'L
               Alert.alert("Connection Error");
               setLoading(false);
             })
+        } else {
+          Alert.alert("Login Failed");
+          setLoading(false);
         }
         // } else {
         //   if (error) {
